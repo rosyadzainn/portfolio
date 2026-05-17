@@ -58,10 +58,10 @@ const HEADLINE = [
 ];
 
 const SHAPES: { id: ShapeName; label: string; icon: string }[] = [
-  { id: "sphere",  label: "SPHERE",  icon: "○" },
-  { id: "fish",    label: "FISH",    icon: "⟫" },
-  { id: "dragon",  label: "DRAGON",  icon: "⟡" },
-  { id: "hamster", label: "HAMSTER", icon: "◉" },
+  { id: "sphere", label: "SPHERE", icon: "○" },
+  { id: "torus",  label: "TORUS",  icon: "◎" },
+  { id: "helix",  label: "HELIX",  icon: "∿" },
+  { id: "galaxy", label: "GALAXY", icon: "✦" },
 ];
 
 export default function Hero() {

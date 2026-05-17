@@ -97,14 +97,13 @@ export default function ParticleField({ mouseX, mouseY, shape }: ParticleFieldPr
     if (!groupRef.current) return;
     const t = clock.getElapsedTime();
 
-    // Rotation: spin freely for sphere, stop for other shapes
+    // Rotation: sphere spins with wobble; geometric shapes rotate slowly & level
     if (shapeRef.current === "sphere") {
-      rotY.current += 0.00062 * 100 * (1/60); // ~0.062 rad/s
       groupRef.current.rotation.y = t * 0.062;
       groupRef.current.rotation.x = Math.sin(t * 0.038) * 0.14;
     } else {
-      groupRef.current.rotation.y += (0 - groupRef.current.rotation.y) * 0.03;
-      groupRef.current.rotation.x += (0 - groupRef.current.rotation.x) * 0.03;
+      groupRef.current.rotation.y = t * 0.018; // slow continuous rotation
+      groupRef.current.rotation.x += (0 - groupRef.current.rotation.x) * 0.025;
     }
 
     const breathe = 1 + Math.sin(t * 0.9) * 0.018;

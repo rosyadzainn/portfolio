@@ -1,39 +1,10 @@
-export type ShapeName = "sphere" | "fish" | "dragon" | "hamster";
-
-type P2 = [number, number];
-
-function bzPt(t: number, a: P2, b: P2, c: P2, d: P2): P2 {
-  const m = 1 - t;
-  return [
-    m*m*m*a[0] + 3*m*m*t*b[0] + 3*m*t*t*c[0] + t*t*t*d[0],
-    m*m*m*a[1] + 3*m*m*t*b[1] + 3*m*t*t*c[1] + t*t*t*d[1],
-  ];
-}
-
-function bzTan(t: number, a: P2, b: P2, c: P2, d: P2): P2 {
-  const m = 1 - t;
-  const rx = 3*(m*m*(b[0]-a[0]) + 2*m*t*(c[0]-b[0]) + t*t*(d[0]-c[0]));
-  const ry = 3*(m*m*(b[1]-a[1]) + 2*m*t*(c[1]-b[1]) + t*t*(d[1]-c[1]));
-  const l  = Math.hypot(rx, ry);
-  return l > 1e-9 ? [rx/l, ry/l] : [1, 0];
-}
-
-function rndSphere(cx: number, cy: number, cz: number, r: number): [number, number, number] {
-  const phi   = Math.acos(2 * Math.random() - 1);
-  const theta = Math.random() * Math.PI * 2;
-  const rad   = r * Math.cbrt(Math.random());
-  return [
-    cx + rad * Math.sin(phi) * Math.cos(theta),
-    cy + rad * Math.sin(phi) * Math.sin(theta),
-    cz + rad * Math.cos(phi),
-  ];
-}
+export type ShapeName = "sphere" | "torus" | "helix" | "galaxy";
 
 function set3(pos: Float32Array, i: number, x: number, y: number, z: number) {
   pos[i*3] = x; pos[i*3+1] = y; pos[i*3+2] = z;
 }
 
-// ── SPHERE ──────────────────────────────────────────────────────────────────
+// ── SPHERE ───────────────────────────────────────────────────────────────────
 
 function fillSphere(pos: Float32Array, count: number) {
   for (let i = 0; i < count; i++) {
@@ -71,258 +42,151 @@ function fillSphere(pos: Float32Array, count: number) {
   }
 }
 
-// ── FISH (Koi) ───────────────────────────────────────────────────────────────
-// Koi reference: C-curved body, head lower-right, large split fan-tail upper-left,
-// tall dorsal fin along the convex (outside) edge of the curve.
+// ── TORUS ────────────────────────────────────────────────────────────────────
+// Classic donut ring, tilted 55° toward viewer so depth is visible.
 
-function fillFish(pos: Float32Array, count: number) {
-  const BODY = Math.floor(count * 0.48);
-  const TAIL = Math.floor(count * 0.28);
-  const DFIN = Math.floor(count * 0.14); // dorsal fin
-  const PFIN = Math.floor(count * 0.05); // pectoral fins
-  const HEAD = count - BODY - TAIL - DFIN - PFIN;
+function fillTorus(pos: Float32Array, count: number) {
+  const R    = 1.55; // major radius
+  const r    = 0.42; // minor (tube) radius
+  const TILT = 55 * (Math.PI / 180); // tilt around X axis
+  const cosT = Math.cos(TILT);
+  const sinT = Math.sin(TILT);
 
-  // Cubic bezier spine: head (lower-right) → tail attachment (upper-left)
-  const S0: P2 = [ 1.05, -1.22];
-  const S1: P2 = [ 1.52, -0.05];
-  const S2: P2 = [ 0.08,  0.92];
-  const S3: P2 = [-0.88,  1.12];
+  for (let i = 0; i < count; i++) {
+    const u  = Math.random() * Math.PI * 2;
+    const v  = Math.random() * Math.PI * 2;
+    // Surface biased: 80% on shell, 20% slight inner fill
+    const rr = r * (Math.random() < 0.80 ? (0.88 + Math.random() * 0.12) : Math.random() * 0.88);
 
-  // Body — disc perpendicular to spine, tapers from head to tail
-  for (let i = 0; i < BODY; i++) {
-    const t           = Math.random();
-    const [sx, sy]    = bzPt(t, S0, S1, S2, S3);
-    const [tang, tany]= bzTan(t, S0, S1, S2, S3);
-    const nx = -tany, ny = tang; // left-hand normal
-    const maxR = 0.52 * Math.pow(1 - t, 0.42) + 0.08;
-    const r    = maxR * Math.sqrt(Math.random());
-    const a    = Math.random() * Math.PI * 2;
-    set3(pos, i,
-      sx + nx * r * Math.cos(a),
-      sy + ny * r * Math.cos(a),
-      r * Math.sin(a) * 0.50
-    );
-  }
+    const tx = (R + rr * Math.cos(v)) * Math.cos(u);
+    const ty = (R + rr * Math.cos(v)) * Math.sin(u);
+    const tz = rr * Math.sin(v);
 
-  // Tail — V-shaped fan from S3, two lobes fanning upward
-  // Right lobe: 22°→88°, Left lobe: 98°→162° (from +X axis)
-  for (let i = 0; i < TAIL; i++) {
-    const ii      = BODY + i;
-    const isRight = i < TAIL * 0.54;
-    const angle   = isRight
-      ? (22 + Math.random() * 66) * (Math.PI / 180)
-      : (98 + Math.random() * 64) * (Math.PI / 180);
-    const r    = Math.pow(Math.random(), 0.50) * 1.30;
-    const perp = (Math.random() - 0.5) * (0.05 + (r / 1.30) * 0.14);
-    set3(pos, ii,
-      S3[0] + Math.cos(angle) * r - Math.sin(angle) * perp,
-      S3[1] + Math.sin(angle) * r + Math.cos(angle) * perp,
-      (Math.random() - 0.5) * 0.16
-    );
-  }
-
-  // Dorsal fin — right-hand normal (outside/convex of C-curve), tallest at mid-body
-  for (let i = 0; i < DFIN; i++) {
-    const ii           = BODY + TAIL + i;
-    const t            = 0.04 + Math.random() * 0.72;
-    const [sx, sy]     = bzPt(t, S0, S1, S2, S3);
-    const [tangX, tangY] = bzTan(t, S0, S1, S2, S3);
-    const nx = tangY, ny = -tangX; // right-hand normal = convex side
-    const bodyR  = 0.52 * Math.pow(1 - t, 0.42) + 0.08;
-    const finH   = 0.68 * Math.sin((t - 0.04) / 0.72 * Math.PI);
-    const offset = bodyR + finH * (0.08 + Math.random() * 0.92);
-    set3(pos, ii,
-      sx + nx * offset,
-      sy + ny * offset,
-      (Math.random() - 0.5) * 0.07
-    );
-  }
-
-  // Pectoral fins — small side fins near head
-  for (let i = 0; i < PFIN; i++) {
-    const ii   = BODY + TAIL + DFIN + i;
-    const side = i < PFIN / 2 ? 1 : -1;
-    const t    = 0.05 + Math.random() * 0.20;
-    const [sx, sy] = bzPt(t, S0, S1, S2, S3);
-    const finR = 0.18 + Math.random() * 0.40;
-    set3(pos, ii,
-      sx + (Math.random() - 0.5) * 0.18,
-      sy + (Math.random() - 0.5) * 0.20,
-      side * (0.45 + finR * 0.55)
-    );
-  }
-
-  // Extra head density — rounder head at t≈0
-  for (let i = 0; i < HEAD; i++) {
-    const ii       = BODY + TAIL + DFIN + PFIN + i;
-    const t        = Math.random() * 0.08;
-    const [sx, sy] = bzPt(t, S0, S1, S2, S3);
-    const [x, y, z] = rndSphere(sx, sy, 0, 0.52);
-    set3(pos, ii, x, y, z * 0.58);
+    // Apply tilt around X
+    set3(pos, i, tx, ty * cosT - tz * sinT, ty * sinT + tz * cosT);
   }
 }
 
-// ── DRAGON (Chinese coiling) ──────────────────────────────────────────────────
-// Reference: oval-ish coil ~1.3 loops, large head upper-right with horns/antlers,
-// body spirals counterclockwise, tapering tail at center.
+// ── HELIX (Double) ────────────────────────────────────────────────────────────
+// DNA-style double helix with two intertwined strands and connecting rungs.
+// Looks spectacular rotating around Y.
 
-function fillDragon(pos: Float32Array, count: number) {
-  const LOOPS  = 1.28;
-  const TMAX   = LOOPS * Math.PI * 2;
-  const OFFSET = 0.76; // rotates spiral so head lands upper-right
+function fillHelix(pos: Float32Array, count: number) {
+  const TURNS  = 5.5;
+  const HEIGHT = 4.0;
+  const RADIUS = 0.88;
+  const TUBE   = 0.09;
+  const RUNG_N = Math.floor(TURNS * 2); // rungs per strand pair
 
-  const BODY  = Math.floor(count * 0.58);
-  const HEAD  = Math.floor(count * 0.22);
-  const HORNS = Math.floor(count * 0.12);
-  const TAIL  = count - BODY - HEAD - HORNS;
+  const STRAND = Math.floor(count * 0.38);
+  const RUNGS  = Math.floor(count * 0.24);
+  const EXTRA  = count - STRAND * 2 - RUNGS; // spare → add to strand1
 
-  const headX = 1.30 * Math.cos(OFFSET);
-  const headY = 1.30 * Math.sin(OFFSET) * 0.80;
-
-  // Coiling serpentine body — shrinking Archimedean spiral, oval-compressed
-  for (let i = 0; i < BODY; i++) {
-    const t   = (i / BODY) * TMAX;
-    const r   = 1.30 - (t / TMAX) * 0.88;
-    const sx  = r * Math.cos(t + OFFSET);
-    const sy  = r * Math.sin(t + OFFSET) * 0.80;
-    const br  = (0.30 - (t / TMAX) * 0.22) * Math.sqrt(Math.random());
-    const a   = Math.random() * Math.PI * 2;
-    set3(pos, i,
-      sx + br * Math.cos(a) * 0.72,
-      sy + br * Math.sin(a),
-      br * Math.cos(a) * 0.68
-    );
-  }
-
-  // Head — large elongated sphere with snout bias
-  const snoutDX = Math.cos(OFFSET) * 0.28;
-  const snoutDY = Math.sin(OFFSET) * 0.28 * 0.80;
-  for (let i = 0; i < HEAD; i++) {
-    const ii = BODY + i;
-    const [x, y, z] = rndSphere(headX, headY, 0, 0.50);
-    const snout = i < HEAD * 0.28 ? Math.random() : 0;
-    set3(pos, ii,
-      x + snoutDX * snout,
-      y + snoutDY * snout,
-      z * 0.72
-    );
-  }
-
-  // Horns / antlers — two branching projections from top of head
-  // Each horn: a short stem that splits into two branches
-  for (let i = 0; i < HORNS; i++) {
-    const ii   = BODY + HEAD + i;
-    const side = i < HORNS / 2 ? -1 : 1;
-    const half = i < HORNS / 2 ? i : i - Math.floor(HORNS / 2);
-    const q    = half / (HORNS / 2);
-
-    // Base stem (lower 40%)
-    if (q < 0.40) {
-      const t = q / 0.40;
-      set3(pos, ii,
-        headX + side * 0.13 + (Math.random() - 0.5) * 0.06,
-        headY + 0.44 + t * 0.30,
-        (Math.random() - 0.5) * 0.08
-      );
-    } else {
-      // Two branches from stem tip
-      const branch = q < 0.70 ? 0 : 1;
-      const bt     = branch === 0 ? (q - 0.40) / 0.30 : (q - 0.70) / 0.30;
-      const branchAngle = branch === 0
-        ? Math.PI / 2 + side * 0.5   // outer branch
-        : Math.PI / 2 - side * 0.3;  // inner branch
-      set3(pos, ii,
-        headX + side * 0.13 + Math.cos(branchAngle) * bt * 0.30 + (Math.random()-0.5)*0.05,
-        headY + 0.74 + Math.sin(branchAngle) * bt * 0.30 + (Math.random()-0.5)*0.05,
-        (Math.random() - 0.5) * 0.07
+  // Strand builder
+  function strand(startIdx: number, n: number, phaseOffset: number) {
+    for (let i = 0; i < n; i++) {
+      const t     = i / n;
+      const angle = t * TURNS * Math.PI * 2 + phaseOffset;
+      const y     = (t - 0.5) * HEIGHT;
+      const cx    = RADIUS * Math.cos(angle);
+      const cz    = RADIUS * Math.sin(angle);
+      // Small tube scatter
+      const tr    = TUBE * Math.sqrt(Math.random());
+      const ta    = Math.random() * Math.PI * 2;
+      set3(pos, startIdx + i,
+        cx + tr * Math.cos(ta),
+        y  + tr * Math.sin(ta) * 0.4,
+        cz + tr * Math.sin(ta + 1.5)
       );
     }
   }
 
-  // Tail — small curling cluster at end of spiral
-  const tailAngle = TMAX + OFFSET;
-  const tailR     = 1.30 - 0.88;
-  const tailX     = tailR * Math.cos(tailAngle);
-  const tailY     = tailR * Math.sin(tailAngle) * 0.80;
-  for (let i = 0; i < TAIL; i++) {
-    const ii   = BODY + HEAD + HORNS + i;
-    const t    = i / TAIL;
-    const curl = tailAngle + t * Math.PI * 0.70;
+  strand(0,              STRAND + EXTRA, 0);
+  strand(STRAND + EXTRA, STRAND,         Math.PI);
+
+  // Connecting rungs — sampled evenly along height
+  const rungStep = 1 / RUNG_N;
+  for (let i = 0; i < RUNGS; i++) {
+    const ii      = STRAND * 2 + EXTRA + i;
+    const rungIdx = Math.floor(i / (RUNGS / RUNG_N));
+    const t       = rungIdx * rungStep;
+    const angle   = t * TURNS * Math.PI * 2;
+    const y       = (t - 0.5) * HEIGHT;
+    const along   = Math.random(); // 0=strand1 side, 1=strand2 side
+    const a1      = angle;
+    const a2      = angle + Math.PI;
     set3(pos, ii,
-      tailX + Math.cos(curl) * t * 0.28 + (Math.random()-0.5)*0.06,
-      tailY + Math.sin(curl) * t * 0.22 + (Math.random()-0.5)*0.06,
-      (Math.random() - 0.5) * 0.09
+      RADIUS * (Math.cos(a1) * (1-along) + Math.cos(a2) * along) + (Math.random()-0.5) * TUBE,
+      y + (Math.random()-0.5) * TUBE * 0.5,
+      RADIUS * (Math.sin(a1) * (1-along) + Math.sin(a2) * along) + (Math.random()-0.5) * TUBE
     );
   }
 }
 
-// ── HAMSTER ──────────────────────────────────────────────────────────────────
-// Reference: extremely round body, very large protruding cheeks, round head,
-// small round ears on top, tiny nose and eyes front-facing, small front paws.
+// ── GALAXY (Spiral) ───────────────────────────────────────────────────────────
+// Tilted spiral galaxy: dense central bulge + 3 logarithmic spiral arms
+// + scattered disc stars. Stunning with slow Y-axis rotation.
 
-function fillHamster(pos: Float32Array, count: number) {
-  const BODY   = Math.floor(count * 0.38);
-  const HEAD   = Math.floor(count * 0.16);
-  const LCHEEK = Math.floor(count * 0.16);
-  const RCHEEK = Math.floor(count * 0.16);
-  const LEAR   = Math.floor(count * 0.06);
-  const REAR   = Math.floor(count * 0.06);
-  const DETAIL = count - BODY - HEAD - LCHEEK - RCHEEK - LEAR - REAR;
+function fillGalaxy(pos: Float32Array, count: number) {
+  const NUM_ARMS  = 3;
+  const ARM_TURNS = 2.5;
+  const TILT      = 40 * (Math.PI / 180); // tilt around X for 3D look
+  const cosT      = Math.cos(TILT);
+  const sinT      = Math.sin(TILT);
 
-  let base = 0;
+  const BULGE = Math.floor(count * 0.22);
+  const ARMS  = Math.floor(count * 0.58);
+  const DISC  = count - BULGE - ARMS;
 
-  // Large round body — slightly wider than tall
-  for (let i = 0; i < BODY; i++) {
-    const [x, y, z] = rndSphere(0, -0.30, -0.06, 1.06);
-    set3(pos, base + i, x * 1.04, y * 0.90, z * 0.94);
+  function applyTilt(x: number, y: number, z: number): [number, number, number] {
+    return [x, y * cosT - z * sinT, y * sinT + z * cosT];
   }
-  base += BODY;
 
-  // Round head — front-center, slightly elevated, merging with body
-  for (let i = 0; i < HEAD; i++) {
-    const [x, y, z] = rndSphere(0, 0.50, 0.10, 0.54);
-    set3(pos, base + i, x, y, z * 0.88);
+  // Central bulge — dense sphere, slightly flattened
+  for (let i = 0; i < BULGE; i++) {
+    const r   = 0.32 * Math.cbrt(Math.random());
+    const phi = Math.acos(2 * Math.random() - 1);
+    const th  = Math.random() * Math.PI * 2;
+    const [x, y, z] = applyTilt(
+      r * Math.sin(phi) * Math.cos(th),
+      r * Math.sin(phi) * Math.sin(th) * 0.35,
+      r * Math.cos(phi)
+    );
+    set3(pos, i, x, y, z);
   }
-  base += HEAD;
 
-  // Left cheek — very prominent outward puff
-  for (let i = 0; i < LCHEEK; i++) {
-    const [x, y, z] = rndSphere(-0.72, 0.08, 0.15, 0.46);
-    set3(pos, base + i, x, y, z * 0.82);
+  // Spiral arms — logarithmic-style, scatter widens with radius
+  for (let i = 0; i < ARMS; i++) {
+    const ii       = BULGE + i;
+    const armPhase = (i % NUM_ARMS) / NUM_ARMS * Math.PI * 2;
+    const t        = Math.pow(Math.random(), 0.65); // bias toward outer arms
+    const angle    = armPhase + t * ARM_TURNS * Math.PI * 2;
+    const r        = 0.18 + t * 1.88;
+
+    // Perpendicular scatter (wider at edges)
+    const scatter  = (0.04 + t * 0.22) * (Math.random() - 0.5) * 2;
+    const px = Math.cos(angle + Math.PI/2) * scatter;
+    const pz = Math.sin(angle + Math.PI/2) * scatter;
+
+    const [x, y, z] = applyTilt(
+      r * Math.cos(angle) + px,
+      (Math.random() - 0.5) * (0.03 + t * 0.10),
+      r * Math.sin(angle) + pz
+    );
+    set3(pos, ii, x, y, z);
   }
-  base += LCHEEK;
 
-  // Right cheek — mirror
-  for (let i = 0; i < RCHEEK; i++) {
-    const [x, y, z] = rndSphere(0.72, 0.08, 0.15, 0.46);
-    set3(pos, base + i, x, y, z * 0.82);
-  }
-  base += RCHEEK;
-
-  // Left ear — small round disc
-  for (let i = 0; i < LEAR; i++) {
-    const [x, y, z] = rndSphere(-0.42, 1.08, 0.02, 0.20);
-    set3(pos, base + i, x, y, z * 0.55);
-  }
-  base += LEAR;
-
-  // Right ear
-  for (let i = 0; i < REAR; i++) {
-    const [x, y, z] = rndSphere(0.42, 1.08, 0.02, 0.20);
-    set3(pos, base + i, x, y, z * 0.55);
-  }
-  base += REAR;
-
-  // Facial details + front paws
-  for (let i = 0; i < DETAIL; i++) {
-    const r = Math.random();
-    let pt: [number, number, number];
-    if      (r < 0.18) pt = rndSphere(  0.00, 0.34, 0.50, 0.07); // nose
-    else if (r < 0.38) pt = rndSphere( -0.22, 0.58, 0.44, 0.06); // left eye
-    else if (r < 0.58) pt = rndSphere(  0.22, 0.58, 0.44, 0.06); // right eye
-    else if (r < 0.79) pt = rndSphere( -0.36,-1.14, 0.34, 0.15); // left paw
-    else               pt = rndSphere(  0.36,-1.14, 0.34, 0.15); // right paw
-    set3(pos, base + i, pt[0], pt[1], pt[2]);
+  // Disc field stars — thin, scattered across full disc
+  for (let i = 0; i < DISC; i++) {
+    const ii = BULGE + ARMS + i;
+    const th = Math.random() * Math.PI * 2;
+    const r  = Math.sqrt(Math.random()) * 2.15;
+    const [x, y, z] = applyTilt(
+      r * Math.cos(th),
+      (Math.random() - 0.5) * 0.09,
+      r * Math.sin(th)
+    );
+    set3(pos, ii, x, y, z);
   }
 }
 
@@ -330,9 +194,9 @@ function fillHamster(pos: Float32Array, count: number) {
 
 export function generateShapePositions(shape: ShapeName, count: number): Float32Array {
   const pos = new Float32Array(count * 3);
-  if      (shape === "sphere")  fillSphere(pos, count);
-  else if (shape === "fish")    fillFish(pos, count);
-  else if (shape === "dragon")  fillDragon(pos, count);
-  else if (shape === "hamster") fillHamster(pos, count);
+  if      (shape === "sphere") fillSphere(pos, count);
+  else if (shape === "torus")  fillTorus(pos, count);
+  else if (shape === "helix")  fillHelix(pos, count);
+  else if (shape === "galaxy") fillGalaxy(pos, count);
   return pos;
 }
