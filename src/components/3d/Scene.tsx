@@ -6,10 +6,12 @@ import { useFrame } from "@react-three/fiber";
 import { AdaptiveDpr, AdaptiveEvents } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import ParticleField from "./ParticleField";
+import type { ShapeName } from "@/lib/shapes";
 
 interface SceneProps {
   mouseX: number;
   mouseY: number;
+  shape: ShapeName;
 }
 
 function CameraRig({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
@@ -21,7 +23,7 @@ function CameraRig({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
   return null;
 }
 
-export default function Scene({ mouseX, mouseY }: SceneProps) {
+export default function Scene({ mouseX, mouseY, shape }: SceneProps) {
   return (
     <Canvas
       dpr={[1, 1.5]}
@@ -38,7 +40,7 @@ export default function Scene({ mouseX, mouseY }: SceneProps) {
 
       <Suspense fallback={null}>
         <CameraRig mouseX={mouseX} mouseY={mouseY} />
-        <ParticleField mouseX={mouseX} mouseY={mouseY} />
+        <ParticleField mouseX={mouseX} mouseY={mouseY} shape={shape} />
 
         <EffectComposer>
           <Bloom

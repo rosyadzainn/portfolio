@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { generateShapePositions, type ShapeName } from "@/lib/shapes";
 
 const WHITE  = "#ffffff";
 const SILVER = "#d0d0d0";
@@ -19,10 +20,13 @@ const DAMPING        = 0.87;
 interface ParticleFieldProps {
   mouseX: number;
   mouseY: number;
+  shape: ShapeName;
 }
 
-export default function ParticleField({ mouseX, mouseY }: ParticleFieldProps) {
+export default function ParticleField({ mouseX, mouseY, shape }: ParticleFieldProps) {
   const groupRef = useRef<THREE.Group>(null);
+  const rotY     = useRef(0);
+  const shapeRef = useRef<ShapeName>("sphere");
 
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
   const mouse2D   = useMemo(() => new THREE.Vector2(), []);
@@ -30,11 +34,13 @@ export default function ParticleField({ mouseX, mouseY }: ParticleFieldProps) {
   const localPt   = useMemo(() => new THREE.Vector3(), []);
   const zeroPlane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), []);
 
-  const { originalPositions, velocities, cloudGeo, starsGeo } = useMemo(() => {
-    const positions         = new Float32Array(COUNT * 3);
-    const originalPositions = new Float32Array(COUNT * 3);
-    const velocities        = new Float32Array(COUNT * 3);
-    const colors            = new Float32Array(COUNT * 3);
+  // Target positions — updated when shape changes, spring physics animates particles toward them
+  const origRef = useRef<Float32Array>(generateShapePositions("sphere", COUNT));
+
+  const { velocities, cloudGeo, starsGeo } = useMemo(() => {
+    const initialPos = origRef.current.slice(); // copy sphere positions
+    const velocities = new Float32Array(COUNT * 3);
+    const colors     = new Float32Array(COUNT * 3);
 
     const white  = new THREE.Color(WHITE);
     const silver = new THREE.Color(SILVER);
@@ -43,58 +49,24 @@ export default function ParticleField({ mouseX, mouseY }: ParticleFieldProps) {
 
     for (let i = 0; i < COUNT; i++) {
       const rnd = Math.random();
-
-      let x: number, y: number, z: number;
       let brightness = 1;
+      if (rnd >= 0.56 && rnd < 0.72) brightness = 1.1;
+      else if (rnd >= 0.72 && rnd < 0.86) brightness = 0.38;
+      else if (rnd >= 0.86) brightness = 0.55;
 
-      if (rnd < 0.56) {
-        const radius = 1.6 + Math.random() * 0.38;
-        const phi    = Math.acos(1 - 2 * (i + 0.5) / COUNT);
-        const theta  = Math.PI * (1 + Math.sqrt(5)) * (i + 0.5) + Math.random() * 0.6;
-        x = radius * Math.sin(phi) * Math.cos(theta);
-        y = radius * Math.sin(phi) * Math.sin(theta);
-        z = radius * Math.cos(phi);
-      } else if (rnd < 0.72) {
-        const radius = 0.4 + Math.random() * 0.8;
-        const phi    = Math.acos(2 * Math.random() - 1);
-        const theta  = Math.random() * Math.PI * 2;
-        x = radius * Math.sin(phi) * Math.cos(theta);
-        y = radius * Math.sin(phi) * Math.sin(theta);
-        z = radius * Math.cos(phi);
-        brightness = 1.1;
-      } else if (rnd < 0.86) {
-        const radius = 2.2 + Math.random() * 0.65;
-        const phi    = Math.acos(2 * Math.random() - 1);
-        const theta  = Math.random() * Math.PI * 2;
-        x = radius * Math.sin(phi) * Math.cos(theta);
-        y = radius * Math.sin(phi) * Math.sin(theta);
-        z = radius * Math.cos(phi);
-        brightness = 0.38;
-      } else {
-        const theta  = Math.random() * Math.PI * 2;
-        const radius = 1.0 + Math.random() * 1.55;
-        x = Math.cos(theta) * radius;
-        y = (Math.random() - 0.5) * 0.14;
-        z = Math.sin(theta) * radius;
-        brightness = 0.55;
-      }
-
-      positions[i*3]   = x; positions[i*3+1]   = y; positions[i*3+2]   = z;
-      originalPositions[i*3] = x; originalPositions[i*3+1] = y; originalPositions[i*3+2] = z;
-
-      // White → silver gradient with depth-based brightness
       tmp.lerpColors(white, silver, Math.pow(Math.random(), 2));
       if (brightness < 1) tmp.multiplyScalar(brightness);
       colors[i*3] = tmp.r; colors[i*3+1] = tmp.g; colors[i*3+2] = tmp.b;
     }
+    void dim;
 
-    const posAttr = new THREE.BufferAttribute(positions, 3);
-    posAttr.usage  = THREE.DynamicDrawUsage;
+    const posAttr = new THREE.BufferAttribute(new Float32Array(initialPos), 3);
+    posAttr.usage = THREE.DynamicDrawUsage;
     const cloudGeo = new THREE.BufferGeometry();
     cloudGeo.setAttribute("position", posAttr);
     cloudGeo.setAttribute("color",    new THREE.BufferAttribute(colors, 3));
 
-    // Star layer — bright white, no physics
+    // Stars layer
     const sPos = new Float32Array(S_COUNT * 3);
     const sCol = new Float32Array(S_COUNT * 3);
     for (let i = 0; i < S_COUNT; i++) {
@@ -111,36 +83,48 @@ export default function ParticleField({ mouseX, mouseY }: ParticleFieldProps) {
     starsGeo.setAttribute("position", new THREE.BufferAttribute(sPos, 3));
     starsGeo.setAttribute("color",    new THREE.BufferAttribute(sCol, 3));
 
-    return { originalPositions, velocities, cloudGeo, starsGeo };
+    return { velocities, cloudGeo, starsGeo };
   }, []);
+
+  // Update target positions when shape changes
+  useEffect(() => {
+    shapeRef.current = shape;
+    const newPos = generateShapePositions(shape, COUNT);
+    origRef.current.set(newPos);
+  }, [shape]);
 
   useFrame(({ clock, camera }) => {
     if (!groupRef.current) return;
     const t = clock.getElapsedTime();
 
-    groupRef.current.rotation.y = t * 0.062;
-    groupRef.current.rotation.x = Math.sin(t * 0.038) * 0.14;
-    const breathe = 1 + Math.sin(t * 0.9) * 0.022;
+    // Rotation: spin freely for sphere, stop for other shapes
+    if (shapeRef.current === "sphere") {
+      rotY.current += 0.00062 * 100 * (1/60); // ~0.062 rad/s
+      groupRef.current.rotation.y = t * 0.062;
+      groupRef.current.rotation.x = Math.sin(t * 0.038) * 0.14;
+    } else {
+      groupRef.current.rotation.y += (0 - groupRef.current.rotation.y) * 0.03;
+      groupRef.current.rotation.x += (0 - groupRef.current.rotation.x) * 0.03;
+    }
+
+    const breathe = 1 + Math.sin(t * 0.9) * 0.018;
     groupRef.current.scale.setScalar(breathe);
 
     mouse2D.set(mouseX, mouseY);
     raycaster.setFromCamera(mouse2D, camera);
     const hit = raycaster.ray.intersectPlane(zeroPlane, worldPt);
-    if (hit) {
-      groupRef.current.worldToLocal(localPt.copy(worldPt));
-    } else {
-      localPt.set(99999, 99999, 99999);
-    }
+    if (hit) groupRef.current.worldToLocal(localPt.copy(worldPt));
+    else     localPt.set(99999, 99999, 99999);
 
     const mx  = localPt.x, my = localPt.y, mz = localPt.z;
     const pa  = cloudGeo.attributes.position;
     const pos = pa.array as Float32Array;
+    const orig = origRef.current;
     const rr  = REPEL_RADIUS * REPEL_RADIUS;
 
     for (let i = 0; i < COUNT; i++) {
       const ix = i * 3, iy = ix + 1, iz = ix + 2;
-      const px = pos[ix],  py = pos[iy],  pz = pos[iz];
-      const ox = originalPositions[ix], oy = originalPositions[iy], oz = originalPositions[iz];
+      const px = pos[ix], py = pos[iy], pz = pos[iz];
 
       const dx = px - mx, dy = py - my, dz = pz - mz;
       const dSq = dx*dx + dy*dy + dz*dz;
@@ -155,9 +139,9 @@ export default function ParticleField({ mouseX, mouseY }: ParticleFieldProps) {
         fz = (dz / d) * f;
       }
 
-      fx += (ox - px) * SPRING;
-      fy += (oy - py) * SPRING;
-      fz += (oz - pz) * SPRING;
+      fx += (orig[ix] - px) * SPRING;
+      fy += (orig[iy] - py) * SPRING;
+      fz += (orig[iz] - pz) * SPRING;
 
       velocities[ix] = (velocities[ix] + fx) * DAMPING;
       velocities[iy] = (velocities[iy] + fy) * DAMPING;
