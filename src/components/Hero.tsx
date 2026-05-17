@@ -91,17 +91,6 @@ export default function Hero() {
         background: "linear-gradient(0deg, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.65) 40%, transparent 100%)",
       }} />
 
-      {/* ── Cinematic framing lines ── */}
-      <motion.div style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: 1, zIndex: 30, pointerEvents: "none",
-        background: "linear-gradient(90deg, transparent 5%, rgba(255,255,255,0.22) 25%, rgba(255,255,255,0.22) 75%, transparent 95%)",
-      }}
-        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.3, duration: 1.4, ease: [0.22, 1, 0.36, 1] }} />
-      <motion.div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0, height: 1, zIndex: 30, pointerEvents: "none",
-        background: "linear-gradient(90deg, transparent 5%, rgba(255,255,255,0.22) 25%, rgba(255,255,255,0.22) 75%, transparent 95%)",
-      }}
-        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.3, duration: 1.4, ease: [0.22, 1, 0.36, 1] }} />
 
 
 {/* ── Main content ── */}
