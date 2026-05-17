@@ -274,26 +274,6 @@ export default function Hero() {
 
       </motion.div>
 
-      {/* ── Scroll indicator: right edge (desktop only) ── */}
-      <motion.div style={{
-        position: "absolute", right: 28, top: "50%", transform: "translateY(-50%)",
-        display: isMobile ? "none" : "flex", flexDirection: "column", alignItems: "center", gap: 10, zIndex: 10,
-      }}
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2, duration: 0.8 }}>
-        <div style={{ width: 1, height: 64, overflow: "hidden", background: "rgba(255,255,255,0.05)" }}>
-          <motion.div
-            style={{ width: "100%", height: "45%", background: "linear-gradient(180deg, rgba(255,255,255,0.5), transparent)" }}
-            animate={{ y: ["0%", "230%"] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
-        <span style={{
-          fontSize: 8, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.38em",
-          color: "rgba(255,255,255,0.15)", writingMode: "vertical-rl" as const,
-        }}>
-          SCROLL
-        </span>
-      </motion.div>
 
     </motion.section>
   );
