@@ -5,10 +5,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import Lenis from "lenis";
 import LoadingScreen from "@/components/LoadingScreen";
 import CustomCursor from "@/components/CustomCursor";
+import CursorTrail from "@/components/CursorTrail";
 import Navigation from "@/components/Navigation";
+import SystemStatus from "@/components/SystemStatus";
+import ThemePicker from "@/components/ThemePicker";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
+import Skills from "@/components/Skills";
 import RealTime3D from "@/components/RealTime3D";
 import Contact from "@/components/Contact";
 
@@ -47,6 +51,8 @@ export default function Home() {
   return (
     <>
       <CustomCursor />
+      <CursorTrail />
+      <ThemePicker />
 
       {/* Easter egg overlay */}
       <AnimatePresence>
@@ -100,10 +106,12 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <Navigation />
+            <SystemStatus />
             <main>
               <Hero />
               <About />
               <Projects />
+              <Skills />
               <RealTime3D />
               <Contact />
             </main>

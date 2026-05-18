@@ -13,6 +13,23 @@ const CAPABILITIES = [
   { icon: "◎", title: "Interactive Experience", desc: "Combining motion, atmosphere, and storytelling into futuristic digital experiences." },
 ];
 
+const EDUCATION = [
+  {
+    period: "2023 — 2025",
+    degree: "Master's Degree",
+    field: "Management Information Systems and Services",
+    school: "BINUS University",
+    gpa: "3.80",
+  },
+  {
+    period: "2018 — 2022",
+    degree: "Bachelor of Applied Science",
+    field: "Multimedia Engineering Technology",
+    school: "Telkom University",
+    gpa: "3.59",
+  },
+];
+
 const JOURNEY = [
   { period: "2021 — 2022", role: "Videographer & Multimedia Support", company: "SEVEN INC JOGJA",       desc: "Produced visual content, motion graphics, and branding-focused multimedia experiences while developing storytelling and creative production workflows." },
   { period: "2025 — PRESENT", role: "Multimedia & IT Specialist",    company: "PT. Pendi Hijau Berkah", desc: "Developing company websites, digital systems, and visual branding materials while supporting modern business operations and multimedia production." },
@@ -47,6 +64,29 @@ function CapabilityCard({ item, index }: { item: (typeof CAPABILITIES)[0]; index
         <div>
           <h3 style={{ margin: "0 0 5px", fontSize: 13, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: W }}>{item.title}</h3>
           <p style={{ margin: 0, fontSize: 12, lineHeight: 1.7, color: "rgba(255,255,255,0.36)" }}>{item.desc}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function EducationCard({ item, index }: { item: (typeof EDUCATION)[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+  return (
+    <motion.div ref={ref} className="gradient-border" style={{ overflow: "hidden" }}
+      initial={{ opacity: 0, y: 18 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: index * 0.12, duration: 0.5 }}
+      whileHover={{ y: -3, transition: { duration: 0.2 } }}>
+      <div style={{ padding: "20px 22px", display: "flex", flexDirection: "column", gap: 10, height: "100%" }}>
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
+          <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.22em", color: "rgba(255,255,255,0.28)" }}>{item.period}</span>
+          <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.16em", padding: "2px 8px", borderRadius: 2, border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.03)", flexShrink: 0 }}>GPA {item.gpa}</span>
+        </div>
+        <div>
+          <span style={{ display: "block", fontSize: 14, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: W, marginBottom: 3 }}>{item.school}</span>
+          <span style={{ display: "block", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>{item.degree}</span>
+          <span style={{ display: "block", fontSize: 10, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.24)", lineHeight: 1.5 }}>{item.field}</span>
         </div>
       </div>
     </motion.div>
@@ -136,6 +176,17 @@ export default function About() {
             <div style={{ display: "flex", flexDirection: "column" }}>
               {JOURNEY.map((item, i) => <JourneyItem key={i} item={item} index={i} isLast={i === JOURNEY.length - 1} />)}
             </div>
+          </div>
+        </div>
+
+        {/* Education */}
+        <div style={{ marginTop: isMobile ? 48 : 72 }}>
+          <motion.p style={{ margin: "0 0 28px", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.28)" }}
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+            EDUCATION
+          </motion.p>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 0 : "0 72px" }}>
+            {EDUCATION.map((item, i) => <EducationCard key={i} item={item} index={i} />)}
           </div>
         </div>
       </div>

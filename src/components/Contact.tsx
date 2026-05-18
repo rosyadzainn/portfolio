@@ -255,7 +255,7 @@ export default function Contact() {
         }}
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
           <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.18)" }}>
-            © 2024 PORTFOLIO — ALL RIGHTS RESERVED
+            © 2026 PORTFOLIO — ALL RIGHTS RESERVED
           </span>
           <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(255,255,255,0.12)" }}>
             BUILT WITH NEXT.JS · THREE.JS · FRAMER MOTION

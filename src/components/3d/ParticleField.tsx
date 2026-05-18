@@ -21,12 +21,14 @@ interface ParticleFieldProps {
   mouseX: number;
   mouseY: number;
   shape: ShapeName;
+  accentColor?: string;
 }
 
-export default function ParticleField({ mouseX, mouseY, shape }: ParticleFieldProps) {
-  const groupRef = useRef<THREE.Group>(null);
-  const rotY     = useRef(0);
-  const shapeRef = useRef<ShapeName>("sphere");
+export default function ParticleField({ mouseX, mouseY, shape, accentColor = "#22c55e" }: ParticleFieldProps) {
+  const groupRef  = useRef<THREE.Group>(null);
+  const rotY      = useRef(0);
+  const shapeRef  = useRef<ShapeName>("sphere");
+  const explodeRef = useRef<THREE.Vector3 | null>(null);
 
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
   const mouse2D   = useMemo(() => new THREE.Vector2(), []);
@@ -138,6 +140,22 @@ export default function ParticleField({ mouseX, mouseY, shape }: ParticleFieldPr
         fz = (dz / d) * f;
       }
 
+      // Click explode
+      if (explodeRef.current) {
+        const ex = px - explodeRef.current.x;
+        const ey = py - explodeRef.current.y;
+        const ez = pz - explodeRef.current.z;
+        const eSq = ex*ex + ey*ey + ez*ez;
+        const EXPLODE_R = 1.8;
+        if (eSq < EXPLODE_R * EXPLODE_R && eSq > 1e-6) {
+          const ed  = Math.sqrt(eSq);
+          const str = (1 - ed / EXPLODE_R) * 0.38;
+          fx += (ex / ed) * str;
+          fy += (ey / ed) * str;
+          fz += (ez / ed) * str;
+        }
+      }
+
       fx += (orig[ix] - px) * SPRING;
       fy += (orig[iy] - py) * SPRING;
       fz += (orig[iz] - pz) * SPRING;
@@ -152,13 +170,25 @@ export default function ParticleField({ mouseX, mouseY, shape }: ParticleFieldPr
     }
 
     pa.needsUpdate = true;
+    // Clear explode after one frame
+    if (explodeRef.current) explodeRef.current = null;
   });
 
   return (
-    <group ref={groupRef}>
+    <group ref={groupRef}
+      onPointerDown={(e) => {
+        if (!groupRef.current) return;
+        const pt = new THREE.Vector3();
+        if (e.ray.intersectPlane(zeroPlane, pt)) {
+          const local = groupRef.current.worldToLocal(pt.clone());
+          explodeRef.current = local;
+        }
+      }}
+    >
       <points geometry={cloudGeo}>
         <pointsMaterial
           size={0.020}
+          color={accentColor}
           vertexColors
           transparent
           opacity={0.94}
@@ -179,6 +209,12 @@ export default function ParticleField({ mouseX, mouseY, shape }: ParticleFieldPr
           blending={THREE.AdditiveBlending}
         />
       </points>
+
+      {/* Invisible plane to catch pointer events */}
+      <mesh>
+        <planeGeometry args={[20, 20]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
 
       <mesh>
         <sphereGeometry args={[0.052, 10, 10]} />

@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import DecryptText from "./DecryptText";
 
 const PROJECTS = [
   {
@@ -24,9 +25,17 @@ const PROJECTS = [
   },
   {
     id: 3, slug: "pendi",
-    title: "PENDI.ID", subtitle: "Company Digital Presence",
+    title: "PENDI GROUP", subtitle: "Holding Company Digital Presence",
     url: "https://www.pendi.id",
-    description: "Corporate website for PT. Pendi Hijau Berkah — clean digital branding, company profile, and modern business presentation.",
+    description: "Digital presence for Pendi Group, a holding company — clean corporate branding, group profile, and modern multi-entity business presentation.",
+    tech: ["WordPress", "Figma"],
+    category: "Web · Corporate", year: "2025", status: "LIVE",
+  },
+  {
+    id: 4, slug: "pendihijau",
+    title: "PENDI HIJAU", subtitle: "Green & Environmental Initiative",
+    url: "https://www.pendihijau.com",
+    description: "A dedicated platform for Pendi Group's green and environmental initiatives — sustainability programs, eco-friendly projects, and corporate responsibility.",
     tech: ["WordPress", "Figma"],
     category: "Web · Corporate", year: "2025", status: "LIVE",
   },
@@ -100,7 +109,9 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
               </span>
             </div>
 
-            <h3 style={{ margin: "0 0 2px", fontFamily: "Exo 2, sans-serif", fontSize: 18, fontWeight: 800, color: "#fff", letterSpacing: "0.04em" }}>{project.title}</h3>
+            <h3 style={{ margin: "0 0 2px", fontFamily: "Exo 2, sans-serif", fontSize: 18, fontWeight: 800, color: "#fff", letterSpacing: "0.04em" }}>
+              <DecryptText text={project.title} trigger={inView} delay={index * 120} />
+            </h3>
             <p style={{ margin: "0 0 3px", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.32)" }}>{project.subtitle}</p>
             <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.18)", letterSpacing: "0.06em", marginBottom: 14, display: "block" }}>
               {project.url.replace("https://www.", "")}
@@ -158,7 +169,7 @@ export default function Projects() {
           </motion.p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 12 : 16, alignItems: "stretch" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 12 : 16, alignItems: "stretch" }}>
           {PROJECTS.map((p, i) => <ProjectCard key={p.id} project={p} index={i} />)}
         </div>
       </div>

@@ -1,19 +1,206 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 const TOOLS = ["UNREAL ENGINE 5", "LUMEN", "NANITE", "MEGASCANS", "METAHUMAN"];
 
+const VIDEOS = [
+  { src: "/videos/Scene Statue Fish Landscape 2.mp4", label: "UNREAL ENGINE 5", env: "ENV_001" },
+  { src: "/videos/bamboo forest.mp4",                 label: "BAMBOO FOREST",   env: "ENV_002" },
+];
+
+const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+
+const btnStyle: React.CSSProperties = {
+  background: "none", border: "none", cursor: "pointer", padding: 0,
+  display: "flex", alignItems: "center", justifyContent: "center",
+  color: "rgba(255,255,255,0.7)", flexShrink: 0,
+};
+
+function VideoFrame({ src, label, env, index }: { src: string; label: string; env: string; index: number }) {
+  const videoRef    = useRef<HTMLVideoElement>(null);
+  const frameRef    = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const inView      = useInView(frameRef, { once: true, margin: "-60px" });
+
+  const [playing,  setPlaying]  = useState(false);
+  const [current,  setCurrent]  = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [muted,    setMuted]    = useState(true);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const onTime    = () => setCurrent(v.currentTime);
+    const onMeta    = () => setDuration(v.duration);
+    const onEnded   = () => { setPlaying(false); setCurrent(0); };
+    v.addEventListener("timeupdate",     onTime);
+    v.addEventListener("loadedmetadata", onMeta);
+    v.addEventListener("ended",          onEnded);
+    const obs = new IntersectionObserver(
+      ([e]) => { if (!e.isIntersecting) { v.pause(); setPlaying(false); } },
+      { threshold: 0.2 }
+    );
+    obs.observe(v);
+    return () => {
+      v.removeEventListener("timeupdate",     onTime);
+      v.removeEventListener("loadedmetadata", onMeta);
+      v.removeEventListener("ended",          onEnded);
+      obs.disconnect();
+    };
+  }, []);
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) { v.play().catch(() => {}); setPlaying(true); }
+    else          { v.pause(); setPlaying(false); }
+  };
+
+  const toggleMute = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setMuted(v.muted);
+  };
+
+  const seek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const v = videoRef.current, bar = progressRef.current;
+    if (!v || !bar || !duration) return;
+    const r = bar.getBoundingClientRect();
+    v.currentTime = ((e.clientX - r.left) / r.width) * duration;
+  };
+
+  const goFullscreen = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (document.fullscreenElement) document.exitFullscreen();
+    else v.requestFullscreen().catch(() => {});
+  };
+
+  const pct = duration > 0 ? (current / duration) * 100 : 0;
+
+  return (
+    <motion.div
+      ref={frameRef}
+      initial={{ opacity: 0, y: 32 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: index * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div style={{
+        position: "relative", width: "100%", aspectRatio: "16/9",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: 8, overflow: "hidden", background: "#000",
+      }}>
+        <video
+          ref={videoRef} src={src} muted loop playsInline preload="auto"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
+        />
+
+        {/* Center play overlay */}
+        <motion.div
+          onClick={togglePlay}
+          style={{ position: "absolute", inset: 0, bottom: 36, zIndex: 3, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}
+          animate={{ opacity: playing ? 0 : 1 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        >
+          <motion.div
+            style={{ width: 52, height: 52, borderRadius: "50%", background: "rgba(0,0,0,0.65)", border: "1px solid rgba(255,255,255,0.22)", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}
+            whileHover={{ scale: 1.1, background: "rgba(255,255,255,0.15)" }}
+            whileTap={{ scale: 0.93 }}
+          >
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+              <path d="M5 3L17 10L5 17V3Z" fill="rgba(255,255,255,0.9)" />
+            </svg>
+          </motion.div>
+        </motion.div>
+
+        {/* Vignette */}
+        <div style={{ position: "absolute", inset: 0, bottom: 36, pointerEvents: "none", background: "radial-gradient(ellipse 85% 70% at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%)" }} />
+
+        {/* Corner brackets */}
+        {[
+          { top: 10, left: 10,  borderTop:    "1px solid rgba(255,255,255,0.28)", borderLeft:  "1px solid rgba(255,255,255,0.28)" },
+          { top: 10, right: 10, borderTop:    "1px solid rgba(255,255,255,0.28)", borderRight: "1px solid rgba(255,255,255,0.28)" },
+          { bottom: 46, left: 10,  borderBottom: "1px solid rgba(255,255,255,0.28)", borderLeft:  "1px solid rgba(255,255,255,0.28)" },
+          { bottom: 46, right: 10, borderBottom: "1px solid rgba(255,255,255,0.28)", borderRight: "1px solid rgba(255,255,255,0.28)" },
+        ].map((s, i) => (
+          <div key={i} style={{ position: "absolute", width: 14, height: 14, zIndex: 2, ...s }} />
+        ))}
+
+        {/* ── Control bar ── */}
+        <div style={{
+          position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 5,
+          height: 36, display: "flex", alignItems: "center", gap: 8,
+          padding: "0 10px",
+          background: "rgba(0,0,0,0.88)",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          backdropFilter: "blur(10px)",
+        }}>
+
+          {/* Play/Pause */}
+          <button onClick={togglePlay} style={btnStyle}>
+            {playing
+              ? <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="1" y="0" width="3" height="10" rx="1" fill="rgba(255,255,255,0.85)"/><rect x="6" y="0" width="3" height="10" rx="1" fill="rgba(255,255,255,0.85)"/></svg>
+              : <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 1L9 5L2 9V1Z" fill="rgba(255,255,255,0.85)"/></svg>
+            }
+          </button>
+
+          {/* Timecode */}
+          <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.55)", letterSpacing: "0.04em", flexShrink: 0, minWidth: 72 }}>
+            {fmt(current)} / {fmt(duration)}
+          </span>
+
+          {/* Progress bar */}
+          <div
+            ref={progressRef}
+            onClick={seek}
+            style={{ flex: 1, height: 3, background: "rgba(255,255,255,0.15)", borderRadius: 2, cursor: "pointer", position: "relative" }}
+          >
+            <div style={{ position: "absolute", left: 0, top: 0, height: "100%", width: `${pct}%`, background: "rgba(255,255,255,0.85)", borderRadius: 2, transition: "width 0.1s linear" }} />
+          </div>
+
+          {/* Volume */}
+          <button onClick={toggleMute} style={btnStyle}>
+            {muted
+              ? <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H2v6h4l5 4V5Z" fill="rgba(255,255,255,0.5)"/><line x1="18" y1="9" x2="23" y2="15" stroke="rgba(255,255,255,0.5)" strokeWidth="2"/><line x1="23" y1="9" x2="18" y2="15" stroke="rgba(255,255,255,0.5)" strokeWidth="2"/></svg>
+              : <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H2v6h4l5 4V5Z" fill="rgba(255,255,255,0.85)"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="rgba(255,255,255,0.85)" strokeWidth="2"/></svg>
+            }
+          </button>
+
+          {/* Fullscreen */}
+          <button onClick={goFullscreen} style={btnStyle}>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2">
+              <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+              <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+            </svg>
+          </button>
+
+          {/* ENV label */}
+          <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.18em", color: "rgba(255,255,255,0.22)", flexShrink: 0 }}>
+            {env}
+          </span>
+        </div>
+
+        {/* Top-left label */}
+        <div style={{ position: "absolute", top: 12, left: 14, zIndex: 2, display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ width: 4, height: 4, borderRadius: "50%", background: "rgba(255,255,255,0.5)", boxShadow: "0 0 5px rgba(255,255,255,0.35)", display: "inline-block" }} />
+          <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", color: "rgba(255,255,255,0.4)" }}>{label}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function RealTime3D() {
   const sectionRef = useRef<HTMLElement>(null);
   const headRef    = useRef<HTMLDivElement>(null);
-  const frameRef   = useRef<HTMLDivElement>(null);
-  const headInView  = useInView(headRef,  { once: true, margin: "-80px" });
-  const frameInView = useInView(frameRef, { once: true, margin: "-60px" });
-  const isMobile    = useIsMobile();
+  const headInView = useInView(headRef, { once: true, margin: "-80px" });
+  const isMobile   = useIsMobile();
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], [-40, 40]);
@@ -47,7 +234,7 @@ export default function RealTime3D() {
           >
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
             <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
-              03 / ENVIRONMENTS
+              04 / ENVIRONMENTS
             </span>
           </motion.div>
 
@@ -70,76 +257,18 @@ export default function RealTime3D() {
           </motion.p>
         </div>
 
-        {/* ── Cinematic viewport frame ── */}
-        <motion.div
-          ref={frameRef}
-          style={{ position: "relative" }}
-          initial={{ opacity: 0, y: 32 }}
-          animate={frameInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {/* Outer frame */}
-          <div style={{
-            position: "relative", width: "100%", aspectRatio: "16/7",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: 8, overflow: "hidden",
-            background: "#000",
-          }}>
-            {/* Video */}
-            <video
-              src="/videos/Scene Statue Fish Landscape 2.mp4"
-              autoPlay muted loop playsInline
-              style={{
-                position: "absolute", inset: 0,
-                width: "100%", height: "100%",
-                objectFit: "cover", objectPosition: "center",
-              }}
-            />
-
-            {/* Subtle dark vignette over video */}
-            <div style={{
-              position: "absolute", inset: 0, pointerEvents: "none",
-              background: "radial-gradient(ellipse 85% 70% at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%)",
-            }} />
-
-            {/* Bottom gradient fade */}
-            <div style={{
-              position: "absolute", bottom: 0, left: 0, right: 0, height: 80, pointerEvents: "none",
-              background: "linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%)",
-            }} />
-
-            {/* Corner brackets */}
-            {[
-              { top: 12, left: 12, borderTop: "1px solid rgba(255,255,255,0.3)", borderLeft: "1px solid rgba(255,255,255,0.3)" },
-              { top: 12, right: 12, borderTop: "1px solid rgba(255,255,255,0.3)", borderRight: "1px solid rgba(255,255,255,0.3)" },
-              { bottom: 12, left: 12, borderBottom: "1px solid rgba(255,255,255,0.3)", borderLeft: "1px solid rgba(255,255,255,0.3)" },
-              { bottom: 12, right: 12, borderBottom: "1px solid rgba(255,255,255,0.3)", borderRight: "1px solid rgba(255,255,255,0.3)" },
-            ].map((s, i) => (
-              <div key={i} style={{ position: "absolute", width: 20, height: 20, zIndex: 2, ...s }} />
-            ))}
-
-            {/* Bottom-left label */}
-            <div style={{ position: "absolute", bottom: 16, left: 20, zIndex: 2, display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(255,255,255,0.6)", boxShadow: "0 0 6px rgba(255,255,255,0.4)", display: "inline-block" }} />
-              <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.22em", color: "rgba(255,255,255,0.45)" }}>
-                UNREAL ENGINE 5
-              </span>
-            </div>
-
-            {/* Bottom-right label */}
-            <div style={{ position: "absolute", bottom: 16, right: 20, zIndex: 2 }}>
-              <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.22em", color: "rgba(255,255,255,0.25)" }}>
-                ENV_001
-              </span>
-            </div>
-          </div>
-        </motion.div>
+        {/* ── Video grid ── */}
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 16 : 20 }}>
+          {VIDEOS.map((v, i) => (
+            <VideoFrame key={v.env} src={v.src} label={v.label} env={v.env} index={i} />
+          ))}
+        </div>
 
         {/* ── Tool tags ── */}
         <motion.div
           style={{ marginTop: 24, display: "flex", gap: 8, flexWrap: "wrap" }}
-          initial={{ opacity: 0 }} animate={frameInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.5 }}
         >
           {TOOLS.map((t) => (
             <span key={t} style={{

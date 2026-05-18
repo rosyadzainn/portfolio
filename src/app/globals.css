@@ -7,8 +7,7 @@
   --bg-2:      #0a0a0a;
   --bg-3:      #111111;
   --accent:    #ffffff;
-  --accent-dim: rgba(255,255,255,0.55);
-  --accent-glow: rgba(255,255,255,0.18);
+  --accent-glow: rgba(255,255,255,0.45);
   --white:     #ffffff;
   --white-60:  rgba(255,255,255,0.6);
   --white-30:  rgba(255,255,255,0.3);
@@ -71,7 +70,7 @@ body {
   z-index: 1;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,0.005) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
   background-size: 80px 80px;
 }

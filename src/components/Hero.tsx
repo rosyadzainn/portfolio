@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useMousePosition } from "@/hooks/useMousePosition";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import type { ShapeName } from "@/lib/shapes";
+import { useAccentColor } from "@/hooks/useAccentColor";
 
 const Scene = dynamic(() => import("./3d/Scene"), {
   ssr: false,
@@ -57,28 +57,20 @@ const HEADLINE = [
   { text: "ZAIN.",   color: "rgba(255,255,255,0.55)", delay: 0.78 },
 ];
 
-const SHAPES: { id: ShapeName; label: string; icon: string }[] = [
-  { id: "sphere", label: "SPHERE", icon: "○" },
-  { id: "torus",  label: "TORUS",  icon: "◎" },
-  { id: "helix",  label: "HELIX",  icon: "∿" },
-  { id: "galaxy", label: "GALAXY", icon: "✦" },
-];
-
 export default function Hero() {
   const mouse = useMousePosition();
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 520], [1, 0]);
   const isMobile = useIsMobile();
-  const [shape, setShape] = useState<ShapeName>("sphere");
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { color: accentColor, glow: accentGlow } = useAccentColor();
   const go = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <motion.section style={{ position: "relative", height: "100vh", overflow: "hidden", opacity }}>
+    <motion.section id="hero" style={{ position: "relative", height: "100vh", overflow: "hidden", opacity }}>
 
       {/* ── Full-screen 3D ── */}
       <div style={{ position: "absolute", inset: 0 }}>
-        <Scene mouseX={mouse.normalizedX} mouseY={mouse.normalizedY} shape={shape} />
+        <Scene mouseX={mouse.normalizedX} mouseY={mouse.normalizedY} shape="sphere" accentColor={accentColor} />
       </div>
 
       {/* ── Gradient overlays ── */}
@@ -115,7 +107,7 @@ export default function Hero() {
           }}>
             <span style={{
               display: "inline-block", width: 5, height: 5, borderRadius: "50%",
-              background: "#22c55e", boxShadow: "0 0 8px #22c55e",
+              background: accentColor, boxShadow: `0 0 8px ${accentGlow}`,
               animation: "pulse-glow 2s ease-in-out infinite",
             }} />
             <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.3em", color: "rgba(255,255,255,0.55)" }}>
@@ -158,6 +150,46 @@ export default function Hero() {
         </motion.div>
       </div>
 
+      {/* ── Scroll indicator ── */}
+      {!isMobile && (
+        <motion.div
+          style={{
+            position: "absolute", right: 36, top: "50%", zIndex: 10,
+            display: "flex", flexDirection: "column", alignItems: "center", gap: 12,
+            transform: "translateY(-50%)",
+          }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ delay: 2.0, duration: 0.8 }}>
+
+          {/* Animated line */}
+          <div style={{ position: "relative", width: 1, height: 80, overflow: "hidden" }}>
+            {/* Track */}
+            <div style={{
+              position: "absolute", inset: 0,
+              background: "rgba(255,255,255,0.08)",
+            }} />
+            {/* Travelling light */}
+            <motion.div
+              style={{
+                position: "absolute", left: 0, right: 0,
+                height: 32,
+                background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.7) 50%, transparent 100%)",
+              }}
+              animate={{ y: [-32, 80] }}
+              transition={{ duration: 1.6, ease: "linear", repeat: Infinity, repeatDelay: 0.4 }}
+            />
+          </div>
+
+          <span style={{
+            fontSize: 8, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700,
+            letterSpacing: "0.28em", color: "rgba(255,255,255,0.25)",
+            writingMode: "vertical-rl", textOrientation: "mixed",
+          }}>
+            SCROLL
+          </span>
+        </motion.div>
+      )}
+
       {/* ── Bottom bar ── */}
       <motion.div style={{
         position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 10,
@@ -177,100 +209,6 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* Shape selector */}
-        {!isMobile && (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
-            <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.2)" }}>
-              PARTICLE FORM
-            </span>
-            <div style={{ display: "flex", gap: 5 }}>
-              {SHAPES.map((s) => {
-                const active = shape === s.id;
-                return (
-                  <motion.button
-                    key={s.id}
-                    onClick={() => setShape(s.id)}
-                    style={{
-                      display: "flex", alignItems: "center", gap: 5,
-                      padding: "4px 10px", borderRadius: 3,
-                      fontFamily: "Space Grotesk, sans-serif", fontSize: 8,
-                      fontWeight: 700, letterSpacing: "0.18em",
-                      border: active ? "1px solid rgba(255,255,255,0.45)" : "1px solid rgba(255,255,255,0.10)",
-                      background: active ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.02)",
-                      color: active ? "#fff" : "rgba(255,255,255,0.32)",
-                      cursor: "pointer",
-                    }}
-                    whileHover={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)" }}
-                    whileTap={{ scale: 0.94 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <span style={{ fontSize: 10, lineHeight: 1 }}>{s.icon}</span>
-                    {s.label}
-                    {active && (
-                      <motion.span
-                        layoutId="shape-indicator"
-                        style={{
-                          position: "absolute", inset: 0, borderRadius: 3,
-                          border: "1px solid rgba(255,255,255,0.45)",
-                          pointerEvents: "none",
-                        }}
-                      />
-                    )}
-                  </motion.button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Mobile: floating shape button */}
-        {isMobile && (
-          <div style={{ position: "relative" }}>
-            <motion.button
-              onClick={() => setMenuOpen(v => !v)}
-              style={{
-                padding: "5px 12px", borderRadius: 3,
-                fontFamily: "Space Grotesk, sans-serif", fontSize: 8,
-                fontWeight: 700, letterSpacing: "0.18em",
-                border: "1px solid rgba(255,255,255,0.18)",
-                background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.55)",
-                cursor: "pointer",
-              }}
-              whileTap={{ scale: 0.94 }}
-            >
-              {SHAPES.find(s => s.id === shape)?.icon} FORM
-            </motion.button>
-            <AnimatePresence>
-              {menuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }}
-                  style={{
-                    position: "absolute", bottom: "calc(100% + 8px)", right: 0,
-                    display: "flex", flexDirection: "column", gap: 4,
-                    background: "rgba(0,0,0,0.88)", border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: 6, padding: 8, backdropFilter: "blur(12px)",
-                  }}
-                >
-                  {SHAPES.map(s => (
-                    <button key={s.id} onClick={() => { setShape(s.id); setMenuOpen(false); }}
-                      style={{
-                        display: "flex", alignItems: "center", gap: 8,
-                        padding: "5px 12px", borderRadius: 3, whiteSpace: "nowrap",
-                        fontFamily: "Space Grotesk, sans-serif", fontSize: 9,
-                        fontWeight: 700, letterSpacing: "0.16em",
-                        border: shape === s.id ? "1px solid rgba(255,255,255,0.35)" : "1px solid transparent",
-                        background: shape === s.id ? "rgba(255,255,255,0.08)" : "transparent",
-                        color: shape === s.id ? "#fff" : "rgba(255,255,255,0.45)",
-                        cursor: "pointer",
-                      }}>
-                      <span>{s.icon}</span>{s.label}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        )}
 
       </motion.div>
 

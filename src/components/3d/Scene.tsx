@@ -12,6 +12,7 @@ interface SceneProps {
   mouseX: number;
   mouseY: number;
   shape: ShapeName;
+  accentColor?: string;
 }
 
 function CameraRig({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
@@ -23,7 +24,7 @@ function CameraRig({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
   return null;
 }
 
-export default function Scene({ mouseX, mouseY, shape }: SceneProps) {
+export default function Scene({ mouseX, mouseY, shape, accentColor = "#22c55e" }: SceneProps) {
   return (
     <Canvas
       dpr={[1, 1.5]}
@@ -40,7 +41,7 @@ export default function Scene({ mouseX, mouseY, shape }: SceneProps) {
 
       <Suspense fallback={null}>
         <CameraRig mouseX={mouseX} mouseY={mouseY} />
-        <ParticleField mouseX={mouseX} mouseY={mouseY} shape={shape} />
+        <ParticleField mouseX={mouseX} mouseY={mouseY} shape={shape} accentColor={accentColor} />
 
         <EffectComposer>
           <Bloom
