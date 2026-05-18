@@ -82,7 +82,7 @@ export default function OGImage() {
             ))}
           </div>
           <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em" }}>
-            portfolio-pearl-three-12.vercel.app
+            rosyadzain.com
           </span>
         </div>
       </div>
