@@ -29,6 +29,20 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Rosyad Zain",
+  url: "https://rosyadzain.com",
+  image: "https://rosyadzain.com/opengraph-image",
+  jobTitle: "Creative Developer & Real-Time 3D Artist",
+  description: "Creative developer specializing in modern web experiences, Next.js applications, and cinematic real-time 3D environments using Unreal Engine 5.",
+  knowsAbout: ["Next.js", "React", "TypeScript", "Unreal Engine 5", "3D Art", "UI/UX Design", "Web Development"],
+  sameAs: ["https://github.com/rosyadzainn"],
+  worksFor: { "@type": "Organization", name: "Freelance" },
+  address: { "@type": "PostalAddress", addressCountry: "ID" },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -39,6 +53,10 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body>
         <div className="noise-overlay" />
