@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rosyadzain.vercel.app"),
+  metadataBase: new URL("https://portfolio-pearl-three-12.vercel.app"),
   title: {
     default: "Rosyad Zain — Creative Developer & Real-Time 3D Artist",
     template: "%s | Rosyad Zain",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: "Rosyad Zain — Creative Developer & Real-Time 3D Artist",
     description: "Creative developer building modern web experiences and cinematic real-time 3D environments with Unreal Engine 5.",
     type: "website",
-    url: "https://rosyadzain.vercel.app",
+    url: "https://portfolio-pearl-three-12.vercel.app",
     siteName: "Rosyad Zain Portfolio",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Rosyad Zain Portfolio" }],
   },
