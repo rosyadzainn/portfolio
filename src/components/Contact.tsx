@@ -54,8 +54,10 @@ export default function Contact() {
   const headInView = useInView(headRef, { once: true, margin: "-80px" });
   const mountTime  = useRef(Date.now());
   const isMobile   = useIsMobile();
-  const [sent, setSent]       = useState(false);
-  const [blocked, setBlocked] = useState(false);
+  const [sent, setSent]         = useState(false);
+  const [blocked, setBlocked]   = useState(false);
+  const [loading, setLoading]   = useState(false);
+  const [error, setError]       = useState(false);
 
   const checkRateLimit = () => {
     const KEY = "cf_submissions";
@@ -69,34 +71,45 @@ export default function Contact() {
     return true;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
 
-    // 1. Honeypot — bots fill hidden field, humans don't
     if (fd.get("website")) return;
-
-    // 2. Time gate — must spend ≥5s on the form
     if (Date.now() - mountTime.current < 5000) return;
-
-    // 3. Rate limit — max 2 per hour
     if (!checkRateLimit()) {
       setBlocked(true);
       setTimeout(() => setBlocked(false), 6000);
       return;
     }
 
-    const name    = fd.get("name")    as string;
-    const email   = fd.get("email")   as string;
-    const subject = fd.get("subject") as string;
-    const message = fd.get("message") as string;
-
-    const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-    window.open(
-      `mailto:zainvon@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    );
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          honeypot: fd.get("website"),
+          name:     fd.get("name"),
+          email:    fd.get("email"),
+          subject:  fd.get("subject"),
+          message:  fd.get("message"),
+        }),
+      });
+      if (res.ok) {
+        setSent(true);
+        setTimeout(() => setSent(false), 5000);
+      } else {
+        setError(true);
+        setTimeout(() => setError(false), 5000);
+      }
+    } catch {
+      setError(true);
+      setTimeout(() => setError(false), 5000);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -113,7 +126,7 @@ export default function Contact() {
           <motion.div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 12 }}
             initial={{ opacity: 0, y: 16 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4))" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.35)" }}>04 / CONTACT</span>
+            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.35)" }}>05 / CONTACT</span>
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.4), transparent)" }} />
           </motion.div>
           <motion.h2 style={{ margin: 0, fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
@@ -221,25 +234,33 @@ export default function Contact() {
                   <Field label="SUBJECT" name="subject" placeholder="Project brief" />
                   <Field label="MESSAGE" name="message" placeholder="Describe your vision..." multi />
 
-                  <motion.button type="submit"
+                  <motion.button type="submit" disabled={loading}
                     style={{
                       position: "relative", marginTop: 4, padding: "14px 0", borderRadius: 6, overflow: "hidden",
                       fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: "0.2em",
-                      background: "#fff", border: "1px solid rgba(255,255,255,0.9)", color: "#000", width: "100%",
+                      background: loading ? "rgba(255,255,255,0.7)" : "#fff",
+                      border: "1px solid rgba(255,255,255,0.9)", color: "#000", width: "100%",
+                      cursor: loading ? "not-allowed" : "pointer",
                     }}
-                    whileHover={{ boxShadow: "0 0 28px rgba(255,255,255,0.3)" }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={loading ? {} : { boxShadow: "0 0 28px rgba(255,255,255,0.3)" }}
+                    whileTap={loading ? {} : { scale: 0.98 }}
                     data-hover="true">
-                    <span className="shimmer" style={{ position: "absolute", inset: 0 }} />
-                    <span style={{ position: "relative", zIndex: 1 }}>SEND TRANSMISSION</span>
+                    {!loading && <span className="shimmer" style={{ position: "absolute", inset: 0 }} />}
+                    <span style={{ position: "relative", zIndex: 1 }}>
+                      {loading ? "SENDING..." : "SEND TRANSMISSION"}
+                    </span>
                   </motion.button>
 
                   {blocked && (
-                    <motion.p
-                      initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
-                      style={{ margin: 0, textAlign: "center", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(239,68,68,0.75)" }}
-                    >
+                    <motion.p initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+                      style={{ margin: 0, textAlign: "center", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(239,68,68,0.75)" }}>
                       Too many submissions. Please wait before trying again.
+                    </motion.p>
+                  )}
+                  {error && (
+                    <motion.p initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+                      style={{ margin: 0, textAlign: "center", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(239,68,68,0.75)" }}>
+                      Failed to send. Please try again or email directly.
                     </motion.p>
                   )}
                 </form>
@@ -255,11 +276,16 @@ export default function Contact() {
         }}
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
           <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.18)" }}>
-            © 2026 PORTFOLIO — ALL RIGHTS RESERVED
+            © 2026 ROSYAD ZAIN — ALL RIGHTS RESERVED
           </span>
-          <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(255,255,255,0.12)" }}>
-            BUILT WITH NEXT.JS · THREE.JS · FRAMER MOTION
-          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+            <a href="/cv" style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.22)", textDecoration: "none" }} data-hover="true">
+              CURRICULUM VITAE
+            </a>
+            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(255,255,255,0.1)" }}>
+              NEXT.JS · THREE.JS · FRAMER MOTION
+            </span>
+          </div>
         </motion.div>
       </div>
     </section>
