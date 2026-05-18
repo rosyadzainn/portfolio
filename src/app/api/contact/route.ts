@@ -1,11 +1,12 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: NextRequest) {
   try {
     const { name, email, subject, message, honeypot } = await req.json();
+
+    if (!process.env.RESEND_API_KEY)
+      return NextResponse.json({ error: "Email service not configured" }, { status: 503 });
 
     if (honeypot) return NextResponse.json({ error: "Bot detected" }, { status: 400 });
 
@@ -18,6 +19,7 @@ export async function POST(req: NextRequest) {
     if (message.trim().length < 10)
       return NextResponse.json({ error: "Message too short" }, { status: 400 });
 
+    const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
       from: "Portfolio <contact@rosyadzain.com>",
       to:   "zainvon@gmail.com",
