@@ -33,9 +33,9 @@ const PROJECTS = [
   },
   {
     id: 4, slug: "pendihijau",
-    title: "PENDI HIJAU", subtitle: "Green & Environmental Initiative",
+    title: "PENDI HIJAU", subtitle: "Health Distribution Company",
     url: "https://www.pendihijau.com",
-    description: "A dedicated platform for Pendi Group's green and environmental initiatives — sustainability programs, eco-friendly projects, and corporate responsibility.",
+    description: "Digital presence for PT. Pendi Hijau Berkah — a precision health distribution company, showcasing products, partnerships, and corporate profile.",
     tech: ["WordPress", "Figma"],
     category: "Web · Corporate", year: "2025", status: "LIVE",
   },
