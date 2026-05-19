@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import GlobalUI from "@/components/GlobalUI";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -67,6 +68,7 @@ export default function RootLayout({
           position: "fixed", inset: 0, zIndex: 2, pointerEvents: "none",
           background: "radial-gradient(ellipse 75% 60% at 50% 44%, transparent 25%, rgba(0,0,0,0.6) 100%)",
         }} />
+        <GlobalUI />
         {children}
         <Analytics />
       </body>

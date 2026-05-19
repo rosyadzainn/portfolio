@@ -4,8 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Lenis from "lenis";
 import LoadingScreen from "@/components/LoadingScreen";
-import CustomCursor from "@/components/CustomCursor";
-import CursorTrail from "@/components/CursorTrail";
 import Navigation from "@/components/Navigation";
 import SystemStatus from "@/components/SystemStatus";
 import ThemePicker from "@/components/ThemePicker";
@@ -52,8 +50,6 @@ export default function Home() {
 
   return (
     <LanguageProvider>
-      <CustomCursor />
-      <CursorTrail />
       <ThemePicker />
 
       {/* Easter egg overlay */}
