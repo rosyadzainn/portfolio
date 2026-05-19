@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useLanguage } from "@/context/LanguageContext";
 
 const TOOLS = ["UNREAL ENGINE 5", "LUMEN", "NANITE", "MEGASCANS", "METAHUMAN"];
 
@@ -202,6 +203,7 @@ export default function RealTime3D() {
   const headInView = useInView(headRef, { once: true, margin: "-80px" });
   const isMobile   = useIsMobile();
 
+  const { t } = useLanguage();
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], [-40, 40]);
 
@@ -234,7 +236,7 @@ export default function RealTime3D() {
           >
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
             <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
-              04 / ENVIRONMENTS
+              04 / {t.env.label}
             </span>
           </motion.div>
 
@@ -243,9 +245,9 @@ export default function RealTime3D() {
             initial={{ opacity: 0, y: 22 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.12, duration: 0.6 }}
           >
-            <span style={{ color: "#fff" }}>Real-Time</span>
+            <span style={{ color: "#fff" }}>{t.env.h1}</span>
             <br />
-            <span style={{ color: "rgba(255,255,255,0.4)" }}>Worlds</span>
+            <span style={{ color: "rgba(255,255,255,0.4)" }}>{t.env.h2}</span>
           </motion.h2>
 
           <motion.p
@@ -253,7 +255,7 @@ export default function RealTime3D() {
             initial={{ opacity: 0, y: 14 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.22, duration: 0.55 }}
           >
-            Exploring cinematic real-time environments and immersive world-building using Unreal Engine 5 — bridging the gap between game development and interactive storytelling.
+            {t.env.sub}
           </motion.p>
         </div>
 

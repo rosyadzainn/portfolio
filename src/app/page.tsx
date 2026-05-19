@@ -15,6 +15,7 @@ import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import RealTime3D from "@/components/RealTime3D";
 import Contact from "@/components/Contact";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export default function Home() {
   const [loading, setLoading]     = useState(true);
@@ -49,7 +50,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <LanguageProvider>
       <CustomCursor />
       <CursorTrail />
       <ThemePicker />
@@ -118,6 +119,6 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </LanguageProvider>
   );
 }

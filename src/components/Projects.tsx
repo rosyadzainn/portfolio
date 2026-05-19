@@ -4,38 +4,35 @@ import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useLanguage } from "@/context/LanguageContext";
 import DecryptText from "./DecryptText";
 
-const PROJECTS = [
+const PROJECTS_META = [
   {
     id: 1, slug: "islametra",
-    title: "ISLAMETRA", subtitle: "Islamic Digital Platform",
+    title: "ISLAMETRA",
     url: "https://www.islametra.com",
-    description: "A modern Islamic platform delivering curated content, digital resources, and a refined reading experience for a Muslim audience.",
     tech: ["Next.js", "React", "Tailwind CSS", "CMS"],
     category: "Web · Platform", year: "2025", status: "LIVE",
   },
   {
     id: 2, slug: "zainogen",
-    title: "ZAINOGEN", subtitle: "Invoice Generator",
+    title: "ZAINOGEN",
     url: "https://www.zainogen.com",
-    description: "A clean and efficient web application for generating professional invoices — fast, minimal, and built for modern workflows.",
     tech: ["Next.js", "React", "TypeScript"],
     category: "Web · Tool", year: "2025", status: "LIVE",
   },
   {
     id: 3, slug: "pendi",
-    title: "PENDI GROUP", subtitle: "Holding Company Digital Presence",
+    title: "PENDI GROUP",
     url: "https://www.pendi.id",
-    description: "Digital presence for Pendi Group, a holding company — clean corporate branding, group profile, and modern multi-entity business presentation.",
     tech: ["WordPress", "Figma"],
     category: "Web · Corporate", year: "2025", status: "LIVE",
   },
   {
     id: 4, slug: "pendihijau",
-    title: "PENDI HIJAU", subtitle: "Health Distribution Company",
+    title: "PENDI HIJAU",
     url: "https://www.pendihijau.com",
-    description: "Digital presence for PT. Pendi Hijau Berkah — a precision health distribution company, showcasing products, partnerships, and corporate profile.",
     tech: ["WordPress", "Figma"],
     category: "Web · Corporate", year: "2025", status: "LIVE",
   },
@@ -45,7 +42,9 @@ function screenshotFallback(url: string) {
   return `https://s0.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=1200&h=900`;
 }
 
-function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index: number }) {
+type ProjectItem = (typeof PROJECTS_META)[0] & { subtitle: string; description: string };
+
+function ProjectCard({ project, index, visitLabel }: { project: ProjectItem; index: number; visitLabel: string }) {
   const [hov, setHov]         = useState(false);
   const [mouse, setMouse]     = useState({ x: 0.5, y: 0.5 });
   const [imgSrc, setImgSrc]   = useState(`/images/projects/${project.slug}.jpg`);
@@ -119,8 +118,8 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
             <p style={{ margin: "0 0 16px", fontSize: 12, lineHeight: 1.7, flex: 1, color: "rgba(255,255,255,0.36)" }}>{project.description}</p>
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-              {project.tech.map((t) => (
-                <span key={t} style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", padding: "2px 8px", borderRadius: 2, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.3)" }}>{t}</span>
+              {project.tech.map((tech) => (
+                <span key={tech} style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", padding: "2px 8px", borderRadius: 2, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.3)" }}>{tech}</span>
               ))}
             </div>
 
@@ -128,7 +127,7 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
               {hov && (
                 <motion.div style={{ marginTop: 14 }} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }} transition={{ duration: 0.16 }}>
                   <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.2em", color: "rgba(255,255,255,0.6)", display: "flex", alignItems: "center", gap: 7 }}>
-                    VISIT SITE
+                    {visitLabel}
                     <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}>→</motion.span>
                   </span>
                 </motion.div>
@@ -145,6 +144,13 @@ export default function Projects() {
   const headRef    = useRef<HTMLDivElement>(null);
   const headInView = useInView(headRef, { once: true, margin: "-80px" });
   const isMobile   = useIsMobile();
+  const { t }      = useLanguage();
+
+  const projects = PROJECTS_META.map((p, i) => ({
+    ...p,
+    subtitle: t.projects.items[i].subtitle,
+    description: t.projects.items[i].desc,
+  }));
 
   return (
     <section id="projects" style={{ position: "relative", paddingTop: isMobile ? 80 : 112, paddingBottom: isMobile ? 80 : 112, overflow: "hidden" }}>
@@ -156,21 +162,21 @@ export default function Projects() {
           <motion.div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}
             initial={{ opacity: 0, x: -20 }} animate={headInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.5 }}>
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>02 / PROJECTS</span>
+            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>02 / {t.projects.label}</span>
           </motion.div>
           <motion.h2 style={{ margin: "0 0 12px", fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
             initial={{ opacity: 0, y: 22 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.15, duration: 0.6 }}>
-            <span style={{ color: "#fff" }}>Selected</span><br />
-            <span style={{ color: "rgba(255,255,255,0.4)" }}>Works</span>
+            <span style={{ color: "#fff" }}>{t.projects.h1}</span><br />
+            <span style={{ color: "rgba(255,255,255,0.4)" }}>{t.projects.h2}</span>
           </motion.h2>
           <motion.p style={{ margin: 0, fontSize: 13, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.28)" }}
             initial={{ opacity: 0 }} animate={headInView ? { opacity: 1 } : {}} transition={{ delay: 0.3, duration: 0.5 }}>
-            A focused selection of live websites built for real clients.
+            {t.projects.sub}
           </motion.p>
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 12 : 16, alignItems: "stretch" }}>
-          {PROJECTS.map((p, i) => <ProjectCard key={p.id} project={p} index={i} />)}
+          {projects.map((p, i) => <ProjectCard key={p.id} project={p} index={i} visitLabel={t.projects.visit} />)}
         </div>
       </div>
     </section>

@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useMousePosition } from "@/hooks/useMousePosition";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useAccentColor } from "@/hooks/useAccentColor";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Scene = dynamic(() => import("./3d/Scene"), {
   ssr: false,
@@ -63,6 +64,7 @@ export default function Hero() {
   const opacity = useTransform(scrollY, [0, 520], [1, 0]);
   const isMobile = useIsMobile();
   const { color: accentColor, glow: accentGlow } = useAccentColor();
+  const { t } = useLanguage();
   const go = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
@@ -111,7 +113,7 @@ export default function Hero() {
               animation: "pulse-glow 2s ease-in-out infinite",
             }} />
             <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.3em", color: "rgba(255,255,255,0.55)" }}>
-              AVAILABLE FOR WORK
+              {t.hero.badge}
             </span>
           </div>
         </motion.div>
@@ -137,7 +139,7 @@ export default function Hero() {
           transition={{ delay: 1.28, duration: 0.7 }}>
           <div style={{ height: 1, width: 28, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)", flexShrink: 0 }} />
           <span style={{ fontSize: 11, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.32)", letterSpacing: "0.07em" }}>
-            Creative Developer · Real-Time 3D Artist
+            {t.hero.subtitle}
           </span>
         </motion.div>
 
@@ -145,8 +147,8 @@ export default function Hero() {
         <motion.div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.45, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}>
-          <MagBtn onClick={() => go("#projects")} primary>View Projects</MagBtn>
-          {!isMobile && <MagBtn onClick={() => go("#about")}>Enter Experience</MagBtn>}
+          <MagBtn onClick={() => go("#projects")} primary>{t.hero.cta1}</MagBtn>
+          {!isMobile && <MagBtn onClick={() => go("#about")}>{t.hero.cta2}</MagBtn>}
         </motion.div>
       </div>
 
@@ -185,7 +187,7 @@ export default function Hero() {
             letterSpacing: "0.28em", color: "rgba(255,255,255,0.25)",
             writingMode: "vertical-rl", textOrientation: "mixed",
           }}>
-            SCROLL
+            {t.hero.scroll}
           </span>
         </motion.div>
       )}
@@ -201,7 +203,7 @@ export default function Hero() {
 
         {/* Stats */}
         <div style={{ display: "flex", gap: 52 }}>
-          {[["3+", "YEARS XP"], ["∞", "IDEAS"]].map(([v, l]) => (
+          {[["3+", t.hero.stat1], ["∞", t.hero.stat2]].map(([v, l]) => (
             <div key={l} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               <span style={{ fontSize: 22, fontFamily: "Exo 2, sans-serif", fontWeight: 800, color: "#fff", lineHeight: 1 }}>{v}</span>
               <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.22)", letterSpacing: "0.24em" }}>{l}</span>

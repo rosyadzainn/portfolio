@@ -4,37 +4,22 @@ import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useLanguage } from "@/context/LanguageContext";
 
 const W = "#fff";
 
-const CAPABILITIES = [
-  { icon: "⬡", title: "Web Development",       desc: "Building modern interactive websites using Next.js, React, and immersive frontend systems." },
-  { icon: "◈", title: "Real-Time 3D",           desc: "Creating cinematic environments and immersive worlds using Unreal Engine." },
-  { icon: "◎", title: "Interactive Experience", desc: "Combining motion, atmosphere, and storytelling into futuristic digital experiences." },
+const CAPABILITY_ICONS = ["⬡", "◈", "◎"];
+
+const JOURNEY_META = [
+  { period: "2021 — 2022",    company: "SEVEN INC JOGJA"        },
+  { period: "2025 — PRESENT", company: "PT. Pendi Hijau Berkah"  },
+  { period: "2025 — PRESENT", company: "MBBiotek"                },
+  { period: "2025 — PRESENT", company: null                       },
 ];
 
-const EDUCATION = [
-  {
-    period: "2023 — 2025",
-    degree: "Master's Degree",
-    field: "Management Information Systems and Services",
-    school: "BINUS University",
-    gpa: "3.80",
-  },
-  {
-    period: "2018 — 2022",
-    degree: "Bachelor of Applied Science",
-    field: "Multimedia Engineering Technology",
-    school: "Telkom University",
-    gpa: "3.59",
-  },
-];
-
-const JOURNEY = [
-  { period: "2021 — 2022", role: "Videographer & Multimedia Support", company: "SEVEN INC JOGJA",       desc: "Produced visual content, motion graphics, and branding-focused multimedia experiences while developing storytelling and creative production workflows." },
-  { period: "2025 — PRESENT", role: "Multimedia & IT Specialist",    company: "PT. Pendi Hijau Berkah", desc: "Developing company websites, digital systems, and visual branding materials while supporting modern business operations and multimedia production." },
-  { period: "2025 — PRESENT", role: "Multimedia & IT Specialist",    company: "MBBiotek",               desc: "Handling multimedia production, digital branding, visual communication, and creative assets for healthcare-related products and campaigns." },
-  { period: "2025 — PRESENT", role: "Real-Time 3D Exploration",      company: null,                     desc: "Expanding into cinematic 3D environments and immersive world-building using Unreal Engine workflows." },
+const EDUCATION_META = [
+  { period: "2023 — 2025", school: "BINUS University", gpa: "3.80" },
+  { period: "2018 — 2022", school: "Telkom University", gpa: "3.59" },
 ];
 
 function SectionLabel({ number, label }: { number: string; label: string }) {
@@ -51,7 +36,7 @@ function SectionLabel({ number, label }: { number: string; label: string }) {
   );
 }
 
-function CapabilityCard({ item, index }: { item: (typeof CAPABILITIES)[0]; index: number }) {
+function CapabilityCard({ item, index }: { item: { icon: string; title: string; desc: string }; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   return (
@@ -70,7 +55,7 @@ function CapabilityCard({ item, index }: { item: (typeof CAPABILITIES)[0]; index
   );
 }
 
-function EducationCard({ item, index }: { item: (typeof EDUCATION)[0]; index: number }) {
+function EducationCard({ item, index }: { item: { period: string; degree: string; field: string; school: string; gpa: string }; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   return (
@@ -93,7 +78,7 @@ function EducationCard({ item, index }: { item: (typeof EDUCATION)[0]; index: nu
   );
 }
 
-function JourneyItem({ item, index, isLast }: { item: (typeof JOURNEY)[0]; index: number; isLast: boolean }) {
+function JourneyItem({ item, index, isLast }: { item: { period: string; role: string; company: string | null; desc: string }; index: number; isLast: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-30px" });
   return (
@@ -120,8 +105,13 @@ function JourneyItem({ item, index, isLast }: { item: (typeof JOURNEY)[0]; index
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
   const isMobile   = useIsMobile();
+  const { t }      = useLanguage();
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+
+  const capabilities = CAPABILITY_ICONS.map((icon, i) => ({ icon, ...t.about.caps[i] }));
+  const journey      = JOURNEY_META.map((meta, i) => ({ ...meta, ...t.about.journey[i] }));
+  const education    = EDUCATION_META.map((meta, i) => ({ ...meta, ...t.about.edu[i] }));
 
   return (
     <section id="about" ref={sectionRef} style={{ position: "relative", paddingTop: isMobile ? 80 : 120, paddingBottom: isMobile ? 80 : 120, overflow: "hidden" }}>
@@ -130,12 +120,12 @@ export default function About() {
 
       <div style={{ ...container, position: "relative", zIndex: 10 }}>
         <div style={{ marginBottom: isMobile ? 40 : 64 }}>
-          <SectionLabel number="01" label="ABOUT" />
+          <SectionLabel number="01" label={t.about.label} />
           <motion.h2 style={{ margin: 0, fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(1.8rem, 4vw, 3.1rem)", lineHeight: 1.08 }}
             initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1, duration: 0.6 }}>
-            <span style={{ color: W }}>The Mind</span>
+            <span style={{ color: W }}>{t.about.h1}</span>
             <br />
-            <span style={{ color: "rgba(255,255,255,0.38)" }}>Behind the Work</span>
+            <span style={{ color: "rgba(255,255,255,0.38)" }}>{t.about.h2}</span>
           </motion.h2>
         </div>
 
@@ -146,23 +136,23 @@ export default function About() {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.6 }}
               style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <p style={{ margin: 0, fontSize: 15, lineHeight: 1.85, color: "rgba(255,255,255,0.58)" }}>
-                I&apos;m <strong style={{ color: W, fontWeight: 600 }}>Rosyad Zain</strong>, a creative developer focused on modern web experiences and cinematic real-time 3D environments.
+                {t.about.p1}
               </p>
               <p style={{ margin: 0, fontSize: 13, lineHeight: 1.85, color: "rgba(255,255,255,0.36)" }}>
-                I build immersive digital products using modern frontend technologies and Unreal Engine — creating interactive worlds that blend technology, atmosphere, and storytelling.
+                {t.about.p2}
               </p>
               <p style={{ margin: 0, fontSize: 13, lineHeight: 1.85, color: "rgba(255,255,255,0.24)" }}>
-                From futuristic interfaces to cinematic environments, every project is crafted with a balance of aesthetics, performance, and experience.
+                {t.about.p3}
               </p>
             </motion.div>
 
             <div>
               <motion.p style={{ margin: "0 0 14px", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.28)" }}
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-                CAPABILITIES
+                {t.about.cap_label}
               </motion.p>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {CAPABILITIES.map((c, i) => <CapabilityCard key={c.title} item={c} index={i} />)}
+                {capabilities.map((c, i) => <CapabilityCard key={i} item={c} index={i} />)}
               </div>
             </div>
           </div>
@@ -171,10 +161,10 @@ export default function About() {
           <div>
             <motion.p style={{ margin: "0 0 28px", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.28)" }}
               initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              DIGITAL JOURNEY
+              {t.about.journey_label}
             </motion.p>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              {JOURNEY.map((item, i) => <JourneyItem key={i} item={item} index={i} isLast={i === JOURNEY.length - 1} />)}
+              {journey.map((item, i) => <JourneyItem key={i} item={item} index={i} isLast={i === journey.length - 1} />)}
             </div>
           </div>
         </div>
@@ -183,10 +173,10 @@ export default function About() {
         <div style={{ marginTop: isMobile ? 48 : 72 }}>
           <motion.p style={{ margin: "0 0 28px", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.28)" }}
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-            EDUCATION
+            {t.about.edu_label}
           </motion.p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 0 : "0 72px" }}>
-            {EDUCATION.map((item, i) => <EducationCard key={i} item={item} index={i} />)}
+            {education.map((item, i) => <EducationCard key={i} item={item} index={i} />)}
           </div>
         </div>
       </div>

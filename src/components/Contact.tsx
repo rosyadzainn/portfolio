@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useLanguage } from "@/context/LanguageContext";
 
 const SOCIALS = [
   { label: "GITHUB",   icon: "⌥", href: "https://github.com/rosyadzainn" },
@@ -54,6 +55,7 @@ export default function Contact() {
   const headInView = useInView(headRef, { once: true, margin: "-80px" });
   const mountTime  = useRef(Date.now());
   const isMobile   = useIsMobile();
+  const { t }      = useLanguage();
   const [sent, setSent]         = useState(false);
   const [blocked, setBlocked]   = useState(false);
   const [loading, setLoading]   = useState(false);
@@ -61,11 +63,11 @@ export default function Contact() {
 
   const checkRateLimit = () => {
     const KEY = "cf_submissions";
-    const WINDOW = 60 * 60 * 1000; // 1 hour
+    const WINDOW = 60 * 60 * 1000;
     const MAX = 2;
     const now = Date.now();
     const stored: number[] = JSON.parse(localStorage.getItem(KEY) ?? "[]");
-    const recent = stored.filter(t => now - t < WINDOW);
+    const recent = stored.filter(ts => now - ts < WINDOW);
     if (recent.length >= MAX) return false;
     localStorage.setItem(KEY, JSON.stringify([...recent, now]));
     return true;
@@ -126,18 +128,18 @@ export default function Contact() {
           <motion.div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 12 }}
             initial={{ opacity: 0, y: 16 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4))" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.35)" }}>05 / CONTACT</span>
+            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.35)" }}>05 / {t.contact.label}</span>
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.4), transparent)" }} />
           </motion.div>
           <motion.h2 style={{ margin: 0, fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
             initial={{ opacity: 0, y: 22 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.15, duration: 0.6 }}>
-            <span style={{ color: "#fff" }}>Let&apos;s Build</span>
+            <span style={{ color: "#fff" }}>{t.contact.h1}</span>
             <br />
-            <span style={{ color: "rgba(255,255,255,0.5)" }}>Something Extraordinary</span>
+            <span style={{ color: "rgba(255,255,255,0.5)" }}>{t.contact.h2}</span>
           </motion.h2>
           <motion.p style={{ margin: "16px auto 0", fontSize: 13, fontFamily: "Space Grotesk, sans-serif", maxWidth: 380, lineHeight: 1.7, color: "rgba(255,255,255,0.38)" }}
             initial={{ opacity: 0 }} animate={headInView ? { opacity: 1 } : {}} transition={{ delay: 0.3, duration: 0.5 }}>
-            Have a vision for the future? Let&apos;s make it real.
+            {t.contact.tagline}
           </motion.p>
         </div>
 
@@ -151,22 +153,22 @@ export default function Contact() {
             transition={{ duration: 0.65 }}>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", marginBottom: 2, color: "rgba(255,255,255,0.35)" }}>TRANSMISSION</span>
+              <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", marginBottom: 2, color: "rgba(255,255,255,0.35)" }}>{t.contact.transmission}</span>
               <a href="mailto:zainvon@gmail.com" style={{ fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.75)", textDecoration: "none" }} data-hover="true">
                 zainvon@gmail.com
               </a>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", marginBottom: 2, color: "rgba(255,255,255,0.35)" }}>COORDINATES</span>
+              <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", marginBottom: 2, color: "rgba(255,255,255,0.35)" }}>{t.contact.coords}</span>
               <span style={{ fontSize: 13, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.45)", lineHeight: 1.7 }}>
-                Indonesia<br />
-                <span style={{ color: "rgba(255,255,255,0.28)", fontSize: 12 }}>Remote-first · Open to relocation</span>
+                {t.contact.location}<br />
+                <span style={{ color: "rgba(255,255,255,0.28)", fontSize: 12 }}>{t.contact.locationSub}</span>
               </span>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", marginBottom: 4, color: "rgba(255,255,255,0.35)" }}>NETWORK NODES</span>
+              <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", marginBottom: 4, color: "rgba(255,255,255,0.35)" }}>{t.contact.network}</span>
               {SOCIALS.map((s, i) => (
                 <motion.a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
                   style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}
@@ -190,8 +192,8 @@ export default function Contact() {
                 background: "#22c55e", boxShadow: "0 0 7px #22c55e", animation: "pulse-glow 2s ease-in-out infinite",
               }} />
               <div>
-                <p style={{ margin: 0, fontSize: 11, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "rgba(34,197,94,0.85)" }}>AVAILABLE FOR NEW PROJECTS</p>
-                <p style={{ margin: "2px 0 0", fontSize: 10, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.28)" }}>Response time &lt; 24 hours</p>
+                <p style={{ margin: 0, fontSize: 11, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "rgba(34,197,94,0.85)" }}>{t.contact.available}</p>
+                <p style={{ margin: "2px 0 0", fontSize: 10, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.28)" }}>{t.contact.response}</p>
               </div>
             </div>
           </motion.div>
@@ -205,7 +207,7 @@ export default function Contact() {
             <div style={{ padding: 28, borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff", boxShadow: "0 0 6px rgba(255,255,255,0.5)" }} />
-                <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", color: "rgba(255,255,255,0.35)" }}>INITIATE TRANSMISSION</span>
+                <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", color: "rgba(255,255,255,0.35)" }}>{t.contact.initiate}</span>
               </div>
 
               {sent ? (
@@ -217,22 +219,21 @@ export default function Contact() {
                   }}>
                     <span style={{ color: "#22c55e", fontSize: 22 }}>✓</span>
                   </div>
-                  <p style={{ margin: 0, fontSize: 12, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(34,197,94,0.8)" }}>TRANSMISSION RECEIVED</p>
-                  <p style={{ margin: 0, fontSize: 11, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.35)" }}>I&apos;ll be in touch within 24 hours.</p>
+                  <p style={{ margin: 0, fontSize: 12, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(34,197,94,0.8)" }}>{t.contact.ok_title}</p>
+                  <p style={{ margin: 0, fontSize: 11, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.35)" }}>{t.contact.ok_sub}</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                  {/* Honeypot — visually hidden, traps bots */}
                   <div style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }} aria-hidden>
                     <input name="website" type="text" tabIndex={-1} autoComplete="off" />
                   </div>
 
                   <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
-                    <Field label="NAME"  name="name"  placeholder="Your name" />
-                    <Field label="EMAIL" name="email" type="email" placeholder="your@email.com" />
+                    <Field label={t.contact.name_l}  name="name"  placeholder={t.contact.name_ph} />
+                    <Field label={t.contact.email_l} name="email" type="email" placeholder="your@email.com" />
                   </div>
-                  <Field label="SUBJECT" name="subject" placeholder="Project brief" />
-                  <Field label="MESSAGE" name="message" placeholder="Describe your vision..." multi />
+                  <Field label={t.contact.subject_l} name="subject" placeholder={t.contact.subject_ph} />
+                  <Field label={t.contact.message_l} name="message" placeholder={t.contact.message_ph} multi />
 
                   <motion.button type="submit" disabled={loading}
                     style={{
@@ -247,20 +248,20 @@ export default function Contact() {
                     data-hover="true">
                     {!loading && <span className="shimmer" style={{ position: "absolute", inset: 0 }} />}
                     <span style={{ position: "relative", zIndex: 1 }}>
-                      {loading ? "SENDING..." : "SEND TRANSMISSION"}
+                      {loading ? t.contact.sending : t.contact.send}
                     </span>
                   </motion.button>
 
                   {blocked && (
                     <motion.p initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
                       style={{ margin: 0, textAlign: "center", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(239,68,68,0.75)" }}>
-                      Too many submissions. Please wait before trying again.
+                      {t.contact.err_rate}
                     </motion.p>
                   )}
                   {error && (
                     <motion.p initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
                       style={{ margin: 0, textAlign: "center", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(239,68,68,0.75)" }}>
-                      Failed to send. Please try again or email directly.
+                      {t.contact.err_send}
                     </motion.p>
                   )}
                 </form>
@@ -276,14 +277,14 @@ export default function Contact() {
         }}
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
           <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.18)" }}>
-            © 2026 ROSYAD ZAIN — ALL RIGHTS RESERVED
+            {t.contact.footer_rights}
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
             <a href="/cv" style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.22)", textDecoration: "none" }} data-hover="true">
-              CURRICULUM VITAE
+              {t.contact.cv}
             </a>
             <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(255,255,255,0.1)" }}>
-              NEXT.JS · THREE.JS · FRAMER MOTION
+              {t.contact.footer_built}
             </span>
           </div>
         </motion.div>

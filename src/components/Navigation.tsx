@@ -4,12 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
-
-const NAV_ITEMS = [
-  { label: "About",    href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills",   href: "#skills" },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 const W = "#fff";
 
@@ -17,6 +12,13 @@ export default function Navigation() {
   const { scrollY } = useScroll();
   const bg = useTransform(scrollY, [0, 80], [0, 1]);
   const isMobile = useIsMobile();
+  const { lang, setLang, t } = useLanguage();
+
+  const NAV_ITEMS = [
+    { label: t.nav.about,    href: "#about" },
+    { label: t.nav.projects, href: "#projects" },
+    { label: t.nav.skills,   href: "#skills" },
+  ];
 
   const go = (href: string) =>
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
@@ -64,10 +66,35 @@ export default function Navigation() {
         </button>
 
         {/* Links */}
-        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 12 : 28 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 24 }}>
           {!isMobile && NAV_ITEMS.map((item, i) => (
-            <NavLink key={item.label} label={item.label} onClick={() => go(item.href)} delay={i * 0.07} />
+            <NavLink key={item.href} label={item.label} onClick={() => go(item.href)} delay={i * 0.07} />
           ))}
+
+          {/* Language toggle */}
+          <div style={{ display: "flex", alignItems: "center", gap: 1, border: "1px solid rgba(255,255,255,0.12)", borderRadius: 4, overflow: "hidden" }}>
+            {(["en", "id"] as const).map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                data-hover="true"
+                style={{
+                  padding: isMobile ? "5px 8px" : "5px 10px",
+                  fontSize: 9,
+                  fontFamily: "Space Grotesk, sans-serif",
+                  fontWeight: 700,
+                  letterSpacing: "0.16em",
+                  background: lang === l ? "rgba(255,255,255,0.12)" : "none",
+                  border: "none",
+                  color: lang === l ? "#fff" : "rgba(255,255,255,0.38)",
+                  cursor: "pointer",
+                  transition: "background 0.2s, color 0.2s",
+                }}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </div>
 
           <motion.button
             onClick={() => go("#contact")}
@@ -90,7 +117,7 @@ export default function Navigation() {
               initial="initial"
               transition={{ duration: 0.25 }}
             />
-            <span style={{ position: "relative", zIndex: 1 }}>CONTACT</span>
+            <span style={{ position: "relative", zIndex: 1 }}>{t.nav.contact}</span>
           </motion.button>
         </div>
       </div>
