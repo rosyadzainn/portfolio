@@ -18,6 +18,7 @@ export default function Navigation() {
     { label: t.nav.about,    href: "#about" },
     { label: t.nav.projects, href: "#projects" },
     { label: t.nav.skills,   href: "#skills" },
+    { label: t.nav.process,  href: "#services" },
   ];
 
   const go = (href: string) =>

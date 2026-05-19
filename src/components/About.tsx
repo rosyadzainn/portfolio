@@ -175,7 +175,7 @@ export default function About() {
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
             {t.about.edu_label}
           </motion.p>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 0 : "0 72px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : "0 72px" }}>
             {education.map((item, i) => <EducationCard key={i} item={item} index={i} />)}
           </div>
         </div>

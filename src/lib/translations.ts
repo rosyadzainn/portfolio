@@ -2,11 +2,11 @@ export type Lang = "en" | "id";
 
 const en = {
   nav: {
-    about: "About", projects: "Projects", skills: "Skills", contact: "CONTACT",
+    about: "About", projects: "Projects", skills: "Skills", process: "Process", contact: "CONTACT",
   },
   hero: {
     badge: "AVAILABLE FOR WORK",
-    subtitle: "Creative Developer · Real-Time 3D Artist",
+    subtitle: "Creative Director · Real-Time 3D · Modern Web",
     cta1: "View Projects", cta2: "Enter Experience",
     scroll: "SCROLL",
   },
@@ -84,11 +84,11 @@ const en = {
 
 const id: typeof en = {
   nav: {
-    about: "Tentang", projects: "Proyek", skills: "Keahlian", contact: "KONTAK",
+    about: "Tentang", projects: "Proyek", skills: "Keahlian", process: "Proses", contact: "KONTAK",
   },
   hero: {
     badge: "TERSEDIA UNTUK PROYEK",
-    subtitle: "Creative Developer · Seniman 3D Real-Time",
+    subtitle: "Creative Director · Real-Time 3D · Web Modern",
     cta1: "Lihat Proyek", cta2: "Mulai Jelajah",
     scroll: "GULIR",
   },

@@ -3,22 +3,43 @@
 import { motion } from "framer-motion";
 
 const EDUCATION = [
-  { school: "BINUS University",   degree: "Master's — Management Information Systems", period: "2023 – 2025", gpa: "3.80" },
-  { school: "Telkom University",  degree: "BASc — Multimedia Engineering Technology",  period: "2018 – 2022", gpa: "3.59" },
+  { school: "BINUS University",  degree: "Master's — Management Information Systems & Services", period: "2023 – 2025", gpa: "3.80" },
+  { school: "Telkom University", degree: "BASc — Multimedia Engineering Technology",              period: "2018 – 2022", gpa: "3.59" },
+];
+
+const EXPERIENCE = [
+  {
+    role: "Creative Lead & Multimedia Director",
+    company: "PT. Pendi Hijau Berkah",
+    period: "2025 — Present",
+    desc: "Leading creative direction and multimedia production — brand identity, website, and corporate visual systems for a precision health distribution company.",
+  },
+  {
+    role: "Creative Director & Multimedia Lead",
+    company: "MBBiotek (Contract)",
+    period: "2025 — 2026",
+    desc: "Directed website development and brand identity for a medical device manufacturer — multimedia production and medical industry packaging design.",
+  },
+  {
+    role: "Videographer & Multimedia Support",
+    company: "Seven Inc Jogja",
+    period: "2021 — 2022",
+    desc: "Produced visual content for a formal clothing brand — developing storytelling and creative production workflows.",
+  },
 ];
 
 const SKILLS = [
-  { label: "Web Development",    items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js"] },
-  { label: "3D & Real-Time",     items: ["Unreal Engine 5", "Lumen", "Nanite", "Megascans", "MetaHuman"] },
-  { label: "Design & Creative",  items: ["Figma", "Adobe Photoshop", "Illustrator", "Motion Design"] },
-  { label: "Tools & Platforms",  items: ["Git", "GitHub", "Vercel", "WordPress"] },
+  { label: "DESIGN & DIRECTION",  items: ["Figma", "Design Systems", "UI/UX Design", "Brand Identity", "Creative Direction"] },
+  { label: "REAL-TIME 3D",        items: ["Unreal Engine 5", "Lumen", "Nanite", "Megascans", "MetaHuman", "Environment Art"] },
+  { label: "MULTIMEDIA & VISUAL", items: ["Adobe Photoshop", "Illustrator", "Premiere Pro", "After Effects", "Motion Graphics"] },
+  { label: "MODERN WORKFLOW",     items: ["AI-Augmented Development", "Figma-to-Code", "WordPress", "Vercel", "Project Direction"] },
 ];
 
 const PROJECTS = [
-  { title: "ISLAMETRA",    url: "islametra.com",    desc: "Modern Islamic digital platform — curated content & reading experience.",   tech: ["Next.js", "React", "Tailwind CSS"] },
-  { title: "ZAINOGEN",     url: "zainogen.com",     desc: "Clean web app for generating professional invoices, fast and minimal.",      tech: ["Next.js", "TypeScript"] },
-  { title: "PENDI GROUP",  url: "pendi.id",         desc: "Corporate digital presence for Pendi Group holding company.",               tech: ["WordPress", "Figma"] },
-  { title: "PENDI HIJAU",  url: "pendihijau.com",   desc: "Platform for PT. Pendi Hijau Berkah — health distribution company.",       tech: ["WordPress", "Figma"] },
+  { title: "ISLAMETRA",   url: "islametra.com",  desc: "Modern Islamic digital platform — curated content & refined reading experience.",    tech: ["Next.js", "React", "Tailwind CSS"] },
+  { title: "ZAINOGEN",    url: "zainogen.com",   desc: "Clean web app for generating professional invoices — fast, minimal, modern.",         tech: ["Next.js", "TypeScript"] },
+  { title: "PENDI GROUP", url: "pendi.id",       desc: "Corporate digital presence for Pendi Group holding company.",                         tech: ["WordPress", "Figma"] },
+  { title: "PENDI HIJAU", url: "pendihijau.com", desc: "Digital presence for PT. Pendi Hijau Berkah — health distribution company.",         tech: ["WordPress", "Figma"] },
 ];
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
@@ -62,18 +83,18 @@ export default function CV() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          style={{ maxWidth: 820, margin: "0 auto", padding: "100px 40px 80px" }}
+          style={{ maxWidth: 820, margin: "0 auto", padding: "100px clamp(20px, 5vw, 40px) 80px" }}
         >
           {/* Header */}
           <div style={{ marginBottom: 52, paddingBottom: 40, borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
             <p className="cv-label" style={{ fontSize: 10, letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)", marginBottom: 10 }}>
-              CREATIVE DEVELOPER · REAL-TIME 3D ARTIST
+              CREATIVE DIRECTOR · REAL-TIME 3D · MODERN WEB
             </p>
             <h1 style={{ margin: "0 0 4px", fontFamily: "Exo 2, sans-serif", fontWeight: 900, fontSize: "clamp(2.5rem, 6vw, 4rem)", letterSpacing: "0.02em", lineHeight: 1 }}>
               ROSYAD ZAIN
             </h1>
             <p className="cv-muted" style={{ margin: "16px 0 0", fontSize: 13, lineHeight: 1.8, color: "rgba(255,255,255,0.45)", maxWidth: 560 }}>
-              Creative developer specializing in modern web experiences and cinematic real-time 3D environments. Bridging the gap between engineering, design, and interactive storytelling.
+              I design and direct cinematic web experiences — bridging premium visual design, real-time 3D, and modern AI-augmented development workflows. I help founders, agencies, and brands deliver digital experiences that don&apos;t just inform — they leave an impression.
             </p>
             <div style={{ marginTop: 24, display: "flex", flexWrap: "wrap", gap: 20 }}>
               {[
@@ -94,6 +115,24 @@ export default function CV() {
             </div>
           </div>
 
+          {/* Experience */}
+          <Section title="EXPERIENCE">
+            <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+              {EXPERIENCE.map((e) => (
+                <div key={e.company} style={{ display: "grid", gridTemplateColumns: "minmax(120px, 160px) 1fr", gap: 16, alignItems: "start" }}>
+                  <div>
+                    <p className="cv-muted" style={{ margin: "0 0 2px", fontSize: 10, letterSpacing: "0.12em", color: "rgba(255,255,255,0.35)" }}>{e.period}</p>
+                    <p style={{ margin: 0, fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.5)", letterSpacing: "0.06em" }}>{e.company}</p>
+                  </div>
+                  <div>
+                    <p style={{ margin: "0 0 6px", fontSize: 13, fontWeight: 600, color: "#fff" }}>{e.role}</p>
+                    <p className="cv-muted" style={{ margin: 0, fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{e.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Section>
+
           {/* Education */}
           <Section title="EDUCATION">
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -113,8 +152,8 @@ export default function CV() {
           </Section>
 
           {/* Skills */}
-          <Section title="TECHNICAL SKILLS">
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px 32px" }}>
+          <Section title="SKILLS & TOOLS">
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px 32px" }}>
               {SKILLS.map((g) => (
                 <div key={g.label}>
                   <p className="cv-label" style={{ margin: "0 0 8px", fontSize: 9, letterSpacing: "0.2em", color: "rgba(255,255,255,0.28)" }}>{g.label}</p>
@@ -132,7 +171,7 @@ export default function CV() {
           <Section title="SELECTED PROJECTS">
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               {PROJECTS.map((p) => (
-                <div key={p.title} style={{ display: "grid", gridTemplateColumns: "160px 1fr", gap: 16, alignItems: "start" }}>
+                <div key={p.title} style={{ display: "grid", gridTemplateColumns: "minmax(120px, 160px) 1fr", gap: 16, alignItems: "start" }}>
                   <div>
                     <p style={{ margin: "0 0 2px", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", color: "#fff" }}>{p.title}</p>
                     <a href={`https://${p.url}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", textDecoration: "none" }}>{p.url}</a>
