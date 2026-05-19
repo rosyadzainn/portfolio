@@ -13,28 +13,28 @@ const PROJECTS_META = [
     title: "ISLAMETRA",
     url: "https://www.islametra.com",
     tech: ["Next.js", "React", "Tailwind CSS", "CMS"],
-    category: "Web · Platform", year: "2025", status: "LIVE",
+    category: "Web · Platform", year: "2025", status: "LIVE", type: "PERSONAL PROJECT",
   },
   {
     id: 2, slug: "zainogen",
     title: "ZAINOGEN",
     url: "https://www.zainogen.com",
     tech: ["Next.js", "React", "TypeScript"],
-    category: "Web · Tool", year: "2025", status: "LIVE",
+    category: "Web · Tool", year: "2025", status: "LIVE", type: "PERSONAL PROJECT",
   },
   {
     id: 3, slug: "pendi",
     title: "PENDI GROUP",
     url: "https://www.pendi.id",
     tech: ["WordPress", "Figma"],
-    category: "Web · Corporate", year: "2025", status: "LIVE",
+    category: "Web · Corporate", year: "2025", status: "LIVE", type: "CLIENT WORK",
   },
   {
     id: 4, slug: "pendihijau",
     title: "PENDI HIJAU",
     url: "https://www.pendihijau.com",
     tech: ["WordPress", "Figma"],
-    category: "Web · Corporate", year: "2025", status: "LIVE",
+    category: "Web · Corporate", year: "2025", status: "LIVE", type: "CLIENT WORK",
   },
 ];
 
@@ -42,7 +42,7 @@ function screenshotFallback(url: string) {
   return `https://s0.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=1200&h=900`;
 }
 
-type ProjectItem = (typeof PROJECTS_META)[0] & { subtitle: string; description: string };
+type ProjectItem = (typeof PROJECTS_META)[0] & { subtitle: string; description: string; };
 
 function ProjectCard({ project, index, visitLabel }: { project: ProjectItem; index: number; visitLabel: string }) {
   const [hov, setHov]         = useState(false);
@@ -103,9 +103,14 @@ function ProjectCard({ project, index, visitLabel }: { project: ProjectItem; ind
                 <span style={{ display: "block", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.22em", marginBottom: 2, color: "rgba(255,255,255,0.28)" }}>{project.category}</span>
                 <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.18)" }}>{project.year}</span>
               </div>
-              <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.2em", padding: "2px 8px", borderRadius: 3, border: "1px solid rgba(255,255,255,0.14)", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)" }}>
-                {project.status}
-              </span>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5 }}>
+                <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.2em", padding: "2px 8px", borderRadius: 3, border: "1px solid rgba(255,255,255,0.14)", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)" }}>
+                  {project.status}
+                </span>
+                <span style={{ fontSize: 7.5, fontFamily: "Space Grotesk, sans-serif", fontWeight: 500, letterSpacing: "0.16em", padding: "2px 8px", borderRadius: 3, border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.22)", background: "none" }}>
+                  {project.type}
+                </span>
+              </div>
             </div>
 
             <h3 style={{ margin: "0 0 2px", fontFamily: "Exo 2, sans-serif", fontSize: 18, fontWeight: 800, color: "#fff", letterSpacing: "0.04em" }}>

@@ -8,7 +8,7 @@ const en = {
     badge: "AVAILABLE FOR WORK",
     subtitle: "Creative Developer · Real-Time 3D Artist",
     cta1: "View Projects", cta2: "Enter Experience",
-    stat1: "YEARS XP", stat2: "IDEAS", scroll: "SCROLL",
+    scroll: "SCROLL",
   },
   about: {
     label: "ABOUT", h1: "The Mind", h2: "Behind the Work",
@@ -34,7 +34,7 @@ const en = {
   },
   projects: {
     label: "PROJECTS", h1: "Selected", h2: "Works",
-    sub: "A focused selection of live websites built for real clients.",
+    sub: "A focused selection of recent projects — design-led, delivery-focused.",
     visit: "VISIT SITE",
     items: [
       { subtitle: "Islamic Digital Platform",          desc: "A modern Islamic platform delivering curated content, digital resources, and a refined reading experience for a Muslim audience." },
@@ -45,8 +45,33 @@ const en = {
   },
   skills: {
     label: "SKILLS", h1: "Technical", h2: "Arsenal",
-    sub: "A curated set of tools and technologies across web development, real-time 3D, and creative design.",
-    groups: ["WEB DEVELOPMENT", "3D & REAL-TIME", "DESIGN & CREATIVE", "TOOLS & PLATFORMS"],
+    sub: "A curated set of tools and disciplines across design, real-time 3D, multimedia production, and modern creative workflow.",
+    groups: ["DESIGN & DIRECTION", "REAL-TIME 3D", "MULTIMEDIA & VISUAL", "MODERN WORKFLOW"],
+  },
+  services: {
+    label: "SERVICES", h1: "What I", h2: "Offer",
+    sub: "End-to-end digital experiences — from concept to deployment.",
+    starting: "Starting at", timeline_label: "Timeline",
+    cta: "Tell me about your project",
+    cta_sub: "Custom packages available for ongoing partnerships and retainers.",
+    items: [
+      {
+        title: "CINEMATIC LANDING PAGE", price: "$1,500 / Rp 12M", timeline: "2–3 weeks", tag: "",
+        features: ["Custom Figma design", "1 page premium landing", "Smooth animations & micro-interactions", "Mobile responsive", "Domain & deployment setup", "1 round of revisions"],
+      },
+      {
+        title: "PREMIUM BRAND WEBSITE", price: "$3,000 / Rp 25M", timeline: "4–6 weeks", tag: "",
+        features: ["3–5 page custom website", "Full design system", "CMS integration available", "Motion design", "SEO-ready", "2 rounds of revisions"],
+      },
+      {
+        title: "CINEMATIC EXPERIENCE + 3D", price: "$5,000 / Rp 40M", timeline: "6–10 weeks", tag: "SIGNATURE OFFER",
+        features: ["Premium landing or microsite", "Custom Unreal Engine 5 3D environment", "Scroll-driven cinematic experience", "Motion design", "Premium typography", "3 rounds of revisions"],
+      },
+      {
+        title: "CREATIVE DIRECTION", price: "$2,500 / Rp 20M", timeline: "4–8 weeks", tag: "",
+        features: ["Brand & design system (Figma)", "Creative direction", "Project management", "Vendor coordination", "QA & delivery oversight"],
+      },
+    ],
   },
   env: {
     label: "ENVIRONMENTS", h1: "Real-Time", h2: "Worlds",
@@ -78,7 +103,7 @@ const id: typeof en = {
     badge: "TERSEDIA UNTUK PROYEK",
     subtitle: "Creative Developer · Seniman 3D Real-Time",
     cta1: "Lihat Proyek", cta2: "Mulai Jelajah",
-    stat1: "TH PENGALAMAN", stat2: "IDE", scroll: "GULIR",
+    scroll: "GULIR",
   },
   about: {
     label: "TENTANG", h1: "Pikiran di Balik", h2: "Karya Ini",
@@ -104,7 +129,7 @@ const id: typeof en = {
   },
   projects: {
     label: "PROYEK", h1: "Karya", h2: "Pilihan",
-    sub: "Seleksi website live yang dibangun untuk klien nyata.",
+    sub: "Seleksi proyek terkini — berbasis desain, fokus pada pengiriman.",
     visit: "KUNJUNGI SITUS",
     items: [
       { subtitle: "Platform Digital Islami",              desc: "Platform Islam modern yang menyajikan konten pilihan, sumber daya digital, dan pengalaman membaca yang elegan untuk audiens Muslim." },
@@ -115,8 +140,33 @@ const id: typeof en = {
   },
   skills: {
     label: "KEAHLIAN", h1: "Keahlian", h2: "Teknis",
-    sub: "Kumpulan alat dan teknologi pilihan di bidang pengembangan web, real-time 3D, dan desain kreatif.",
-    groups: ["PENGEMBANGAN WEB", "3D & REAL-TIME", "DESAIN & KREATIF", "ALAT & PLATFORM"],
+    sub: "Kumpulan alat dan disiplin pilihan di bidang desain, real-time 3D, produksi multimedia, dan alur kerja kreatif modern.",
+    groups: ["DESAIN & ARAHAN", "REAL-TIME 3D", "MULTIMEDIA & VISUAL", "ALUR KERJA MODERN"],
+  },
+  services: {
+    label: "LAYANAN", h1: "Yang Saya", h2: "Tawarkan",
+    sub: "Pengalaman digital end-to-end — dari konsep hingga deployment.",
+    starting: "Mulai dari", timeline_label: "Durasi",
+    cta: "Ceritakan proyekmu",
+    cta_sub: "Paket kustom tersedia untuk kemitraan dan retainer jangka panjang.",
+    items: [
+      {
+        title: "LANDING PAGE SINEMATIK", price: "$1,500 / Rp 12M", timeline: "2–3 minggu", tag: "",
+        features: ["Desain Figma custom", "1 halaman landing premium", "Animasi halus & micro-interaction", "Responsif mobile", "Setup domain & deployment", "1 putaran revisi"],
+      },
+      {
+        title: "WEBSITE BRAND PREMIUM", price: "$3,000 / Rp 25M", timeline: "4–6 minggu", tag: "",
+        features: ["Website custom 3–5 halaman", "Sistem desain lengkap", "Integrasi CMS tersedia", "Motion design", "Siap SEO", "2 putaran revisi"],
+      },
+      {
+        title: "PENGALAMAN SINEMATIK + 3D", price: "$5,000 / Rp 40M", timeline: "6–10 minggu", tag: "SIGNATURE OFFER",
+        features: ["Landing atau microsite premium", "Lingkungan 3D Unreal Engine 5 custom", "Pengalaman sinematik berbasis scroll", "Motion design", "Tipografi premium", "3 putaran revisi"],
+      },
+      {
+        title: "ARAHAN KREATIF", price: "$2,500 / Rp 20M", timeline: "4–8 minggu", tag: "",
+        features: ["Brand & sistem desain (Figma)", "Arahan kreatif", "Manajemen proyek", "Koordinasi vendor", "QA & pengawasan pengiriman"],
+      },
+    ],
   },
   env: {
     label: "LINGKUNGAN", h1: "Dunia", h2: "Real-Time",

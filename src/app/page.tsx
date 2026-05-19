@@ -13,6 +13,7 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
+import Services from "@/components/Services";
 import RealTime3D from "@/components/RealTime3D";
 import Contact from "@/components/Contact";
 import { LanguageProvider } from "@/context/LanguageContext";
@@ -113,6 +114,7 @@ export default function Home() {
               <About />
               <Projects />
               <Skills />
+              <Services />
               <RealTime3D />
               <Contact />
             </main>

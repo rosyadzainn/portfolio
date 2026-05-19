@@ -1,6 +1,12 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
+// Switch FROM back to "contact@rosyadzain.com" and TO to "zainvon@gmail.com"
+// once rosyadzain.com is verified in Resend (resend.com/domains → click Verify).
+// DNS records are already live — Resend just needs to re-check them.
+const FROM = "Portfolio Contact <onboarding@resend.dev>";
+const TO   = "rosyadz123@gmail.com";
+
 export async function POST(req: NextRequest) {
   try {
     const { name, email, subject, message, honeypot } = await req.json();
@@ -21,11 +27,21 @@ export async function POST(req: NextRequest) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
-      from: "Portfolio <contact@rosyadzain.com>",
-      to:   "zainvon@gmail.com",
+      from:    FROM,
+      to:      TO,
       replyTo: email,
       subject: `[Portfolio] ${subject}`,
-      text: `New message from ${name} (${email})\n\n${message}`,
+      text: [
+        `From: ${name}`,
+        `Email: ${email}`,
+        `Subject: ${subject}`,
+        ``,
+        `Message:`,
+        message.trim(),
+        ``,
+        `---`,
+        `Reply directly to this email to respond to ${name}.`,
+      ].join("\n"),
     });
 
     return NextResponse.json({ success: true });
