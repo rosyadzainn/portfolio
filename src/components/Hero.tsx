@@ -192,27 +192,6 @@ export default function Hero() {
         </motion.div>
       )}
 
-      {/* ── Bottom bar ── */}
-      <motion.div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 10,
-        display: "flex", alignItems: "flex-end", justifyContent: "space-between",
-        padding: "0 8% 38px",
-      }}
-        initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.7, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
-
-        {/* Stats */}
-        <div style={{ display: "flex", gap: 52 }}>
-          {[["3+", t.hero.stat1], ["∞", t.hero.stat2]].map(([v, l]) => (
-            <div key={l} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 22, fontFamily: "Exo 2, sans-serif", fontWeight: 800, color: "#fff", lineHeight: 1 }}>{v}</span>
-              <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.22)", letterSpacing: "0.24em" }}>{l}</span>
-            </div>
-          ))}
-        </div>
-
-
-      </motion.div>
 
 
     </motion.section>

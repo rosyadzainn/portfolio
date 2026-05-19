@@ -12,20 +12,20 @@ const en = {
   },
   about: {
     label: "ABOUT", h1: "The Mind", h2: "Behind the Work",
-    p1: "I'm Rosyad Zain, a creative developer focused on modern web experiences and cinematic real-time 3D environments.",
-    p2: "I build immersive digital products using modern frontend technologies and Unreal Engine — creating interactive worlds that blend technology, atmosphere, and storytelling.",
+    p1: "I design and direct cinematic web experiences — bridging premium visual design, real-time 3D, and modern AI-augmented development workflows.",
+    p2: "I'm Rosyad — a Creative Developer working at the intersection of design, real-time 3D, and modern web. I help founders, agencies, and brands deliver digital experiences that don't just inform — they leave an impression.",
     p3: "From futuristic interfaces to cinematic environments, every project is crafted with a balance of aesthetics, performance, and experience.",
     cap_label: "CAPABILITIES", journey_label: "DIGITAL JOURNEY", edu_label: "EDUCATION",
     caps: [
-      { title: "Web Development",       desc: "Building modern interactive websites using Next.js, React, and immersive frontend systems." },
-      { title: "Real-Time 3D",          desc: "Creating cinematic environments and immersive worlds using Unreal Engine." },
-      { title: "Interactive Experience",desc: "Combining motion, atmosphere, and storytelling into futuristic digital experiences." },
+      { title: "Design & Creative Direction", desc: "Designing design systems and brand identities in Figma, with cinematic vision and premium-level precision." },
+      { title: "Real-Time 3D",                desc: "Creating cinematic environments and immersive worlds using Unreal Engine 5 (Lumen, Nanite, Megascans)." },
+      { title: "Modern Workflow",             desc: "Leading project development through AI-augmented modern workflows and collaboration with trusted technical partners." },
     ],
     journey: [
-      { role: "Videographer & Multimedia Support", desc: "Produced visual content, motion graphics, and branding-focused multimedia experiences while developing storytelling and creative production workflows." },
-      { role: "Multimedia & IT Specialist",        desc: "Developing company websites, digital systems, and visual branding materials while supporting modern business operations and multimedia production." },
-      { role: "Multimedia & IT Specialist",        desc: "Handling multimedia production, digital branding, visual communication, and creative assets for healthcare-related products and campaigns." },
-      { role: "Real-Time 3D Exploration",          desc: "Expanding into cinematic 3D environments and immersive world-building using Unreal Engine workflows." },
+      { role: "Videographer & Multimedia Support", desc: "Produced visual content for a formal clothing brand — developing storytelling and creative production workflows." },
+      { role: "Creative Director & Multimedia Lead", desc: "Directing website development and brand identity for a medical device manufacturer — managing multimedia production and medical industry packaging design." },
+      { role: "Creative Lead & Multimedia Director", desc: "Leading creative direction and multimedia production for Pendi Group — brand identity, website, and corporate visual systems." },
+      { role: "Real-Time 3D Exploration",           desc: "Expanding capabilities into cinematic 3D environments and immersive world-building using Unreal Engine 5 workflows." },
     ],
     edu: [
       { degree: "Master's Degree",            field: "Management Information Systems and Services" },
@@ -49,28 +49,15 @@ const en = {
     groups: ["DESIGN & DIRECTION", "REAL-TIME 3D", "MULTIMEDIA & VISUAL", "MODERN WORKFLOW"],
   },
   services: {
-    label: "SERVICES", h1: "What I", h2: "Offer",
-    sub: "End-to-end digital experiences — from concept to deployment.",
-    starting: "Starting at", timeline_label: "Timeline",
-    cta: "Tell me about your project",
-    cta_sub: "Custom packages available for ongoing partnerships and retainers.",
-    items: [
-      {
-        title: "CINEMATIC LANDING PAGE", price: "$1,500 / Rp 12M", timeline: "2–3 weeks", tag: "",
-        features: ["Custom Figma design", "1 page premium landing", "Smooth animations & micro-interactions", "Mobile responsive", "Domain & deployment setup", "1 round of revisions"],
-      },
-      {
-        title: "PREMIUM BRAND WEBSITE", price: "$3,000 / Rp 25M", timeline: "4–6 weeks", tag: "",
-        features: ["3–5 page custom website", "Full design system", "CMS integration available", "Motion design", "SEO-ready", "2 rounds of revisions"],
-      },
-      {
-        title: "CINEMATIC EXPERIENCE + 3D", price: "$5,000 / Rp 40M", timeline: "6–10 weeks", tag: "SIGNATURE OFFER",
-        features: ["Premium landing or microsite", "Custom Unreal Engine 5 3D environment", "Scroll-driven cinematic experience", "Motion design", "Premium typography", "3 rounds of revisions"],
-      },
-      {
-        title: "CREATIVE DIRECTION", price: "$2,500 / Rp 20M", timeline: "4–8 weeks", tag: "",
-        features: ["Brand & design system (Figma)", "Creative direction", "Project management", "Vendor coordination", "QA & delivery oversight"],
-      },
+    label: "PROCESS", h1: "How I", h2: "Work",
+    sub: "A collaborative process built around clarity, craft, and delivery.",
+    cta: "Start a conversation",
+    cta_sub: "Every project begins with a conversation. No templates, no guesswork.",
+    steps: [
+      { num: "01", title: "DISCOVERY",  desc: "We start with a conversation. I learn about your vision, audience, and what makes your brand distinct — before anything is designed or built." },
+      { num: "02", title: "DESIGN",     desc: "I build the full visual direction in Figma — design system, layout, identity — before a single line of code is written. You see it before it exists." },
+      { num: "03", title: "BUILD",      desc: "Using AI-augmented workflows and trusted technical partners, the experience is brought to life with precision and creative control throughout." },
+      { num: "04", title: "DELIVER",    desc: "Full QA, deployment, and handoff. I stay engaged until it's right — then make sure you know how to own it going forward." },
     ],
   },
   env: {
@@ -107,20 +94,20 @@ const id: typeof en = {
   },
   about: {
     label: "TENTANG", h1: "Pikiran di Balik", h2: "Karya Ini",
-    p1: "Saya Rosyad Zain, seorang creative developer yang berfokus pada pengalaman web modern dan lingkungan 3D sinematik real-time.",
-    p2: "Saya membangun produk digital imersif menggunakan teknologi frontend modern dan Unreal Engine — menciptakan dunia interaktif yang memadukan teknologi, atmosfer, dan storytelling.",
+    p1: "Saya merancang dan mengarahkan pengalaman web sinematik — menjembatani desain visual premium, real-time 3D, dan alur kerja pengembangan modern berbasis AI.",
+    p2: "Saya Rosyad — Creative Developer yang bekerja di persimpangan desain, real-time 3D, dan web modern. Saya membantu founder, agency, dan brand mengirim pengalaman digital yang tidak hanya menginformasikan — tapi meninggalkan kesan.",
     p3: "Dari antarmuka futuristik hingga lingkungan sinematik, setiap proyek dirancang dengan keseimbangan estetika, performa, dan pengalaman.",
     cap_label: "KEMAMPUAN", journey_label: "PERJALANAN DIGITAL", edu_label: "PENDIDIKAN",
     caps: [
-      { title: "Pengembangan Web",       desc: "Membangun website interaktif modern menggunakan Next.js, React, dan sistem frontend yang imersif." },
-      { title: "Real-Time 3D",           desc: "Menciptakan lingkungan sinematik dan dunia imersif menggunakan Unreal Engine." },
-      { title: "Pengalaman Interaktif",  desc: "Memadukan gerakan, atmosfer, dan storytelling menjadi pengalaman digital yang futuristik." },
+      { title: "Desain & Arah Kreatif", desc: "Merancang sistem desain dan identitas brand di Figma, dengan visi sinematik dan presisi tingkat premium." },
+      { title: "Real-Time 3D",          desc: "Menciptakan lingkungan sinematik dan dunia imersif menggunakan Unreal Engine 5 (Lumen, Nanite, Megascans)." },
+      { title: "Alur Kerja Modern",     desc: "Memimpin pengembangan proyek lewat workflow modern berbasis AI dan kolaborasi dengan partner teknis terpercaya." },
     ],
     journey: [
-      { role: "Videografer & Dukungan Multimedia", desc: "Memproduksi konten visual, motion graphics, dan pengalaman multimedia berbasis branding sambil mengembangkan alur kerja produksi kreatif." },
-      { role: "Spesialis Multimedia & IT",         desc: "Mengembangkan website perusahaan, sistem digital, dan materi branding visual sambil mendukung operasional bisnis modern dan produksi multimedia." },
-      { role: "Spesialis Multimedia & IT",         desc: "Menangani produksi multimedia, branding digital, komunikasi visual, dan aset kreatif untuk produk dan kampanye di bidang kesehatan." },
-      { role: "Eksplorasi Real-Time 3D",           desc: "Memperluas kemampuan ke lingkungan 3D sinematik dan pembangunan dunia imersif menggunakan alur kerja Unreal Engine." },
+      { role: "Videografer & Dukungan Multimedia", desc: "Memproduksi konten visual untuk brand pakaian formal — mengembangkan storytelling dan alur kerja produksi kreatif." },
+      { role: "Creative Director & Multimedia Lead", desc: "Mengarahkan pengembangan website dan identitas brand untuk produsen alat kesehatan — mengelola produksi multimedia dan desain kemasan industri medis." },
+      { role: "Creative Lead & Multimedia Director", desc: "Memimpin arah kreatif dan produksi multimedia untuk Pendi Group — identitas brand, website, dan sistem visual perusahaan." },
+      { role: "Eksplorasi Real-Time 3D",            desc: "Memperluas kemampuan ke lingkungan 3D sinematik dan world-building imersif menggunakan alur kerja Unreal Engine 5." },
     ],
     edu: [
       { degree: "Magister",        field: "Sistem dan Layanan Informasi Manajemen" },
@@ -144,28 +131,15 @@ const id: typeof en = {
     groups: ["DESAIN & ARAHAN", "REAL-TIME 3D", "MULTIMEDIA & VISUAL", "ALUR KERJA MODERN"],
   },
   services: {
-    label: "LAYANAN", h1: "Yang Saya", h2: "Tawarkan",
-    sub: "Pengalaman digital end-to-end — dari konsep hingga deployment.",
-    starting: "Mulai dari", timeline_label: "Durasi",
-    cta: "Ceritakan proyekmu",
-    cta_sub: "Paket kustom tersedia untuk kemitraan dan retainer jangka panjang.",
-    items: [
-      {
-        title: "LANDING PAGE SINEMATIK", price: "$1,500 / Rp 12M", timeline: "2–3 minggu", tag: "",
-        features: ["Desain Figma custom", "1 halaman landing premium", "Animasi halus & micro-interaction", "Responsif mobile", "Setup domain & deployment", "1 putaran revisi"],
-      },
-      {
-        title: "WEBSITE BRAND PREMIUM", price: "$3,000 / Rp 25M", timeline: "4–6 minggu", tag: "",
-        features: ["Website custom 3–5 halaman", "Sistem desain lengkap", "Integrasi CMS tersedia", "Motion design", "Siap SEO", "2 putaran revisi"],
-      },
-      {
-        title: "PENGALAMAN SINEMATIK + 3D", price: "$5,000 / Rp 40M", timeline: "6–10 minggu", tag: "SIGNATURE OFFER",
-        features: ["Landing atau microsite premium", "Lingkungan 3D Unreal Engine 5 custom", "Pengalaman sinematik berbasis scroll", "Motion design", "Tipografi premium", "3 putaran revisi"],
-      },
-      {
-        title: "ARAHAN KREATIF", price: "$2,500 / Rp 20M", timeline: "4–8 minggu", tag: "",
-        features: ["Brand & sistem desain (Figma)", "Arahan kreatif", "Manajemen proyek", "Koordinasi vendor", "QA & pengawasan pengiriman"],
-      },
+    label: "PROSES", h1: "Cara Saya", h2: "Bekerja",
+    sub: "Proses kolaborasi yang dibangun di atas kejujuran, craft, dan pengiriman.",
+    cta: "Mulai percakapan",
+    cta_sub: "Setiap proyek dimulai dengan percakapan. Tanpa template, tanpa tebak-tebakan.",
+    steps: [
+      { num: "01", title: "DISCOVERY",  desc: "Kita mulai dengan percakapan. Saya pelajari visi, audiens, dan apa yang membuat brand kamu berbeda — sebelum apapun dirancang atau dibangun." },
+      { num: "02", title: "DESIGN",     desc: "Saya bangun arah visual lengkap di Figma — sistem desain, layout, identitas — sebelum satu baris kode pun ditulis. Kamu lihat sebelum ada wujudnya." },
+      { num: "03", title: "BUILD",      desc: "Dengan workflow berbasis AI dan partner teknis terpercaya, pengalaman diwujudkan dengan presisi dan kontrol kreatif penuh sepanjang prosesnya." },
+      { num: "04", title: "DELIVER",    desc: "QA menyeluruh, deployment, dan serah terima. Saya tetap terlibat sampai hasilnya benar — lalu pastikan kamu tahu cara mengelolanya ke depan." },
     ],
   },
   env: {

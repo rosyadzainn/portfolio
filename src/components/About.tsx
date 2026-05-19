@@ -11,10 +11,10 @@ const W = "#fff";
 const CAPABILITY_ICONS = ["⬡", "◈", "◎"];
 
 const JOURNEY_META = [
-  { period: "2021 — 2022",    company: "SEVEN INC JOGJA"        },
-  { period: "2025 — PRESENT", company: "PT. Pendi Hijau Berkah"  },
-  { period: "2025 — PRESENT", company: "MBBiotek"                },
-  { period: "2025 — PRESENT", company: null                       },
+  { period: "2021 — 2022",    company: "SEVEN INC JOGJA"          },
+  { period: "2025 — 2026",     company: "MBBIOTEK (CONTRACT)"     },
+  { period: "2025 — PRESENT", company: "PT. PENDI HIJAU BERKAH"   },
+  { period: "2025 — PRESENT", company: "PERSONAL PROJECTS"        },
 ];
 
 const EDUCATION_META = [

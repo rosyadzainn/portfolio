@@ -6,130 +6,84 @@ import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useLanguage } from "@/context/LanguageContext";
 
-const W = "#fff";
-
-function ServiceCard({ item, index }: {
-  item: { title: string; price: string; timeline: string; tag: string; features: string[] };
+function StepCard({ step, index }: {
+  step: { num: string; title: string; desc: string };
   index: number;
 }) {
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
-  const { t }  = useLanguage();
-  const isSig  = item.tag !== "";
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.1, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-      style={{ height: "100%" }}
+      transition={{ delay: index * 0.12, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      style={{ position: "relative", paddingTop: 28, paddingBottom: 28 }}
     >
+      {/* Top border line */}
       <div style={{
-        position: "relative", height: "100%", display: "flex", flexDirection: "column",
-        padding: "28px 28px 26px",
-        borderRadius: 10, overflow: "hidden",
-        background: isSig ? "rgba(255,255,255,0.025)" : "rgba(255,255,255,0.015)",
-        border: isSig ? "1px solid rgba(255,255,255,0.18)" : "1px solid rgba(255,255,255,0.07)",
-        boxShadow: isSig ? "0 0 40px rgba(255,255,255,0.04) inset" : "none",
+        position: "absolute", top: 0, left: 0, right: 0, height: 1,
+        background: "linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))",
+      }} />
+
+      {/* Step number — large ghost behind */}
+      <div style={{
+        position: "absolute", top: 10, right: 0,
+        fontFamily: "Exo 2, sans-serif", fontWeight: 800,
+        fontSize: "clamp(64px, 8vw, 96px)",
+        color: "rgba(255,255,255,0.03)",
+        lineHeight: 1, letterSpacing: "-0.02em",
+        userSelect: "none", pointerEvents: "none",
       }}>
-
-        {/* Top gradient accent for signature card */}
-        {isSig && (
-          <div style={{
-            position: "absolute", top: 0, left: 0, right: 0, height: 1,
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)",
-            pointerEvents: "none",
-          }} />
-        )}
-
-        {/* Header row */}
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 20, gap: 12 }}>
-          <h3 style={{
-            margin: 0, fontFamily: "Exo 2, sans-serif", fontWeight: 800,
-            fontSize: 14, letterSpacing: "0.06em", color: W, lineHeight: 1.3,
-            flex: 1,
-          }}>
-            {item.title}
-          </h3>
-          {isSig && (
-            <span style={{
-              flexShrink: 0,
-              fontSize: 7.5, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700,
-              letterSpacing: "0.18em", padding: "3px 9px", borderRadius: 3,
-              border: "1px solid rgba(255,255,255,0.35)",
-              color: "rgba(255,255,255,0.75)",
-              background: "rgba(255,255,255,0.06)",
-              whiteSpace: "nowrap" as const,
-            }}>
-              {item.tag}
-            </span>
-          )}
-        </div>
-
-        {/* Price */}
-        <div style={{ marginBottom: 10 }}>
-          <span style={{
-            display: "block", fontSize: 9, fontFamily: "Space Grotesk, sans-serif",
-            letterSpacing: "0.22em", color: "rgba(255,255,255,0.3)", marginBottom: 4,
-          }}>
-            {t.services.starting}
-          </span>
-          <span style={{
-            fontSize: 20, fontFamily: "Exo 2, sans-serif", fontWeight: 800,
-            color: W, letterSpacing: "0.02em", lineHeight: 1,
-          }}>
-            {item.price}
-          </span>
-        </div>
-
-        {/* Timeline */}
-        <div style={{ marginBottom: 22 }}>
-          <span style={{
-            display: "inline-flex", alignItems: "center", gap: 6,
-            fontSize: 9, fontFamily: "Space Grotesk, sans-serif",
-            letterSpacing: "0.18em", color: "rgba(255,255,255,0.32)",
-            padding: "3px 10px", borderRadius: 2,
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.07)",
-          }}>
-            <svg width="8" height="8" viewBox="0 0 12 12" fill="none">
-              <circle cx="6" cy="6" r="5" stroke="rgba(255,255,255,0.4)" strokeWidth="1"/>
-              <path d="M6 3.5V6.5L8 7.5" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeLinecap="round"/>
-            </svg>
-            {item.timeline}
-          </span>
-        </div>
-
-        {/* Divider */}
-        <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: 20 }} />
-
-        {/* Features */}
-        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
-          {item.features.map((feat, i) => (
-            <motion.li
-              key={i}
-              initial={{ opacity: 0, x: -8 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: index * 0.1 + i * 0.04 + 0.25, duration: 0.35 }}
-              style={{ display: "flex", alignItems: "flex-start", gap: 10 }}
-            >
-              <span style={{
-                flexShrink: 0, marginTop: 5,
-                width: 3, height: 3, borderRadius: "50%",
-                background: isSig ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.28)",
-                display: "inline-block",
-              }} />
-              <span style={{
-                fontSize: 12, fontFamily: "Space Grotesk, sans-serif",
-                color: "rgba(255,255,255,0.52)", lineHeight: 1.55,
-              }}>
-                {feat}
-              </span>
-            </motion.li>
-          ))}
-        </ul>
+        {step.num}
       </div>
+
+      {/* Small step tag */}
+      <motion.div
+        initial={{ opacity: 0, x: -8 }}
+        animate={inView ? { opacity: 1, x: 0 } : {}}
+        transition={{ delay: index * 0.12 + 0.1, duration: 0.4 }}
+        style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}
+      >
+        <span style={{
+          fontSize: 9, fontFamily: "Space Grotesk, sans-serif",
+          letterSpacing: "0.28em", color: "rgba(255,255,255,0.28)",
+        }}>
+          {step.num}
+        </span>
+        <div style={{ height: 1, width: 24, background: "rgba(255,255,255,0.12)" }} />
+      </motion.div>
+
+      {/* Title */}
+      <motion.h3
+        initial={{ opacity: 0, y: 10 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: index * 0.12 + 0.18, duration: 0.5 }}
+        style={{
+          margin: "0 0 14px",
+          fontFamily: "Exo 2, sans-serif", fontWeight: 800,
+          fontSize: "clamp(1.1rem, 2vw, 1.4rem)",
+          letterSpacing: "0.06em", color: "#fff", lineHeight: 1.1,
+        }}
+      >
+        {step.title}
+      </motion.h3>
+
+      {/* Description */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ delay: index * 0.12 + 0.28, duration: 0.5 }}
+        style={{
+          margin: 0, fontSize: 13, lineHeight: 1.8,
+          color: "rgba(255,255,255,0.38)",
+          fontFamily: "Space Grotesk, sans-serif",
+          maxWidth: 340,
+        }}
+      >
+        {step.desc}
+      </motion.p>
     </motion.div>
   );
 }
@@ -150,12 +104,11 @@ export default function Services() {
       style={{ position: "relative", paddingTop: isMobile ? 80 : 120, paddingBottom: isMobile ? 80 : 120, overflow: "hidden" }}
     >
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%)" }} />
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(255,255,255,0.008) 1px, transparent 1px)", backgroundSize: "100% 80px" }} />
 
       <div style={{ ...container, position: "relative", zIndex: 10 }}>
 
         {/* Heading */}
-        <div ref={headRef} style={{ marginBottom: isMobile ? 36 : 64, maxWidth: 520 }}>
+        <div ref={headRef} style={{ marginBottom: isMobile ? 40 : 72, maxWidth: 520 }}>
           <motion.div
             style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}
             initial={{ opacity: 0, x: -20 }} animate={headInView ? { opacity: 1, x: 0 } : {}}
@@ -172,7 +125,7 @@ export default function Services() {
             initial={{ opacity: 0, y: 22 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.12, duration: 0.6 }}
           >
-            <span style={{ color: W }}>{t.services.h1}</span>
+            <span style={{ color: "#fff" }}>{t.services.h1}</span>
             <br />
             <span style={{ color: "rgba(255,255,255,0.4)" }}>{t.services.h2}</span>
           </motion.h2>
@@ -186,50 +139,51 @@ export default function Services() {
           </motion.p>
         </div>
 
-        {/* Grid */}
+        {/* Steps grid — 2×2 */}
         <div style={{
           display: "grid",
           gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-          gap: isMobile ? 12 : 16,
-          alignItems: "stretch",
+          columnGap: isMobile ? 0 : 64,
+          rowGap: 0,
         }}>
-          {t.services.items.map((item, i) => (
-            <ServiceCard key={i} item={item} index={i} />
+          {t.services.steps.map((step, i) => (
+            <StepCard key={step.num} step={step} index={i} />
           ))}
         </div>
 
         {/* CTA */}
         <motion.div
           ref={ctaRef}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            marginTop: isMobile ? 40 : 56,
-            display: "flex", flexDirection: "column", alignItems: "center", gap: 16,
-            textAlign: "center",
-          }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          style={{ marginTop: isMobile ? 40 : 56, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 14 }}
         >
           <p style={{
             margin: 0, fontSize: 12, fontFamily: "Space Grotesk, sans-serif",
-            color: "rgba(255,255,255,0.28)", letterSpacing: "0.06em", maxWidth: 360,
+            color: "rgba(255,255,255,0.25)", letterSpacing: "0.04em",
           }}>
             {t.services.cta_sub}
           </p>
           <motion.button
             onClick={go}
             style={{
-              position: "relative", overflow: "hidden",
-              padding: "12px 36px", borderRadius: 4,
+              display: "inline-flex", alignItems: "center", gap: 10,
+              background: "none", border: "none", padding: 0,
               fontFamily: "Space Grotesk, sans-serif", fontWeight: 700,
-              fontSize: 11, letterSpacing: "0.22em",
-              background: "none", border: "1px solid rgba(255,255,255,0.22)", color: W,
+              fontSize: 13, letterSpacing: "0.1em", color: "rgba(255,255,255,0.65)",
+              cursor: "pointer",
             }}
-            whileHover={{ borderColor: "rgba(255,255,255,0.55)", boxShadow: "0 0 24px rgba(255,255,255,0.08)" }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ color: "#fff" }}
             data-hover="true"
           >
-            <span style={{ position: "relative", zIndex: 1 }}>{t.services.cta} →</span>
+            {t.services.cta}
+            <motion.span
+              animate={{ x: [0, 5, 0] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              →
+            </motion.span>
           </motion.button>
         </motion.div>
 
