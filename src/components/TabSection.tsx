@@ -13,13 +13,6 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const CAPABILITY_ICONS = ["⬡", "◈", "◎"];
 
-const JOURNEY_META = [
-  { period: "2021 — 2022",    company: "SEVEN INC JOGJA"          },
-  { period: "2025 — 2026",    company: "MBBIOTEK (CONTRACT)"      },
-  { period: "2025 — PRESENT", company: "PT. PENDI HIJAU BERKAH"   },
-  { period: "2025 — PRESENT", company: "PERSONAL PROJECTS"        },
-];
-
 const EDUCATION_META = [
   { period: "2023 — 2025", school: "BINUS University", gpa: "3.80" },
   { period: "2018 — 2022", school: "Telkom University", gpa: "3.59" },
@@ -74,7 +67,7 @@ function CapabilityCard({ item, index }: { item: { icon: string; title: string; 
 }
 
 function JourneyItem({ item, index, isLast }: {
-  item: { period: string; role: string; company: string; desc: string };
+  item: { role: string; desc: string };
   index: number; isLast: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -90,10 +83,8 @@ function JourneyItem({ item, index, isLast }: {
         initial={{ scale: 0 }} animate={inView ? { scale: 1 } : {}} transition={{ delay: index * 0.12 + 0.15, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
         <div style={{ width: 4, height: 4, borderRadius: "50%", background: "#fff" }} />
       </motion.div>
-      <span style={{ display: "block", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.22em", color: "rgba(255,255,255,0.28)", marginBottom: 4 }}>{item.period}</span>
-      <div style={{ marginBottom: 5 }}>
+      <div style={{ marginBottom: 6 }}>
         <span style={{ fontSize: 13, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "#fff" }}>{item.role}</span>
-        <span style={{ display: "block", fontSize: 10, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.28)", marginTop: 1, letterSpacing: "0.08em" }}>{item.company}</span>
       </div>
       <p style={{ margin: 0, fontSize: 12, lineHeight: 1.7, color: "rgba(255,255,255,0.32)" }}>{item.desc}</p>
     </motion.div>
@@ -191,7 +182,7 @@ type TT = ReturnType<typeof useLanguage>["t"];
 
 function AboutPane({ isMobile, t }: { isMobile: boolean; t: TT }) {
   const capabilities = CAPABILITY_ICONS.map((icon, i) => ({ icon, ...t.about.caps[i] }));
-  const journey      = JOURNEY_META.map((meta, i) => ({ ...meta, ...t.about.journey[i] }));
+  const journey      = t.about.journey;
   const education    = EDUCATION_META.map((meta, i) => ({ ...meta, ...t.about.edu[i] }));
 
   return (
