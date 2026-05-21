@@ -1,16 +1,8 @@
 "use client";
 
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
 import TabSection from "@/components/TabSection";
-
-function AboutContent() {
-  const params     = useSearchParams();
-  const initialTab = params.get("tab") ?? "about";
-  return <TabSection initialTab={initialTab} />;
-}
 
 function Header() {
   const { lang, setLang } = useLanguage();
@@ -67,9 +59,7 @@ export default function AboutPage() {
       <div style={{ minHeight: "100vh", background: "#000", color: "#fff" }}>
         <Header />
         <div style={{ paddingTop: 56 }}>
-          <Suspense fallback={null}>
-            <AboutContent />
-          </Suspense>
+          <TabSection />
         </div>
       </div>
     </LanguageProvider>

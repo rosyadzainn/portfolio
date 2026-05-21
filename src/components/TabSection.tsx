@@ -1,14 +1,13 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import {
-  motion, AnimatePresence, useInView,
+  motion, useInView,
   useScroll, useTransform,
 } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useLanguage } from "@/context/LanguageContext";
-import { tabControl } from "@/lib/tabControl";
 
 // ── Static data ────────────────────────────────────────────────────────────────
 
@@ -32,6 +31,26 @@ const SKILL_TECH = [
   ["Adobe Photoshop", "Adobe Illustrator", "Adobe Premiere Pro", "After Effects", "Motion Graphics", "Video Production"],
   ["AI-Augmented Development", "Figma-to-Code", "WordPress", "Vercel Deployment", "Project Direction", "Vendor Coordination"],
 ];
+
+// ── Section header ─────────────────────────────────────────────────────────────
+
+function SectionHeader({ label }: { label: string }) {
+  const ref    = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div
+      ref={ref}
+      style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 40 }}
+      initial={{ opacity: 0, x: -20 }} animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.5 }}
+    >
+      <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
+      <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
+        {label}
+      </span>
+    </motion.div>
+  );
+}
 
 // ── About sub-components ───────────────────────────────────────────────────────
 
@@ -166,7 +185,7 @@ function StepCard({ step, index }: { step: { num: string; title: string; desc: s
   );
 }
 
-// ── Tab panes ──────────────────────────────────────────────────────────────────
+// ── Section panes ──────────────────────────────────────────────────────────────
 
 type TT = ReturnType<typeof useLanguage>["t"];
 
@@ -228,7 +247,7 @@ function SkillsPane({ isMobile, t }: { isMobile: boolean; t: TT }) {
   return (
     <div>
       <motion.p style={{ margin: "0 0 32px", fontSize: 14, lineHeight: 1.85, color: "rgba(255,255,255,0.38)", maxWidth: 520 }}
-        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.5 }}>
         {t.skills.sub}
       </motion.p>
       <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : 16 }}>
@@ -241,12 +260,12 @@ function SkillsPane({ isMobile, t }: { isMobile: boolean; t: TT }) {
 function ProcessPane({ isMobile, t }: { isMobile: boolean; t: TT }) {
   const ctaRef    = useRef<HTMLDivElement>(null);
   const ctaInView = useInView(ctaRef, { once: true, margin: "-60px" });
-  const go = () => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+  const go = () => { window.location.href = "/#contact"; };
 
   return (
     <div>
       <motion.p style={{ margin: "0 0 40px", fontSize: 14, lineHeight: 1.85, color: "rgba(255,255,255,0.38)", maxWidth: 520 }}
-        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.5 }}>
         {t.services.sub}
       </motion.p>
       <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", columnGap: isMobile ? 0 : 64, rowGap: 0 }}>
@@ -272,29 +291,13 @@ function ProcessPane({ isMobile, t }: { isMobile: boolean; t: TT }) {
 
 // ── Main export ────────────────────────────────────────────────────────────────
 
-type Tab = "about" | "skills" | "process";
-
-export default function TabSection({ initialTab = "about" }: { initialTab?: string }) {
-  const sectionRef  = useRef<HTMLElement>(null);
-  const headRef     = useRef<HTMLDivElement>(null);
-  const headInView  = useInView(headRef, { once: true, margin: "-80px" });
-  const isMobile    = useIsMobile();
-  const { t }       = useLanguage();
-  const [tab, setTab] = useState<Tab>(initialTab as Tab);
+export default function TabSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const isMobile   = useIsMobile();
+  const { t }      = useLanguage();
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], [60, -60]);
-
-  useEffect(() => {
-    tabControl.setTab = (id: string) => setTab(id as Tab);
-    return () => { tabControl.setTab = null; };
-  }, []);
-
-  const TABS: { id: Tab; label: string }[] = [
-    { id: "about",   label: t.about.label   },
-    { id: "skills",  label: t.skills.label  },
-    { id: "process", label: t.services.label },
-  ];
 
   return (
     <section
@@ -302,7 +305,7 @@ export default function TabSection({ initialTab = "about" }: { initialTab?: stri
       ref={sectionRef}
       style={{ position: "relative", paddingTop: isMobile ? 80 : 120, paddingBottom: isMobile ? 80 : 120, overflow: "hidden" }}
     >
-      {/* Hidden anchors so #skills / #services links still resolve */}
+      {/* Hidden anchors */}
       <span id="skills"   style={{ position: "absolute", top: 0 }} />
       <span id="services" style={{ position: "absolute", top: 0 }} />
 
@@ -311,70 +314,21 @@ export default function TabSection({ initialTab = "about" }: { initialTab?: stri
 
       <div style={{ ...container, position: "relative", zIndex: 10 }}>
 
-        {/* Section eyebrow */}
-        <div ref={headRef} style={{ marginBottom: isMobile ? 28 : 40 }}>
-          <motion.div
-            style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 0 }}
-            initial={{ opacity: 0, x: -20 }} animate={headInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
-            <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
-              {TABS.find(tb => tb.id === tab)?.label}
-            </span>
-          </motion.div>
+        {/* ABOUT */}
+        <SectionHeader label={t.about.label} />
+        <AboutPane isMobile={isMobile} t={t} />
+
+        {/* SKILLS */}
+        <div style={{ marginTop: isMobile ? 80 : 120 }}>
+          <SectionHeader label={t.skills.label} />
+          <SkillsPane isMobile={isMobile} t={t} />
         </div>
 
-        {/* Tab bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.12, duration: 0.5 }}
-          style={{ display: "flex", gap: isMobile ? 20 : 32, marginBottom: isMobile ? 36 : 56, borderBottom: "1px solid rgba(255,255,255,0.07)" }}
-        >
-          {TABS.map((tb) => (
-            <button
-              key={tb.id}
-              onClick={() => setTab(tb.id)}
-              data-hover="true"
-              style={{
-                position: "relative",
-                background: "none", border: "none",
-                padding: "0 0 14px",
-                fontSize: isMobile ? 10 : 11,
-                fontFamily: "Space Grotesk, sans-serif",
-                fontWeight: tab === tb.id ? 700 : 400,
-                letterSpacing: "0.22em",
-                color: tab === tb.id ? "#fff" : "rgba(255,255,255,0.28)",
-                cursor: "pointer",
-                transition: "color 0.25s",
-              }}
-            >
-              {tb.label}
-              {tab === tb.id && (
-                <motion.div
-                  layoutId="tab-underline"
-                  style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 1, background: "#fff" }}
-                  transition={{ type: "spring", stiffness: 380, damping: 34 }}
-                />
-              )}
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Tab content */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={tab}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {tab === "about"   && <AboutPane   isMobile={isMobile} t={t} />}
-            {tab === "skills"  && <SkillsPane  isMobile={isMobile} t={t} />}
-            {tab === "process" && <ProcessPane isMobile={isMobile} t={t} />}
-          </motion.div>
-        </AnimatePresence>
+        {/* PROCESS */}
+        <div style={{ marginTop: isMobile ? 80 : 120 }}>
+          <SectionHeader label={t.services.label} />
+          <ProcessPane isMobile={isMobile} t={t} />
+        </div>
 
       </div>
     </section>
