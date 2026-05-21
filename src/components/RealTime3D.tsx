@@ -325,7 +325,7 @@ export default function RealTime3D() {
           >
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
             <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
-              03 / {t.env.label}
+              02 / {t.env.label}
             </span>
           </motion.div>
 

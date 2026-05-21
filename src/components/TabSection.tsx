@@ -274,13 +274,13 @@ function ProcessPane({ isMobile, t }: { isMobile: boolean; t: TT }) {
 
 type Tab = "about" | "skills" | "process";
 
-export default function TabSection() {
+export default function TabSection({ initialTab = "about" }: { initialTab?: string }) {
   const sectionRef  = useRef<HTMLElement>(null);
   const headRef     = useRef<HTMLDivElement>(null);
   const headInView  = useInView(headRef, { once: true, margin: "-80px" });
   const isMobile    = useIsMobile();
   const { t }       = useLanguage();
-  const [tab, setTab] = useState<Tab>("about");
+  const [tab, setTab] = useState<Tab>(initialTab as Tab);
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const blobY = useTransform(scrollYProgress, [0, 1], [60, -60]);
@@ -320,7 +320,7 @@ export default function TabSection() {
           >
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
             <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
-              01 / {TABS.find(tb => tb.id === tab)?.label}
+              {TABS.find(tb => tb.id === tab)?.label}
             </span>
           </motion.div>
         </div>

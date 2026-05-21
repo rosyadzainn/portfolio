@@ -8,7 +8,6 @@ import Navigation from "@/components/Navigation";
 import SystemStatus from "@/components/SystemStatus";
 import ThemePicker from "@/components/ThemePicker";
 import Hero from "@/components/Hero";
-import TabSection from "@/components/TabSection";
 import Projects from "@/components/Projects";
 import RealTime3D from "@/components/RealTime3D";
 import Contact from "@/components/Contact";
@@ -105,7 +104,6 @@ export default function Home() {
             <SystemStatus />
             <main>
               <Hero />
-              <TabSection />
               <Projects />
               <RealTime3D />
               <Contact />

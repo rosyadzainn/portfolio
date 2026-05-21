@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useLanguage } from "@/context/LanguageContext";
-import { tabControl } from "@/lib/tabControl";
 
 const W = "#fff";
 
@@ -14,18 +14,15 @@ export default function Navigation() {
   const bg = useTransform(scrollY, [0, 80], [0, 1]);
   const isMobile = useIsMobile();
   const { lang, setLang, t } = useLanguage();
+  const router = useRouter();
 
-  const NAV_ITEMS: { label: string; href: string; tab?: string }[] = [
-    { label: t.nav.about,    href: "#about" },
-    { label: t.nav.projects, href: "#projects" },
-    { label: t.nav.skills,   href: "#about",    tab: "skills" },
-    { label: t.nav.process,  href: "#about",    tab: "process" },
+  type NavItem = { label: string; action: () => void };
+  const NAV_ITEMS: NavItem[] = [
+    { label: t.nav.about,    action: () => router.push("/about") },
+    { label: t.nav.projects, action: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
+    { label: t.nav.skills,   action: () => router.push("/about?tab=skills") },
+    { label: t.nav.process,  action: () => router.push("/about?tab=process") },
   ];
-
-  const go = (href: string, tab?: string) => {
-    if (tab) tabControl.setTab?.(tab);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <motion.nav
@@ -72,7 +69,7 @@ export default function Navigation() {
         {/* Links */}
         <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 24 }}>
           {!isMobile && NAV_ITEMS.map((item, i) => (
-            <NavLink key={item.label} label={item.label} onClick={() => go(item.href, item.tab)} delay={i * 0.07} />
+            <NavLink key={item.label} label={item.label} onClick={item.action} delay={i * 0.07} />
           ))}
 
           {/* Language toggle */}
@@ -101,7 +98,7 @@ export default function Navigation() {
           </div>
 
           <motion.button
-            onClick={() => go("#contact")}
+            onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
             style={{
               position: "relative", overflow: "hidden",
               padding: isMobile ? "6px 14px" : "7px 18px",
