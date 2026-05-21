@@ -282,6 +282,7 @@ export default function Contact() {
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             {[
+              { label: "LINKEDIN",  href: "https://www.linkedin.com/in/rosyadzain/" },
               { label: "TIKTOK",    href: "https://www.tiktok.com/@rosyadzainn" },
               { label: "INSTAGRAM", href: "https://www.instagram.com/rosyadzain" },
             ].map(({ label, href }) => (
