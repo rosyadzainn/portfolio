@@ -20,8 +20,6 @@ export default function Navigation() {
   const NAV_ITEMS: NavItem[] = [
     { label: t.nav.about,    action: () => router.push("/about") },
     { label: t.nav.projects, action: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
-    { label: t.nav.skills,   action: () => router.push("/about?tab=skills") },
-    { label: t.nav.process,  action: () => router.push("/about?tab=process") },
   ];
 
   return (
