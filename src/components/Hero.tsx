@@ -148,7 +148,6 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.45, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}>
           <MagBtn onClick={() => go("#projects")} primary>{t.hero.cta1}</MagBtn>
-          {!isMobile && <MagBtn onClick={() => go("#about")}>{t.hero.cta2}</MagBtn>}
         </motion.div>
       </div>
 
