@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useLanguage } from "@/context/LanguageContext";
+import { tabControl } from "@/lib/tabControl";
 
 const W = "#fff";
 
@@ -14,15 +15,17 @@ export default function Navigation() {
   const isMobile = useIsMobile();
   const { lang, setLang, t } = useLanguage();
 
-  const NAV_ITEMS = [
+  const NAV_ITEMS: { label: string; href: string; tab?: string }[] = [
     { label: t.nav.about,    href: "#about" },
     { label: t.nav.projects, href: "#projects" },
-    { label: t.nav.skills,   href: "#skills" },
-    { label: t.nav.process,  href: "#services" },
+    { label: t.nav.skills,   href: "#about",    tab: "skills" },
+    { label: t.nav.process,  href: "#about",    tab: "process" },
   ];
 
-  const go = (href: string) =>
+  const go = (href: string, tab?: string) => {
+    if (tab) tabControl.setTab?.(tab);
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <motion.nav
@@ -69,7 +72,7 @@ export default function Navigation() {
         {/* Links */}
         <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 24 }}>
           {!isMobile && NAV_ITEMS.map((item, i) => (
-            <NavLink key={item.href} label={item.label} onClick={() => go(item.href)} delay={i * 0.07} />
+            <NavLink key={item.label} label={item.label} onClick={() => go(item.href, item.tab)} delay={i * 0.07} />
           ))}
 
           {/* Language toggle */}

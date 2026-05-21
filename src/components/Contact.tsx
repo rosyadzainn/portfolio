@@ -128,7 +128,7 @@ export default function Contact() {
           <motion.div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 12 }}
             initial={{ opacity: 0, y: 16 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4))" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.35)" }}>06 / {t.contact.label}</span>
+            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.35)" }}>04 / {t.contact.label}</span>
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.4), transparent)" }} />
           </motion.div>
           <motion.h2 style={{ margin: 0, fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
