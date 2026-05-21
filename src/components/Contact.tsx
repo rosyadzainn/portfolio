@@ -280,14 +280,6 @@ export default function Contact() {
           <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.18)" }}>
             {t.contact.footer_rights}
           </span>
-          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            <a href="/cv" style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.22)", textDecoration: "none" }} data-hover="true">
-              {t.contact.cv}
-            </a>
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(255,255,255,0.1)" }}>
-              {t.contact.footer_built}
-            </span>
-          </div>
         </motion.div>
       </div>
     </section>
