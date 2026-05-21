@@ -14,7 +14,9 @@ import Contact from "@/components/Contact";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 export default function Home() {
-  const [loading, setLoading]     = useState(true);
+  const [loading, setLoading]     = useState(() =>
+    typeof window === "undefined" ? true : !sessionStorage.getItem("visited")
+  );
   const [easterEgg, setEasterEgg] = useState(false);
   const keyBuffer                 = useRef("");
 
@@ -89,7 +91,7 @@ export default function Home() {
       </AnimatePresence>
 
       <AnimatePresence mode="wait">
-        {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
+        {loading && <LoadingScreen onComplete={() => { sessionStorage.setItem("visited", "1"); setLoading(false); }} />}
       </AnimatePresence>
 
       <AnimatePresence>
