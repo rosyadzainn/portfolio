@@ -31,6 +31,14 @@ export default function Home() {
     function raf(time: number) { lenis.raf(time); rafId = requestAnimationFrame(raf); }
     rafId = requestAnimationFrame(raf);
 
+    // Scroll to hash after Lenis is ready
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    }
+
     return () => { cancelAnimationFrame(rafId); lenis.destroy(); };
   }, []);
 
