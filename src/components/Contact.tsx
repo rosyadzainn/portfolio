@@ -280,20 +280,6 @@ export default function Contact() {
           <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.18)" }}>
             {t.contact.footer_rights}
           </span>
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            {[
-              { label: "LINKEDIN",  href: "https://www.linkedin.com/in/rosyadzain/" },
-              { label: "TIKTOK",    href: "https://www.tiktok.com/@rosyadzainn" },
-              { label: "INSTAGRAM", href: "https://www.instagram.com/rosyadzain" },
-            ].map(({ label, href }) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer" data-hover="true"
-                style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.25)", textDecoration: "none", transition: "color 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.25)")}>
-                {label}
-              </a>
-            ))}
-          </div>
         </motion.div>
       </div>
     </section>
