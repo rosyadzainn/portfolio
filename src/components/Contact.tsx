@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -53,7 +53,8 @@ function Field({ label, name, type = "text", placeholder, multi = false }: {
 export default function Contact() {
   const headRef   = useRef<HTMLDivElement>(null);
   const headInView = useInView(headRef, { once: true, margin: "-80px" });
-  const mountTime  = useRef(Date.now());
+  const mountTime  = useRef(0);
+  useEffect(() => { mountTime.current = Date.now(); }, []);
   const isMobile   = useIsMobile();
   const { t }      = useLanguage();
   const [sent, setSent]         = useState(false);

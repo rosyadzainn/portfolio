@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const EDUCATION = [
   { school: "BINUS University",  degree: "Master's — Management Information Systems & Services", period: "2023 – 2025", gpa: "3.80" },
@@ -71,7 +72,7 @@ export default function CV() {
 
         {/* Actions bar */}
         <div className="cv-actions" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(0,0,0,0.85)", borderBottom: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(16px)", padding: "12px 40px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <a href="/" style={{ fontSize: 11, letterSpacing: "0.2em", color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>← BACK</a>
+          <Link href="/" style={{ fontSize: 11, letterSpacing: "0.2em", color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>← BACK</Link>
           <span style={{ fontSize: 11, letterSpacing: "0.25em", color: "rgba(255,255,255,0.25)" }}>CURRICULUM VITAE</span>
           <button onClick={() => window.print()} style={{ fontSize: 11, letterSpacing: "0.2em", padding: "6px 18px", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 4, background: "none", color: "rgba(255,255,255,0.7)", cursor: "pointer" }}>
             PRINT / SAVE PDF

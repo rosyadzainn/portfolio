@@ -31,17 +31,13 @@ function VideoFrame({ src, label, env, index, seekTo }: {
   const hasCaptured = useRef(false);
 
   const [playing,    setPlaying]    = useState(false);
+  const playingRef  = useRef(false);
   const [current,    setCurrent]    = useState(0);
   const [duration,   setDuration]   = useState(0);
   const [muted,      setMuted]      = useState(true);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [thumbUrl,   setThumbUrl]   = useState("");
   const [hovered,    setHovered]    = useState(false);
-
-  // Trigger video load when the section scrolls into view
-  useEffect(() => {
-    if (inView) setShouldLoad(true);
-  }, [inView]);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -54,7 +50,7 @@ function VideoFrame({ src, label, env, index, seekTo }: {
       if (!hasCaptured.current) v.currentTime = seekTo;
     };
     const onSeeked = () => {
-      if (hasCaptured.current || playing) return;
+      if (hasCaptured.current || playingRef.current) return;
       hasCaptured.current = true;
       // Capture the seeked frame to canvas as poster
       try {
@@ -92,6 +88,8 @@ function VideoFrame({ src, label, env, index, seekTo }: {
       obs.disconnect();
     };
   }, [seekTo]);
+
+  useEffect(() => { playingRef.current = playing; }, [playing]);
 
   const togglePlay = () => {
     const v = videoRef.current;

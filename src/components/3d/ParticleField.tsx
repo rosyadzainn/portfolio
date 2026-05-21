@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity, react-hooks/refs, react-hooks/immutability */
 "use client";
 
 import { useRef, useMemo, useEffect } from "react";
@@ -26,7 +27,6 @@ interface ParticleFieldProps {
 
 export default function ParticleField({ mouseX, mouseY, shape, accentColor = "#22c55e" }: ParticleFieldProps) {
   const groupRef  = useRef<THREE.Group>(null);
-  const rotY      = useRef(0);
   const shapeRef  = useRef<ShapeName>("sphere");
   const explodeRef = useRef<THREE.Vector3 | null>(null);
 

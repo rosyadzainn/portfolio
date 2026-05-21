@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
 import TabSection from "@/components/TabSection";
 
@@ -22,13 +23,13 @@ function Header() {
       padding: "14px clamp(20px, 5.5vw, 40px)",
       display: "flex", alignItems: "center", justifyContent: "space-between",
     }}>
-      <a href="/"
+      <Link href="/"
         data-hover="true"
         style={{ fontSize: 11, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, letterSpacing: "0.2em", color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>
         ← BACK
-      </a>
+      </Link>
 
-      <a href="/" data-hover="true" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+      <Link href="/" data-hover="true" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
         <div style={{ position: "relative", width: 22, height: 22, flexShrink: 0 }}>
           <div style={{ position: "absolute", inset: 0, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.3)", animation: "spin-slow 5s linear infinite" }} />
           <div style={{ position: "absolute", inset: 5, borderRadius: "50%", background: "#fff", boxShadow: "0 0 8px rgba(255,255,255,0.5)" }} />
@@ -36,7 +37,7 @@ function Header() {
         <span style={{ fontSize: 12, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.22em", color: "#fff" }}>
           ROSYAD ZAIN
         </span>
-      </a>
+      </Link>
 
       <div style={{ display: "flex", alignItems: "center", gap: 1, border: "1px solid rgba(255,255,255,0.12)", borderRadius: 4, overflow: "hidden" }}>
         {(["en", "id"] as const).map((l) => (
