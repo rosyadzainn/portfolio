@@ -100,10 +100,7 @@ function EducationCard({ item, index }: { item: { period: string; degree: string
       transition={{ delay: index * 0.12, duration: 0.5 }}
       whileHover={{ y: -3, transition: { duration: 0.2 } }}>
       <div style={{ padding: "20px 22px", display: "flex", flexDirection: "column", gap: 10 }}>
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
-          <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.22em", color: "rgba(255,255,255,0.28)" }}>{item.period}</span>
-          <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.16em", padding: "2px 8px", borderRadius: 2, border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.03)", flexShrink: 0 }}>GPA {item.gpa}</span>
-        </div>
+        <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.22em", color: "rgba(255,255,255,0.28)" }}>{item.period}</span>
         <div>
           <span style={{ display: "block", fontSize: 14, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "#fff", marginBottom: 3 }}>{item.school}</span>
           <span style={{ display: "block", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>{item.degree}</span>
