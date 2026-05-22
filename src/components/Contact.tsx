@@ -157,8 +157,8 @@ export default function Contact() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", marginBottom: 2, color: "rgba(255,255,255,0.35)" }}>{t.contact.transmission}</span>
-              <a href="mailto:zainvon@gmail.com" style={{ fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.75)", textDecoration: "none" }} data-hover="true">
-                zainvon@gmail.com
+              <a href="mailto:rosyadz123@gmail.com" style={{ fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.75)", textDecoration: "none" }} data-hover="true">
+                rosyadz123@gmail.com
               </a>
             </div>
 
