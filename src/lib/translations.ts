@@ -6,7 +6,7 @@ const en = {
   },
   hero: {
     badge: "AVAILABLE FOR WORK",
-    subtitle: "Creative Director · 3D Environment · Modern Web",
+    subtitle: "Creative Developer · 3D Environment · Modern Web",
     cta1: "View Projects", cta2: "Enter Experience",
     scroll: "SCROLL",
   },
@@ -87,7 +87,7 @@ const id: typeof en = {
   },
   hero: {
     badge: "TERSEDIA UNTUK PROYEK",
-    subtitle: "Creative Director · 3D Environment · Web Modern",
+    subtitle: "Creative Developer · 3D Environment · Web Modern",
     cta1: "Lihat Proyek", cta2: "Mulai Jelajah",
     scroll: "GULIR",
   },
