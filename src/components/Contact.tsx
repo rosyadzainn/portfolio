@@ -60,7 +60,7 @@ export default function Contact() {
   const [sent, setSent]         = useState(false);
   const [blocked, setBlocked]   = useState(false);
   const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState(false);
+  const [error, setError]       = useState<string | false>(false);
 
   const checkRateLimit = () => {
     const KEY = "cf_submissions";
@@ -104,12 +104,14 @@ export default function Contact() {
         setSent(true);
         setTimeout(() => setSent(false), 5000);
       } else {
-        setError(true);
-        setTimeout(() => setError(false), 5000);
+        const data = await res.json().catch(() => ({}));
+        const msg = res.status === 503 ? t.contact.err_send : (data.error ?? t.contact.err_send);
+        setError(msg);
+        setTimeout(() => setError(false), 6000);
       }
     } catch {
-      setError(true);
-      setTimeout(() => setError(false), 5000);
+      setError(t.contact.err_send);
+      setTimeout(() => setError(false), 6000);
     } finally {
       setLoading(false);
     }
@@ -262,7 +264,7 @@ export default function Contact() {
                   {error && (
                     <motion.p initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
                       style={{ margin: 0, textAlign: "center", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(239,68,68,0.75)" }}>
-                      {t.contact.err_send}
+                      {error}
                     </motion.p>
                   )}
                 </form>

@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Message too short" }, { status: 400 });
 
     const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
+    const { error: resendError } = await resend.emails.send({
       from:    FROM,
       to:      TO,
       replyTo: email,
@@ -44,8 +44,14 @@ export async function POST(req: NextRequest) {
       ].join("\n"),
     });
 
+    if (resendError) {
+      console.error("Resend error:", resendError);
+      return NextResponse.json({ error: resendError.message }, { status: 500 });
+    }
+
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error("Contact route error:", err);
     return NextResponse.json({ error: "Failed to send" }, { status: 500 });
   }
 }
