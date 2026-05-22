@@ -70,20 +70,16 @@ function JourneyItem({ item, index, isLast }: {
   item: { role: string; desc?: string };
   index: number; isLast: boolean;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-30px" });
+  const num    = String(index + 1).padStart(2, "0");
   return (
-    <motion.div ref={ref} style={{ position: "relative", paddingLeft: 26, paddingBottom: isLast ? 0 : 22 }}
-      initial={{ opacity: 0, x: -12 }} animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ delay: index * 0.12, duration: 0.5 }}>
-      {!isLast && (
-        <div style={{ position: "absolute", left: 5, top: 16, bottom: 0, width: 1, background: "linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%)" }} />
-      )}
-      <motion.div style={{ position: "absolute", left: 0, top: 3, width: 12, height: 12, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.28)", background: "#000", display: "flex", alignItems: "center", justifyContent: "center" }}
-        initial={{ scale: 0 }} animate={inView ? { scale: 1 } : {}} transition={{ delay: index * 0.12 + 0.15, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
-        <div style={{ width: 4, height: 4, borderRadius: "50%", background: "#fff" }} />
-      </motion.div>
-      <span style={{ fontSize: 13, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "#fff" }}>{item.role}</span>
+    <motion.div ref={ref}
+      initial={{ opacity: 0, y: 10 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: index * 0.12, duration: 0.5 }}
+      style={{ paddingTop: 22, paddingBottom: isLast ? 0 : 22, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+      <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.28em", color: "rgba(255,255,255,0.22)" }}>{num}</span>
+      <span style={{ display: "block", fontSize: 14, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "#fff", marginTop: 9, lineHeight: 1.35 }}>{item.role}</span>
     </motion.div>
   );
 }
@@ -178,47 +174,51 @@ function AboutPane({ isMobile, t }: { isMobile: boolean; t: TT }) {
   const journey      = t.about.journey;
   const education    = EDUCATION_META.map((meta, i) => ({ ...meta, ...t.about.edu[i] }));
 
+  const labelStyle = { margin: "0 0 20px", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.28)" } as const;
+
   return (
     <div>
+      {/* Intro + Journey — 2 col */}
       <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 72 }}>
-        {/* Left */}
-        <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 32 : 44 }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.6 }}
-            style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <p style={{ margin: 0, fontSize: 15, lineHeight: 1.85, color: "rgba(255,255,255,0.58)" }}>{t.about.p1}</p>
-            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.85, color: "rgba(255,255,255,0.36)" }}>{t.about.p2}</p>
-            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.85, color: "rgba(255,255,255,0.24)" }}>{t.about.p3}</p>
-          </motion.div>
-          <div>
-            <motion.p style={{ margin: "0 0 14px", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.28)" }}
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              {t.about.cap_label}
-            </motion.p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {capabilities.map((c, i) => <CapabilityCard key={i} item={c} index={i} />)}
-            </div>
-          </div>
-        </div>
-        {/* Right */}
+        {/* Left: paragraphs */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.6 }}
+          style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <p style={{ margin: 0, fontSize: 15, lineHeight: 1.9, color: "rgba(255,255,255,0.58)" }}>{t.about.p1}</p>
+          <p style={{ margin: 0, fontSize: 13, lineHeight: 1.9, color: "rgba(255,255,255,0.36)" }}>{t.about.p2}</p>
+          <p style={{ margin: 0, fontSize: 13, lineHeight: 1.9, color: "rgba(255,255,255,0.24)" }}>{t.about.p3}</p>
+        </motion.div>
+        {/* Right: journey */}
         <div>
-          <motion.p style={{ margin: "0 0 28px", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.28)" }}
+          <motion.p style={labelStyle}
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
             {t.about.journey_label}
           </motion.p>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div>
             {journey.map((item, i) => (
               <JourneyItem key={i} item={item} index={i} isLast={i === journey.length - 1} />
             ))}
           </div>
         </div>
       </div>
+
+      {/* Capabilities — 3-col grid */}
+      <div style={{ marginTop: isMobile ? 56 : 72 }}>
+        <motion.p style={labelStyle}
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+          {t.about.cap_label}
+        </motion.p>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 8 : 12 }}>
+          {capabilities.map((c, i) => <CapabilityCard key={i} item={c} index={i} />)}
+        </div>
+      </div>
+
       {/* Education */}
-      <div style={{ marginTop: isMobile ? 48 : 72 }}>
-        <motion.p style={{ margin: "0 0 28px", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.28)" }}
+      <div style={{ marginTop: isMobile ? 56 : 72 }}>
+        <motion.p style={labelStyle}
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
           {t.about.edu_label}
         </motion.p>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : "0 72px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : 24 }}>
           {education.map((item, i) => <EducationCard key={i} item={item} index={i} />)}
         </div>
       </div>
