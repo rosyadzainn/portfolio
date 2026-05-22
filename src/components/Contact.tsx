@@ -65,13 +65,21 @@ export default function Contact() {
   const checkRateLimit = () => {
     const KEY = "cf_submissions";
     const WINDOW = 60 * 60 * 1000;
-    const MAX = 2;
+    const MAX = 3;
     const now = Date.now();
     const stored: number[] = JSON.parse(localStorage.getItem(KEY) ?? "[]");
     const recent = stored.filter(ts => now - ts < WINDOW);
     if (recent.length >= MAX) return false;
-    localStorage.setItem(KEY, JSON.stringify([...recent, now]));
     return true;
+  };
+
+  const recordSubmission = () => {
+    const KEY = "cf_submissions";
+    const WINDOW = 60 * 60 * 1000;
+    const now = Date.now();
+    const stored: number[] = JSON.parse(localStorage.getItem(KEY) ?? "[]");
+    const recent = stored.filter(ts => now - ts < WINDOW);
+    localStorage.setItem(KEY, JSON.stringify([...recent, now]));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -101,6 +109,7 @@ export default function Contact() {
         }),
       });
       if (res.ok) {
+        recordSubmission();
         setSent(true);
         setTimeout(() => setSent(false), 5000);
       } else {
