@@ -6,26 +6,26 @@ const en = {
   },
   hero: {
     badge: "AVAILABLE FOR WORK",
-    subtitle: "Creative Director · Real-Time 3D · Modern Web",
+    subtitle: "Creative Director · 3D Environment · Modern Web",
     cta1: "View Projects", cta2: "Enter Experience",
     scroll: "SCROLL",
   },
   about: {
     label: "ABOUT", h1: "The Mind", h2: "Behind the Work",
-    p1: "I design and direct cinematic web experiences — bridging premium visual design, real-time 3D, and modern AI-augmented development workflows.",
-    p2: "I'm Rosyad — a Creative Developer working at the intersection of design, real-time 3D, and modern web. I help founders, agencies, and brands deliver digital experiences that don't just inform — they leave an impression.",
+    p1: "I design and direct cinematic web experiences — bridging premium visual design, 3D environment, and modern AI-augmented development workflows.",
+    p2: "I'm Rosyad — a Creative Developer working at the intersection of design, 3D environment, and modern web. I help founders, agencies, and brands deliver digital experiences that don't just inform — they leave an impression.",
     p3: "From futuristic interfaces to cinematic environments, every project is crafted with a balance of aesthetics, performance, and experience.",
     cap_label: "CAPABILITIES", journey_label: "DIGITAL JOURNEY", edu_label: "EDUCATION",
     caps: [
       { title: "Design & Creative Direction", desc: "Designing design systems and brand identities in Figma, with cinematic vision and premium-level precision." },
-      { title: "Real-Time 3D",                desc: "Creating cinematic environments and immersive worlds using Unreal Engine 5 (Lumen, Nanite, Megascans)." },
+      { title: "3D Environment",                desc: "Creating cinematic environments and immersive worlds using Unreal Engine 5 (Lumen, Nanite, Megascans)." },
       { title: "Modern Workflow",             desc: "Leading project development through AI-augmented modern workflows and collaboration with trusted technical partners." },
     ],
     journey: [
       { role: "Videographer & Multimedia Support", desc: "Produced visual content for a formal clothing brand — developing storytelling and creative production workflows." },
       { role: "Creative Director & Multimedia Lead", desc: "Directing website development and brand identity for a medical device manufacturer — managing multimedia production and medical industry packaging design." },
       { role: "Creative Lead & Multimedia Director", desc: "Leading creative direction and multimedia production for Pendi Group — brand identity, website, and corporate visual systems." },
-      { role: "Real-Time 3D Exploration",           desc: "Expanding capabilities into cinematic 3D environments and immersive world-building using Unreal Engine 5 workflows." },
+      { role: "3D Environment Exploration",           desc: "Expanding capabilities into cinematic 3D environments and immersive world-building using Unreal Engine 5 workflows." },
     ],
     edu: [
       { degree: "Master's Degree",            field: "Management Information Systems and Services" },
@@ -45,8 +45,8 @@ const en = {
   },
   skills: {
     label: "SKILLS", h1: "Technical", h2: "Arsenal",
-    sub: "A curated set of tools and disciplines across design, real-time 3D, multimedia production, and modern creative workflow.",
-    groups: ["DESIGN & DIRECTION", "REAL-TIME 3D", "MULTIMEDIA & VISUAL", "MODERN WORKFLOW"],
+    sub: "A curated set of tools and disciplines across design, 3D environment, multimedia production, and modern creative workflow.",
+    groups: ["DESIGN & DIRECTION", "3D ENVIRONMENT", "MULTIMEDIA & VISUAL", "MODERN WORKFLOW"],
   },
   services: {
     label: "PROCESS", h1: "How I", h2: "Work",
@@ -61,8 +61,8 @@ const en = {
     ],
   },
   env: {
-    label: "ENVIRONMENTS", h1: "Real-Time", h2: "Worlds",
-    sub: "Exploring cinematic real-time environments and immersive world-building using Unreal Engine 5 — bridging the gap between game development and interactive storytelling.",
+    label: "3D ENVIRONMENTS", h1: "3D", h2: "Environments",
+    sub: "Exploring cinematic 3D environments and immersive world-building using Unreal Engine 5 — bridging the gap between game development and interactive storytelling.",
   },
   contact: {
     label: "CONTACT", h1: "Let's Build", h2: "Something Extraordinary",
@@ -88,26 +88,26 @@ const id: typeof en = {
   },
   hero: {
     badge: "TERSEDIA UNTUK PROYEK",
-    subtitle: "Creative Director · Real-Time 3D · Web Modern",
+    subtitle: "Creative Director · 3D Environment · Web Modern",
     cta1: "Lihat Proyek", cta2: "Mulai Jelajah",
     scroll: "GULIR",
   },
   about: {
     label: "TENTANG", h1: "Pikiran di Balik", h2: "Karya Ini",
-    p1: "Saya merancang dan mengarahkan pengalaman web sinematik — menjembatani desain visual premium, real-time 3D, dan alur kerja pengembangan modern berbasis AI.",
-    p2: "Saya Rosyad — Creative Developer yang bekerja di persimpangan desain, real-time 3D, dan web modern. Saya membantu founder, agency, dan brand mengirim pengalaman digital yang tidak hanya menginformasikan — tapi meninggalkan kesan.",
+    p1: "Saya merancang dan mengarahkan pengalaman web sinematik — menjembatani desain visual premium, 3D environment, dan alur kerja pengembangan modern berbasis AI.",
+    p2: "Saya Rosyad — Creative Developer yang bekerja di persimpangan desain, 3D environment, dan web modern. Saya membantu founder, agency, dan brand mengirim pengalaman digital yang tidak hanya menginformasikan — tapi meninggalkan kesan.",
     p3: "Dari antarmuka futuristik hingga lingkungan sinematik, setiap proyek dirancang dengan keseimbangan estetika, performa, dan pengalaman.",
     cap_label: "KEMAMPUAN", journey_label: "PERJALANAN DIGITAL", edu_label: "PENDIDIKAN",
     caps: [
       { title: "Desain & Arah Kreatif", desc: "Merancang sistem desain dan identitas brand di Figma, dengan visi sinematik dan presisi tingkat premium." },
-      { title: "Real-Time 3D",          desc: "Menciptakan lingkungan sinematik dan dunia imersif menggunakan Unreal Engine 5 (Lumen, Nanite, Megascans)." },
+      { title: "3D Environment",          desc: "Menciptakan lingkungan sinematik dan dunia imersif menggunakan Unreal Engine 5 (Lumen, Nanite, Megascans)." },
       { title: "Alur Kerja Modern",     desc: "Memimpin pengembangan proyek lewat workflow modern berbasis AI dan kolaborasi dengan partner teknis terpercaya." },
     ],
     journey: [
       { role: "Videografer & Dukungan Multimedia", desc: "Memproduksi konten visual untuk brand pakaian formal — mengembangkan storytelling dan alur kerja produksi kreatif." },
       { role: "Creative Director & Multimedia Lead", desc: "Mengarahkan pengembangan website dan identitas brand untuk produsen alat kesehatan — mengelola produksi multimedia dan desain kemasan industri medis." },
       { role: "Creative Lead & Multimedia Director", desc: "Memimpin arah kreatif dan produksi multimedia untuk Pendi Group — identitas brand, website, dan sistem visual perusahaan." },
-      { role: "Eksplorasi Real-Time 3D",            desc: "Memperluas kemampuan ke lingkungan 3D sinematik dan world-building imersif menggunakan alur kerja Unreal Engine 5." },
+      { role: "Eksplorasi 3D Environment",            desc: "Memperluas kemampuan ke lingkungan 3D sinematik dan world-building imersif menggunakan alur kerja Unreal Engine 5." },
     ],
     edu: [
       { degree: "Magister",        field: "Sistem dan Layanan Informasi Manajemen" },
@@ -127,8 +127,8 @@ const id: typeof en = {
   },
   skills: {
     label: "KEAHLIAN", h1: "Keahlian", h2: "Teknis",
-    sub: "Kumpulan alat dan disiplin pilihan di bidang desain, real-time 3D, produksi multimedia, dan alur kerja kreatif modern.",
-    groups: ["DESAIN & ARAHAN", "REAL-TIME 3D", "MULTIMEDIA & VISUAL", "ALUR KERJA MODERN"],
+    sub: "Kumpulan alat dan disiplin pilihan di bidang desain, 3D environment, produksi multimedia, dan alur kerja kreatif modern.",
+    groups: ["DESAIN & ARAHAN", "3D ENVIRONMENT", "MULTIMEDIA & VISUAL", "ALUR KERJA MODERN"],
   },
   services: {
     label: "PROSES", h1: "Cara Saya", h2: "Bekerja",
@@ -143,8 +143,8 @@ const id: typeof en = {
     ],
   },
   env: {
-    label: "LINGKUNGAN", h1: "Dunia", h2: "Real-Time",
-    sub: "Menjelajahi lingkungan real-time sinematik dan pembangunan dunia imersif menggunakan Unreal Engine 5 — menjembatani game development dan interactive storytelling.",
+    label: "3D ENVIRONMENTS", h1: "3D", h2: "Environments",
+    sub: "Menjelajahi lingkungan 3D sinematik dan pembangunan dunia imersif menggunakan Unreal Engine 5 — menjembatani game development dan interactive storytelling.",
   },
   contact: {
     label: "KONTAK", h1: "Mari Wujudkan", h2: "Sesuatu yang Luar Biasa",
