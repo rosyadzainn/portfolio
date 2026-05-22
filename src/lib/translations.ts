@@ -22,10 +22,9 @@ const en = {
       { title: "Modern Workflow",             desc: "Leading project development through AI-augmented modern workflows and collaboration with trusted technical partners." },
     ],
     journey: [
-      { role: "Videographer & Multimedia Support", desc: "Produced visual content for a formal clothing brand — developing storytelling and creative production workflows." },
-      { role: "Creative Director & Multimedia Lead", desc: "Directing website development and brand identity for a medical device manufacturer — managing multimedia production and medical industry packaging design." },
-      { role: "Creative Lead & Multimedia Director", desc: "Leading creative direction and multimedia production for Pendi Group — brand identity, website, and corporate visual systems." },
-      { role: "3D Environment Exploration",           desc: "Expanding capabilities into cinematic 3D environments and immersive world-building using Unreal Engine 5 workflows." },
+      { role: "Videographer & Multimedia Support", desc: "" },
+      { role: "Creative Lead & Multimedia Director", desc: "" },
+      { role: "3D Environment Exploration",          desc: "" },
     ],
     edu: [
       { degree: "Master's Degree",            field: "Management Information Systems and Services" },
@@ -104,10 +103,9 @@ const id: typeof en = {
       { title: "Alur Kerja Modern",     desc: "Memimpin pengembangan proyek lewat workflow modern berbasis AI dan kolaborasi dengan partner teknis terpercaya." },
     ],
     journey: [
-      { role: "Videografer & Dukungan Multimedia", desc: "Memproduksi konten visual untuk brand pakaian formal — mengembangkan storytelling dan alur kerja produksi kreatif." },
-      { role: "Creative Director & Multimedia Lead", desc: "Mengarahkan pengembangan website dan identitas brand untuk produsen alat kesehatan — mengelola produksi multimedia dan desain kemasan industri medis." },
-      { role: "Creative Lead & Multimedia Director", desc: "Memimpin arah kreatif dan produksi multimedia untuk Pendi Group — identitas brand, website, dan sistem visual perusahaan." },
-      { role: "Eksplorasi 3D Environment",            desc: "Memperluas kemampuan ke lingkungan 3D sinematik dan world-building imersif menggunakan alur kerja Unreal Engine 5." },
+      { role: "Videografer & Dukungan Multimedia", desc: "" },
+      { role: "Creative Lead & Multimedia Director", desc: "" },
+      { role: "Eksplorasi 3D Environment",           desc: "" },
     ],
     edu: [
       { degree: "Magister",        field: "Sistem dan Layanan Informasi Manajemen" },

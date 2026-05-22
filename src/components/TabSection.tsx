@@ -67,13 +67,13 @@ function CapabilityCard({ item, index }: { item: { icon: string; title: string; 
 }
 
 function JourneyItem({ item, index, isLast }: {
-  item: { role: string; desc: string };
+  item: { role: string; desc?: string };
   index: number; isLast: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-30px" });
   return (
-    <motion.div ref={ref} style={{ position: "relative", paddingLeft: 26, paddingBottom: isLast ? 0 : 28 }}
+    <motion.div ref={ref} style={{ position: "relative", paddingLeft: 26, paddingBottom: isLast ? 0 : 22 }}
       initial={{ opacity: 0, x: -12 }} animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ delay: index * 0.12, duration: 0.5 }}>
       {!isLast && (
@@ -83,10 +83,7 @@ function JourneyItem({ item, index, isLast }: {
         initial={{ scale: 0 }} animate={inView ? { scale: 1 } : {}} transition={{ delay: index * 0.12 + 0.15, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
         <div style={{ width: 4, height: 4, borderRadius: "50%", background: "#fff" }} />
       </motion.div>
-      <div style={{ marginBottom: 6 }}>
-        <span style={{ fontSize: 13, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "#fff" }}>{item.role}</span>
-      </div>
-      <p style={{ margin: 0, fontSize: 12, lineHeight: 1.7, color: "rgba(255,255,255,0.32)" }}>{item.desc}</p>
+      <span style={{ fontSize: 13, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "#fff" }}>{item.role}</span>
     </motion.div>
   );
 }
@@ -100,7 +97,6 @@ function EducationCard({ item, index }: { item: { period: string; degree: string
       transition={{ delay: index * 0.12, duration: 0.5 }}
       whileHover={{ y: -3, transition: { duration: 0.2 } }}>
       <div style={{ padding: "20px 22px", display: "flex", flexDirection: "column", gap: 10 }}>
-        <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.22em", color: "rgba(255,255,255,0.28)" }}>{item.period}</span>
         <div>
           <span style={{ display: "block", fontSize: 14, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "#fff", marginBottom: 3 }}>{item.school}</span>
           <span style={{ display: "block", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>{item.degree}</span>
