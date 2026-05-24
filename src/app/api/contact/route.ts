@@ -1,10 +1,7 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
-// Switch FROM back to "contact@rosyadzain.com" and TO to "zainvon@gmail.com"
-// once rosyadzain.com is verified in Resend (resend.com/domains → click Verify).
-// DNS records are already live — Resend just needs to re-check them.
-const FROM = "Portfolio Contact <onboarding@resend.dev>";
+const FROM = "Portfolio Contact <contact@rosyadzain.com>";
 const TO   = "rosyadz123@gmail.com";
 
 export async function POST(req: NextRequest) {
