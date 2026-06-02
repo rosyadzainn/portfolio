@@ -26,14 +26,14 @@ const PROJECTS_META = [
     id: 3, slug: "pendi",
     title: "PENDI GROUP",
     url: "https://www.pendi.id",
-    tech: ["WordPress", "Figma"],
+    tech: ["Next.js", "React", "Figma"],
     category: "Web · Corporate", year: "2025", status: "LIVE", type: "CLIENT WORK",
   },
   {
     id: 4, slug: "pendihijau",
     title: "PENDI HIJAU",
     url: "https://www.pendihijau.com",
-    tech: ["WordPress", "Figma"],
+    tech: ["Next.js", "React", "Figma"],
     category: "Web · Corporate", year: "2025", status: "LIVE", type: "CLIENT WORK",
   },
 ];
