@@ -7,10 +7,10 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { useLanguage } from "@/context/LanguageContext";
 
 const SKILL_TECH = [
-  ["Figma", "Design Systems", "UI/UX Design", "Brand Identity", "Creative Direction"],
+  ["Figma", "Design Systems", "UI/UX Design", "Brand Identity", "Product Strategy"],
   ["Unreal Engine 5", "Lumen", "Nanite", "Megascans", "MetaHuman", "Environment Art"],
   ["Adobe Photoshop", "Adobe Illustrator", "Adobe Premiere Pro", "After Effects", "Motion Graphics", "Video Production"],
-  ["AI-Augmented Development", "Figma-to-Code", "WordPress", "Vercel Deployment", "Project Direction", "Vendor Coordination"],
+  ["AI-Powered Development", "Figma-to-Code", "WordPress", "Vercel Deployment", "Project Direction", "Vendor Coordination"],
 ];
 
 function SkillGroup({ label, skills, index }: { label: string; skills: string[]; index: number }) {

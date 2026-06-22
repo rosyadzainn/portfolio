@@ -12,18 +12,18 @@ const en = {
   },
   about: {
     label: "ABOUT", h1: "The Mind", h2: "Behind the Work",
-    p1: "I design and direct cinematic web experiences — bridging premium visual design, 3D environment, and modern AI-augmented development workflows.",
-    p2: "I'm Rosyad — a Creative Developer working at the intersection of design, 3D environment, and modern web. I help founders, agencies, and brands deliver digital experiences that don't just inform — they leave an impression.",
+    p1: "I design products and ship them — from premium interfaces and brand systems to AI-powered apps, with a cinematic 3D edge when a project calls for it.",
+    p2: "I'm Rosyad — a product designer working at the intersection of design, 3D, and modern web. I help teams and brands turn ideas into finished products that don't just inform — they leave an impression.",
     p3: "From futuristic interfaces to cinematic environments, every project is crafted with a balance of aesthetics, performance, and experience.",
     cap_label: "CAPABILITIES", journey_label: "DIGITAL JOURNEY", edu_label: "EDUCATION",
     caps: [
-      { title: "Design & Creative Direction", desc: "Designing design systems and brand identities in Figma, with cinematic vision and premium-level precision." },
+      { title: "Product & UI/UX Design",       desc: "Designing interfaces, design systems, and brand identities in Figma — premium-level precision, from concept to shipped." },
       { title: "3D Environment",                desc: "Creating cinematic environments and immersive worlds using Unreal Engine 5 (Lumen, Nanite, Megascans)." },
-      { title: "Modern Workflow",             desc: "Leading project development through AI-augmented modern workflows and collaboration with trusted technical partners." },
+      { title: "AI Products",                  desc: "Designing AI-powered products — from multi-agent tools to AI platforms, shipped end-to-end." },
     ],
     journey: [
       { role: "Videographer & Multimedia Support", desc: "" },
-      { role: "Creative Lead & Multimedia Director", desc: "" },
+      { role: "Product & Brand Designer",             desc: "" },
       { role: "3D Environment Exploration",          desc: "" },
     ],
     edu: [
@@ -55,7 +55,7 @@ const en = {
     steps: [
       { num: "01", title: "DISCOVERY",  desc: "We start with a conversation. I learn about your vision, audience, and what makes your brand distinct — before anything is designed or built." },
       { num: "02", title: "DESIGN",     desc: "I build the full visual direction in Figma — design system, layout, identity — before a single line of code is written. You see it before it exists." },
-      { num: "03", title: "BUILD",      desc: "Using AI-augmented workflows and trusted technical partners, the experience is brought to life with precision and creative control throughout." },
+      { num: "03", title: "BUILD",      desc: "Using AI-powered workflows and trusted technical partners, the experience is brought to life with precision and creative control throughout." },
       { num: "04", title: "DELIVER",    desc: "Full QA, deployment, and handoff. I stay engaged until it's right — then make sure you know how to own it going forward." },
     ],
   },
@@ -93,18 +93,18 @@ const id: typeof en = {
   },
   about: {
     label: "TENTANG", h1: "Pikiran di Balik", h2: "Karya Ini",
-    p1: "Saya merancang dan mengarahkan pengalaman web sinematik — menjembatani desain visual premium, 3D environment, dan alur kerja pengembangan modern berbasis AI.",
-    p2: "Saya Rosyad — Creative Developer yang bekerja di persimpangan desain, 3D environment, dan web modern. Saya membantu founder, agency, dan brand mengirim pengalaman digital yang tidak hanya menginformasikan — tapi meninggalkan kesan.",
+    p1: "Saya merancang produk dan mengeksekusinya — dari antarmuka premium dan sistem brand hingga aplikasi bertenaga AI, dengan sentuhan 3D sinematik saat proyek membutuhkannya.",
+    p2: "Saya Rosyad — product designer yang bekerja di persimpangan desain, 3D, dan web modern. Saya membantu tim dan brand mengubah ide menjadi produk jadi yang tidak hanya menginformasikan — tapi meninggalkan kesan.",
     p3: "Dari antarmuka futuristik hingga lingkungan sinematik, setiap proyek dirancang dengan keseimbangan estetika, performa, dan pengalaman.",
     cap_label: "KEMAMPUAN", journey_label: "PERJALANAN DIGITAL", edu_label: "PENDIDIKAN",
     caps: [
-      { title: "Desain & Arah Kreatif", desc: "Merancang sistem desain dan identitas brand di Figma, dengan visi sinematik dan presisi tingkat premium." },
+      { title: "Desain Produk & UI/UX",  desc: "Merancang antarmuka, sistem desain, dan identitas brand di Figma — presisi tingkat premium, dari konsep hingga rilis." },
       { title: "3D Environment",          desc: "Menciptakan lingkungan sinematik dan dunia imersif menggunakan Unreal Engine 5 (Lumen, Nanite, Megascans)." },
-      { title: "Alur Kerja Modern",     desc: "Memimpin pengembangan proyek lewat workflow modern berbasis AI dan kolaborasi dengan partner teknis terpercaya." },
+      { title: "Produk AI",             desc: "Merancang produk bertenaga AI — dari tools multi-agent hingga platform AI, dikerjakan end-to-end." },
     ],
     journey: [
       { role: "Videografer & Dukungan Multimedia", desc: "" },
-      { role: "Creative Lead & Multimedia Director", desc: "" },
+      { role: "Product & Brand Designer",             desc: "" },
       { role: "Eksplorasi 3D Environment",           desc: "" },
     ],
     edu: [
