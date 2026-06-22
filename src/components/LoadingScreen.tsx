@@ -149,7 +149,7 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                     transition={{ delay: 0.45, duration: 0.4 }}
                   >
-                    CREATIVE DEVELOPER
+                    PRODUCT DESIGNER
                   </motion.p>
                 </div>
               </motion.div>
