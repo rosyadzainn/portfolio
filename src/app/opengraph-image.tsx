@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime     = "edge";
-export const alt         = "Rosyad Zain — Creative Director · 3D Environment · Modern Web";
+export const alt         = "Rosyad Zain — Product Designer";
 export const size        = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -49,7 +49,7 @@ export default function OGImage() {
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
             <div style={{ height: 1, width: 56, background: "rgba(255,255,255,0.5)" }} />
             <span style={{ fontSize: 13, letterSpacing: "0.28em", color: "rgba(255,255,255,0.4)" }}>
-              CREATIVE DIRECTOR · 3D ENVIRONMENT
+              PRODUCT DESIGNER · UI/UX · WEB · 3D
             </span>
           </div>
 
@@ -63,14 +63,14 @@ export default function OGImage() {
 
           {/* Subtitle */}
           <div style={{ marginTop: 28, fontSize: 18, color: "rgba(255,255,255,0.45)", letterSpacing: "0.04em", display: "flex" }}>
-            Design Direction · 3D Environment · Modern Web
+            Product Design · UI/UX · Web · AI · 3D
           </div>
         </div>
 
         {/* Bottom bar */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", zIndex: 1 }}>
           <div style={{ display: "flex", gap: 10 }}>
-            {["CREATIVE DIR.", "3D ENVIRONMENT", "MODERN WEB"].map((tag) => (
+            {["PRODUCT DESIGN", "UI/UX", "WEB · AI · 3D"].map((tag) => (
               <div key={tag} style={{
                 fontSize: 10, letterSpacing: "0.18em", padding: "4px 12px",
                 border: "1px solid rgba(255,255,255,0.12)",
