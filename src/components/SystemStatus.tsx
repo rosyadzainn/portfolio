@@ -89,7 +89,7 @@ export default function SystemStatus() {
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.25 }}
                 style={{
-                  fontSize: 8, fontFamily: "Space Grotesk, sans-serif",
+                  fontSize: 8, fontFamily: "Plus Jakarta Sans, sans-serif",
                   fontWeight: 700, letterSpacing: "0.28em",
                   color: "rgba(255,255,255,0.22)",
                 }}
@@ -117,7 +117,7 @@ export default function SystemStatus() {
                   flexShrink: 0,
                 }} />
                 <span style={{
-                  fontSize: 8, fontFamily: "Space Grotesk, sans-serif",
+                  fontSize: 8, fontFamily: "Plus Jakarta Sans, sans-serif",
                   fontWeight: 700, letterSpacing: "0.28em",
                   color: "rgba(255,255,255,0.18)",
                 }}>

@@ -243,7 +243,7 @@ function VideoFrame({ src, label, env, index, seekTo }: {
           </button>
 
           {/* Timecode */}
-          <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.55)", letterSpacing: "0.04em", flexShrink: 0, minWidth: 72 }}>
+          <span style={{ fontSize: 9, fontFamily: "Plus Jakarta Sans, sans-serif", color: "rgba(255,255,255,0.55)", letterSpacing: "0.04em", flexShrink: 0, minWidth: 72 }}>
             {fmt(current)} / {fmt(duration)}
           </span>
 
@@ -273,7 +273,7 @@ function VideoFrame({ src, label, env, index, seekTo }: {
           </button>
 
           {/* ENV label */}
-          <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.18em", color: "rgba(255,255,255,0.22)", flexShrink: 0 }}>
+          <span style={{ fontSize: 8, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.18em", color: "rgba(255,255,255,0.22)", flexShrink: 0 }}>
             {env}
           </span>
         </div>
@@ -281,7 +281,7 @@ function VideoFrame({ src, label, env, index, seekTo }: {
         {/* Top-left label */}
         <div style={{ position: "absolute", top: 12, left: 14, zIndex: 4, display: "flex", alignItems: "center", gap: 6 }}>
           <span style={{ width: 4, height: 4, borderRadius: "50%", background: "rgba(255,255,255,0.5)", boxShadow: "0 0 5px rgba(255,255,255,0.35)", display: "inline-block" }} />
-          <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", color: "rgba(255,255,255,0.4)" }}>{label}</span>
+          <span style={{ fontSize: 8, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.2em", color: "rgba(255,255,255,0.4)" }}>{label}</span>
         </div>
       </div>
     </motion.div>
@@ -322,13 +322,13 @@ export default function RealTime3D() {
             transition={{ duration: 0.5 }}
           >
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
+            <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
               02 / {t.env.label}
             </span>
           </motion.div>
 
           <motion.h2
-            style={{ margin: "0 0 20px", fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)", lineHeight: 1.06 }}
+            style={{ margin: "0 0 20px", fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)", lineHeight: 1.06 }}
             initial={{ opacity: 0, y: 22 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.12, duration: 0.6 }}
           >
@@ -361,7 +361,7 @@ export default function RealTime3D() {
         >
           {TOOLS.map((tool) => (
             <span key={tool} style={{
-              fontSize: 9, fontFamily: "Space Grotesk, sans-serif",
+              fontSize: 9, fontFamily: "Plus Jakarta Sans, sans-serif",
               padding: "3px 12px", borderRadius: 2,
               background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)",
               color: "rgba(255,255,255,0.28)", letterSpacing: "0.15em",

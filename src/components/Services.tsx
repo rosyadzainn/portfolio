@@ -30,7 +30,7 @@ function StepCard({ step, index }: {
       {/* Step number — large ghost behind */}
       <div style={{
         position: "absolute", top: 10, right: 0,
-        fontFamily: "Exo 2, sans-serif", fontWeight: 800,
+        fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 800,
         fontSize: "clamp(64px, 8vw, 96px)",
         color: "rgba(255,255,255,0.03)",
         lineHeight: 1, letterSpacing: "-0.02em",
@@ -47,7 +47,7 @@ function StepCard({ step, index }: {
         style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}
       >
         <span style={{
-          fontSize: 9, fontFamily: "Space Grotesk, sans-serif",
+          fontSize: 9, fontFamily: "Plus Jakarta Sans, sans-serif",
           letterSpacing: "0.28em", color: "rgba(255,255,255,0.28)",
         }}>
           {step.num}
@@ -62,7 +62,7 @@ function StepCard({ step, index }: {
         transition={{ delay: index * 0.12 + 0.18, duration: 0.5 }}
         style={{
           margin: "0 0 14px",
-          fontFamily: "Exo 2, sans-serif", fontWeight: 800,
+          fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 800,
           fontSize: "clamp(1.1rem, 2vw, 1.4rem)",
           letterSpacing: "0.06em", color: "#fff", lineHeight: 1.1,
         }}
@@ -78,7 +78,7 @@ function StepCard({ step, index }: {
         style={{
           margin: 0, fontSize: 13, lineHeight: 1.8,
           color: "rgba(255,255,255,0.38)",
-          fontFamily: "Space Grotesk, sans-serif",
+          fontFamily: "Plus Jakarta Sans, sans-serif",
           maxWidth: 340,
         }}
       >
@@ -115,13 +115,13 @@ export default function Services() {
             transition={{ duration: 0.5 }}
           >
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
+            <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
               04 / {t.services.label}
             </span>
           </motion.div>
 
           <motion.h2
-            style={{ margin: "0 0 20px", fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)", lineHeight: 1.06 }}
+            style={{ margin: "0 0 20px", fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)", lineHeight: 1.06 }}
             initial={{ opacity: 0, y: 22 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.12, duration: 0.6 }}
           >
@@ -160,7 +160,7 @@ export default function Services() {
           style={{ marginTop: isMobile ? 40 : 56, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 14 }}
         >
           <p style={{
-            margin: 0, fontSize: 12, fontFamily: "Space Grotesk, sans-serif",
+            margin: 0, fontSize: 12, fontFamily: "Plus Jakarta Sans, sans-serif",
             color: "rgba(255,255,255,0.25)", letterSpacing: "0.04em",
           }}>
             {t.services.cta_sub}
@@ -170,7 +170,7 @@ export default function Services() {
             style={{
               display: "inline-flex", alignItems: "center", gap: 10,
               background: "none", border: "none", padding: 0,
-              fontFamily: "Space Grotesk, sans-serif", fontWeight: 700,
+              fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 700,
               fontSize: 13, letterSpacing: "0.1em", color: "rgba(255,255,255,0.65)",
               cursor: "pointer",
             }}

@@ -38,7 +38,7 @@ function SectionHeader({ label }: { label: string }) {
       transition={{ duration: 0.5 }}
     >
       <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
-      <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
+      <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
         {label}
       </span>
     </motion.div>
@@ -58,7 +58,7 @@ function CapabilityCard({ item, index }: { item: { icon: string; title: string; 
       <div style={{ padding: "16px 20px", display: "flex", gap: 14, alignItems: "flex-start" }}>
         <span style={{ fontSize: 15, color: "rgba(255,255,255,0.4)", flexShrink: 0, lineHeight: 1, paddingTop: 2 }}>{item.icon}</span>
         <div>
-          <h3 style={{ margin: "0 0 5px", fontSize: 13, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "#fff" }}>{item.title}</h3>
+          <h3 style={{ margin: "0 0 5px", fontSize: 13, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, color: "#fff" }}>{item.title}</h3>
           <p style={{ margin: 0, fontSize: 12, lineHeight: 1.7, color: "rgba(255,255,255,0.36)" }}>{item.desc}</p>
         </div>
       </div>
@@ -78,8 +78,8 @@ function JourneyItem({ item, index, isLast }: {
       initial={{ opacity: 0, y: 10 }} animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.12, duration: 0.5 }}
       style={{ paddingTop: 22, paddingBottom: isLast ? 0 : 22, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-      <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.28em", color: "rgba(255,255,255,0.22)" }}>{num}</span>
-      <span style={{ display: "block", fontSize: 14, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "#fff", marginTop: 9, lineHeight: 1.35 }}>{item.role}</span>
+      <span style={{ fontSize: 9, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.28em", color: "rgba(255,255,255,0.22)" }}>{num}</span>
+      <span style={{ display: "block", fontSize: 14, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, color: "#fff", marginTop: 9, lineHeight: 1.35 }}>{item.role}</span>
     </motion.div>
   );
 }
@@ -94,9 +94,9 @@ function EducationCard({ item, index }: { item: { period: string; degree: string
       whileHover={{ y: -3, transition: { duration: 0.2 } }}>
       <div style={{ padding: "20px 22px", display: "flex", flexDirection: "column", gap: 10 }}>
         <div>
-          <span style={{ display: "block", fontSize: 14, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "#fff", marginBottom: 3 }}>{item.school}</span>
-          <span style={{ display: "block", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>{item.degree}</span>
-          <span style={{ display: "block", fontSize: 10, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.24)", lineHeight: 1.5 }}>{item.field}</span>
+          <span style={{ display: "block", fontSize: 14, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, color: "#fff", marginBottom: 3 }}>{item.school}</span>
+          <span style={{ display: "block", fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif", color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>{item.degree}</span>
+          <span style={{ display: "block", fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", color: "rgba(255,255,255,0.24)", lineHeight: 1.5 }}>{item.field}</span>
         </div>
       </div>
     </motion.div>
@@ -115,14 +115,14 @@ function SkillGroup({ label, skills, index }: { label: string; skills: string[];
       style={{ padding: "28px 28px 24px", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 10, background: "rgba(255,255,255,0.015)" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 18 }}>
         <div style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(255,255,255,0.35)", flexShrink: 0 }} />
-        <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.28em", color: "rgba(255,255,255,0.32)" }}>{label}</span>
+        <span style={{ fontSize: 9, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.28em", color: "rgba(255,255,255,0.32)" }}>{label}</span>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
         {skills.map((skill, si) => (
           <motion.span key={skill}
             initial={{ opacity: 0, scale: 0.88 }} animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: index * 0.1 + si * 0.045 + 0.18, duration: 0.32, ease: "easeOut" }}
-            style={{ fontSize: 11, fontFamily: "Space Grotesk, sans-serif", padding: "5px 13px", borderRadius: 3, background: "rgba(255,255,255,0.035)", border: "1px solid rgba(255,255,255,0.09)", color: "rgba(255,255,255,0.68)", letterSpacing: "0.02em" }}>
+            style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif", padding: "5px 13px", borderRadius: 3, background: "rgba(255,255,255,0.035)", border: "1px solid rgba(255,255,255,0.09)", color: "rgba(255,255,255,0.68)", letterSpacing: "0.02em" }}>
             {skill}
           </motion.span>
         ))}
@@ -142,23 +142,23 @@ function StepCard({ step, index }: { step: { num: string; title: string; desc: s
       transition={{ delay: index * 0.12, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
       style={{ position: "relative", paddingTop: 28, paddingBottom: 28 }}>
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))" }} />
-      <div style={{ position: "absolute", top: 10, right: 0, fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(64px, 8vw, 96px)", color: "rgba(255,255,255,0.03)", lineHeight: 1, letterSpacing: "-0.02em", userSelect: "none", pointerEvents: "none" }}>
+      <div style={{ position: "absolute", top: 10, right: 0, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 800, fontSize: "clamp(64px, 8vw, 96px)", color: "rgba(255,255,255,0.03)", lineHeight: 1, letterSpacing: "-0.02em", userSelect: "none", pointerEvents: "none" }}>
         {step.num}
       </div>
       <motion.div initial={{ opacity: 0, x: -8 }} animate={inView ? { opacity: 1, x: 0 } : {}}
         transition={{ delay: index * 0.12 + 0.1, duration: 0.4 }}
         style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-        <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.28em", color: "rgba(255,255,255,0.28)" }}>{step.num}</span>
+        <span style={{ fontSize: 9, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.28em", color: "rgba(255,255,255,0.28)" }}>{step.num}</span>
         <div style={{ height: 1, width: 24, background: "rgba(255,255,255,0.12)" }} />
       </motion.div>
       <motion.h3 initial={{ opacity: 0, y: 10 }} animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: index * 0.12 + 0.18, duration: 0.5 }}
-        style={{ margin: "0 0 14px", fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(1.1rem, 2vw, 1.4rem)", letterSpacing: "0.06em", color: "#fff", lineHeight: 1.1 }}>
+        style={{ margin: "0 0 14px", fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 800, fontSize: "clamp(1.1rem, 2vw, 1.4rem)", letterSpacing: "0.06em", color: "#fff", lineHeight: 1.1 }}>
         {step.title}
       </motion.h3>
       <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
         transition={{ delay: index * 0.12 + 0.28, duration: 0.5 }}
-        style={{ margin: 0, fontSize: 13, lineHeight: 1.8, color: "rgba(255,255,255,0.38)", fontFamily: "Space Grotesk, sans-serif", maxWidth: 340 }}>
+        style={{ margin: 0, fontSize: 13, lineHeight: 1.8, color: "rgba(255,255,255,0.38)", fontFamily: "Plus Jakarta Sans, sans-serif", maxWidth: 340 }}>
         {step.desc}
       </motion.p>
     </motion.div>
@@ -174,7 +174,7 @@ function AboutPane({ isMobile, t }: { isMobile: boolean; t: TT }) {
   const journey      = t.about.journey;
   const education    = EDUCATION_META.map((meta, i) => ({ ...meta, ...t.about.edu[i] }));
 
-  const labelStyle = { margin: "0 0 20px", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.28)" } as const;
+  const labelStyle = { margin: "0 0 20px", fontSize: 9, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.28)" } as const;
 
   return (
     <div>
@@ -259,11 +259,11 @@ function ProcessPane({ isMobile, t }: { isMobile: boolean; t: TT }) {
         initial={{ opacity: 0, y: 16 }} animate={ctaInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         style={{ marginTop: isMobile ? 40 : 56, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 14 }}>
-        <p style={{ margin: 0, fontSize: 12, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.25)", letterSpacing: "0.04em" }}>
+        <p style={{ margin: 0, fontSize: 12, fontFamily: "Plus Jakarta Sans, sans-serif", color: "rgba(255,255,255,0.25)", letterSpacing: "0.04em" }}>
           {t.services.cta_sub}
         </p>
         <motion.button onClick={go}
-          style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "none", border: "none", padding: 0, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13, letterSpacing: "0.1em", color: "rgba(255,255,255,0.65)", cursor: "pointer" }}
+          style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "none", border: "none", padding: 0, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 700, fontSize: 13, letterSpacing: "0.1em", color: "rgba(255,255,255,0.65)", cursor: "pointer" }}
           whileHover={{ color: "#fff" }} data-hover="true">
           {t.services.cta}
           <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}>→</motion.span>

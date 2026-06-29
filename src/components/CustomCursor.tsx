@@ -136,7 +136,7 @@ export default function CustomCursor() {
         ref={labelRef}
         style={{
           position: "fixed", top: 0, left: 0,
-          fontSize: 8, fontFamily: "Space Grotesk, sans-serif",
+          fontSize: 8, fontFamily: "Plus Jakarta Sans, sans-serif",
           fontWeight: 700, letterSpacing: "0.28em",
           color: "rgba(255,255,255,0.9)",
           pointerEvents: "none", zIndex: 99999,

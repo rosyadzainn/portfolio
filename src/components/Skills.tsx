@@ -33,7 +33,7 @@ function SkillGroup({ label, skills, index }: { label: string; skills: string[];
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 18 }}>
         <div style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(255,255,255,0.35)", flexShrink: 0 }} />
         <span style={{
-          fontSize: 9, fontFamily: "Space Grotesk, sans-serif",
+          fontSize: 9, fontFamily: "Plus Jakarta Sans, sans-serif",
           letterSpacing: "0.28em", color: "rgba(255,255,255,0.32)",
         }}>
           {label}
@@ -48,7 +48,7 @@ function SkillGroup({ label, skills, index }: { label: string; skills: string[];
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: index * 0.1 + si * 0.045 + 0.18, duration: 0.32, ease: "easeOut" }}
             style={{
-              fontSize: 11, fontFamily: "Space Grotesk, sans-serif",
+              fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif",
               padding: "5px 13px", borderRadius: 3,
               background: "rgba(255,255,255,0.035)",
               border: "1px solid rgba(255,255,255,0.09)",
@@ -87,13 +87,13 @@ export default function Skills() {
             transition={{ duration: 0.5 }}
           >
             <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
+            <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>
               03 / {t.skills.label}
             </span>
           </motion.div>
 
           <motion.h2
-            style={{ margin: "0 0 20px", fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)", lineHeight: 1.06 }}
+            style={{ margin: "0 0 20px", fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)", lineHeight: 1.06 }}
             initial={{ opacity: 0, y: 22 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.12, duration: 0.6 }}
           >

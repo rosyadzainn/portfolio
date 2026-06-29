@@ -1,26 +1,18 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { container } from "@/lib/layout";
+import { motion, useInView } from "framer-motion";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useLanguage } from "@/context/LanguageContext";
 import DecryptText from "./DecryptText";
 
 const PROJECTS_META = [
   {
-    id: 1, slug: "islametra",
-    title: "ISLAMETRA",
-    url: "https://www.islametra.com",
-    tech: ["Next.js", "React", "Tailwind CSS", "CMS"],
-    category: "Web · Platform", year: "2025", status: "LIVE", type: "PERSONAL PROJECT",
-  },
-  {
-    id: 2, slug: "zainogen",
-    title: "ZAINOGEN",
-    url: "https://www.zainogen.com",
-    tech: ["Next.js", "React", "TypeScript"],
-    category: "Web · Tool", year: "2025", status: "LIVE", type: "PERSONAL PROJECT",
+    id: 5, slug: "anharumitra",
+    title: "ANHARU MITRA",
+    url: "https://anharumitra.com/en",
+    tech: ["Next.js", "React", "Tailwind CSS", "i18n"],
+    category: "Web · Corporate", year: "2026", status: "LIVE", type: "CLIENT WORK",
   },
   {
     id: 3, slug: "pendi",
@@ -36,6 +28,20 @@ const PROJECTS_META = [
     tech: ["Next.js", "React", "Figma"],
     category: "Web · Corporate", year: "2025", status: "LIVE", type: "CLIENT WORK",
   },
+  {
+    id: 1, slug: "islametra",
+    title: "ISLAMETRA",
+    url: "https://www.islametra.com",
+    tech: ["Next.js", "React", "Tailwind CSS", "CMS"],
+    category: "Web · Platform", year: "2025", status: "LIVE", type: "PERSONAL PROJECT",
+  },
+  {
+    id: 2, slug: "zainogen",
+    title: "ZAINOGEN",
+    url: "https://www.zainogen.com",
+    tech: ["Next.js", "React", "TypeScript"],
+    category: "Web · Tool", year: "2025", status: "LIVE", type: "PERSONAL PROJECT",
+  },
 ];
 
 function screenshotFallback(url: string) {
@@ -44,102 +50,71 @@ function screenshotFallback(url: string) {
 
 type ProjectItem = (typeof PROJECTS_META)[0] & { subtitle: string; description: string; };
 
-function ProjectCard({ project, index, visitLabel }: { project: ProjectItem; index: number; visitLabel: string }) {
+function ProjectCard({ project, index, featured }: { project: ProjectItem; index: number; featured: boolean }) {
   const [hov, setHov]         = useState(false);
-  const [mouse, setMouse]     = useState({ x: 0.5, y: 0.5 });
   const [imgSrc, setImgSrc]   = useState(`/images/projects/${project.slug}.jpg`);
   const [imgLoaded, setImgLoaded] = useState(false);
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <motion.div ref={ref} style={{ perspective: 1000 }}
-      initial={{ opacity: 0, y: 40 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>
+    <motion.div ref={ref}
+      initial={{ opacity: 0, y: 32 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: index * 0.1, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}>
       <a href={project.url} target="_blank" rel="noopener noreferrer"
         style={{ display: "block", textDecoration: "none" }}
         data-hover="true" data-cursor="EXPLORE"
-        onMouseEnter={() => setHov(true)}
-        onMouseLeave={() => { setHov(false); setMouse({ x: 0.5, y: 0.5 }); }}
-        onMouseMove={(e) => {
-          const r = ref.current?.getBoundingClientRect();
-          if (!r) return;
-          setMouse({ x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height });
+        onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
+
+        {/* Image */}
+        <div style={{
+          position: "relative", borderRadius: 16, overflow: "hidden",
+          aspectRatio: featured ? "16 / 7.5" : "16 / 10",
+          border: "1px solid rgba(255,255,255,0.08)", background: "#080808",
         }}>
-        <motion.div style={{ position: "relative", borderRadius: 10, overflow: "hidden", transformStyle: "preserve-3d", background: "rgba(10,10,10,0.95)", display: "flex", flexDirection: "column" }}
-          animate={{
-            rotateX: hov ? (mouse.y - 0.5) * -5 : 0,
-            rotateY: hov ? (mouse.x - 0.5) * 5 : 0,
-            boxShadow: hov ? "0 24px 56px rgba(255,255,255,0.07), 0 0 0 1px rgba(255,255,255,0.2)" : "0 4px 24px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05)",
-          }}
-          transition={{ type: "spring", stiffness: 220, damping: 26 }}>
-
-          {/* Screenshot preview */}
-          <div style={{ position: "relative", height: 196, overflow: "hidden", flexShrink: 0, background: "#080808" }}>
-            {!imgLoaded && (
-              <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div style={{ width: 24, height: 24, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", borderTopColor: "rgba(255,255,255,0.5)", animation: "spin-slow 1s linear infinite" }} />
-              </div>
-            )}
-            <motion.img
-              src={imgSrc}
-              alt={project.title}
-              onLoad={() => setImgLoaded(true)}
-              onError={() => { if (!imgSrc.includes("mshots")) setImgSrc(screenshotFallback(project.url)); }}
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block", opacity: imgLoaded ? 1 : 0, transition: "opacity 0.5s ease" }}
-              animate={{ scale: hov ? 1.04 : 1, filter: hov ? "brightness(0.85)" : "brightness(0.65)" }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              loading="lazy"
-            />
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 72, background: "linear-gradient(0deg, rgba(10,10,10,0.98) 0%, transparent 100%)", pointerEvents: "none" }} />
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)", opacity: hov ? 1 : 0, transition: "opacity 0.4s", pointerEvents: "none" }} />
-            <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse at ${mouse.x * 100}% ${mouse.y * 100}%, rgba(255,255,255,0.06), transparent 65%)`, opacity: hov ? 1 : 0, transition: "opacity 0.3s" }} />
-          </div>
-
-          {/* Card body */}
-          <div style={{ padding: "18px 22px 22px", display: "flex", flexDirection: "column", flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 14 }}>
-              <div>
-                <span style={{ display: "block", fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.22em", marginBottom: 2, color: "rgba(255,255,255,0.28)" }}>{project.category}</span>
-                <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.18)" }}>{project.year}</span>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5 }}>
-                <span style={{ fontSize: 8, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.2em", padding: "2px 8px", borderRadius: 3, border: "1px solid rgba(255,255,255,0.14)", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)" }}>
-                  {project.status}
-                </span>
-                <span style={{ fontSize: 7.5, fontFamily: "Space Grotesk, sans-serif", fontWeight: 500, letterSpacing: "0.16em", padding: "2px 8px", borderRadius: 3, border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.22)", background: "none" }}>
-                  {project.type}
-                </span>
-              </div>
+          {!imgLoaded && (
+            <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ width: 24, height: 24, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", borderTopColor: "rgba(255,255,255,0.5)", animation: "spin-slow 1s linear infinite" }} />
             </div>
+          )}
+          <img
+            src={imgSrc}
+            alt={project.title}
+            onLoad={() => setImgLoaded(true)}
+            onError={() => { if (!imgSrc.includes("mshots")) setImgSrc(screenshotFallback(project.url)); }}
+            style={{
+              width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block",
+              opacity: imgLoaded ? 1 : 0,
+              transform: hov ? "scale(1.04)" : "scale(1)",
+              transition: "opacity 0.5s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1)",
+            }}
+            loading="lazy"
+          />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.45) 100%)", pointerEvents: "none" }} />
+          {/* White glow — bottom-left on hover */}
+          <div style={{
+            position: "absolute", inset: 0, pointerEvents: "none",
+            background: "radial-gradient(ellipse 55% 65% at 0% 100%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.08) 35%, transparent 65%)",
+            opacity: hov ? 1 : 0,
+            transition: "opacity 0.45s ease",
+          }} />
+        </div>
 
-            <h3 style={{ margin: "0 0 2px", fontFamily: "Exo 2, sans-serif", fontSize: 18, fontWeight: 800, color: "#fff", letterSpacing: "0.04em" }}>
-              <DecryptText text={project.title} trigger={inView} delay={index * 120} />
-            </h3>
-            <p style={{ margin: "0 0 3px", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.32)" }}>{project.subtitle}</p>
-            <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.18)", letterSpacing: "0.06em", marginBottom: 14, display: "block" }}>
-              {project.url.replace("https://www.", "")}
+        {/* Meta below image */}
+        <div style={{ paddingTop: featured ? 20 : 16 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: featured ? 12 : 9 }}>
+            <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif", color: "rgba(255,255,255,0.4)", letterSpacing: "0.06em" }}>{project.year}</span>
+            <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, letterSpacing: "0.06em", color: "rgba(255,255,255,0.55)", padding: "5px 14px", borderRadius: 999, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)" }}>
+              {project.category}
             </span>
-            <p style={{ margin: "0 0 16px", fontSize: 12, lineHeight: 1.7, flex: 1, color: "rgba(255,255,255,0.36)" }}>{project.description}</p>
-
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-              {project.tech.map((tech) => (
-                <span key={tech} style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", padding: "2px 8px", borderRadius: 2, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.3)" }}>{tech}</span>
-              ))}
-            </div>
-
-            <AnimatePresence>
-              {hov && (
-                <motion.div style={{ marginTop: 14 }} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }} transition={{ duration: 0.16 }}>
-                  <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.2em", color: "rgba(255,255,255,0.6)", display: "flex", alignItems: "center", gap: 7 }}>
-                    {visitLabel}
-                    <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}>→</motion.span>
-                  </span>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
-        </motion.div>
+          <h3 style={{ margin: "0 0 8px", fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 700, color: hov ? "#fff" : "rgba(255,255,255,0.92)", fontSize: featured ? "clamp(1.3rem, 2.4vw, 1.7rem)" : "1.15rem", transition: "color 0.2s" }}>
+            <DecryptText text={project.title} trigger={inView} delay={index * 100} />
+          </h3>
+          <p style={{ margin: 0, fontSize: featured ? 14 : 13, lineHeight: 1.75, color: "rgba(255,255,255,0.42)", fontFamily: "Plus Jakarta Sans, sans-serif", maxWidth: featured ? 640 : "100%" }}>
+            {project.description}
+          </p>
+        </div>
       </a>
     </motion.div>
   );
@@ -162,26 +137,47 @@ export default function Projects() {
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, #000 0%, #0a0a0a 55%, #000 100%)" }} />
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px)", backgroundSize: "100% 72px" }} />
 
-      <div style={{ ...container, position: "relative", zIndex: 10 }}>
+      <div style={{ position: "relative", zIndex: 10, padding: isMobile ? "0 24px" : "0 19%" }}>
         <div ref={headRef} style={{ marginBottom: isMobile ? 36 : 56 }}>
-          <motion.div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}
+          <motion.div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}
             initial={{ opacity: 0, x: -20 }} animate={headInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.5 }}>
-            <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.5), transparent)" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>01 / {t.projects.label}</span>
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#fff", boxShadow: "0 0 10px rgba(255,255,255,0.6)", animation: "pulse-glow 2s ease-in-out infinite" }} />
+            <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, letterSpacing: "0.24em", color: "rgba(255,255,255,0.5)" }}>{t.projects.label}</span>
           </motion.div>
-          <motion.h2 style={{ margin: "0 0 12px", fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
+          <motion.h2 style={{ margin: "0 0 12px", fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
             initial={{ opacity: 0, y: 22 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.15, duration: 0.6 }}>
             <span style={{ color: "#fff" }}>{t.projects.h1}</span><br />
             <span style={{ color: "rgba(255,255,255,0.4)" }}>{t.projects.h2}</span>
           </motion.h2>
-          <motion.p style={{ margin: 0, fontSize: 13, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.28)" }}
+          <motion.p style={{ margin: 0, fontSize: 13, fontFamily: "Plus Jakarta Sans, sans-serif", color: "rgba(255,255,255,0.28)" }}
             initial={{ opacity: 0 }} animate={headInView ? { opacity: 1 } : {}} transition={{ delay: 0.3, duration: 0.5 }}>
             {t.projects.sub}
           </motion.p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 12 : 16, alignItems: "stretch" }}>
-          {projects.map((p, i) => <ProjectCard key={p.id} project={p} index={i} visitLabel={t.projects.visit} />)}
+        {/* Featured (latest) */}
+        <div style={{
+          marginBottom: isMobile ? 32 : 56,
+          padding: isMobile ? 18 : 32,
+          borderRadius: 22,
+          background: "linear-gradient(135deg, #050505 0%, #131313 55%, #202020 100%)",
+          border: "1px solid rgba(255,255,255,0.07)",
+        }}>
+          <ProjectCard project={projects[0]} index={0} featured />
+        </div>
+
+        {/* Rest — 2-column grid */}
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 24 : 28 }}>
+          {projects.slice(1).map((p, i) => (
+            <div key={p.id} style={{
+              padding: isMobile ? 16 : 22,
+              borderRadius: 18,
+              background: "linear-gradient(135deg, #050505 0%, #131313 55%, #202020 100%)",
+              border: "1px solid rgba(255,255,255,0.07)",
+            }}>
+              <ProjectCard project={p} index={i + 1} featured={false} />
+            </div>
+          ))}
         </div>
       </div>
     </section>

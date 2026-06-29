@@ -6,7 +6,7 @@ const en = {
   },
   hero: {
     badge: "AVAILABLE FOR WORK",
-    subtitle: "Product Designer • UI/UX • Web • AI • 3D",
+    subtitle: "Product Design · UI/UX Design · Website Development",
     cta1: "View Projects", cta2: "Enter Experience",
     scroll: "SCROLL",
   },
@@ -36,10 +36,11 @@ const en = {
     sub: "A focused selection of recent projects — design-led, delivery-focused.",
     visit: "VISIT SITE",
     items: [
-      { subtitle: "Islamic Digital Platform",          desc: "A modern Islamic platform delivering curated content, digital resources, and a refined reading experience for a Muslim audience." },
-      { subtitle: "Business Document Generator",         desc: "A free tool to build and download professional business documents — Quotation, Invoice, Receipt, and Purchase Order — in seconds. No account required." },
+      { subtitle: "Mining Services Company",            desc: "Corporate website for PT Anharu Mitra Barokah — a mining services provider specializing in drilling & blasting across Kalimantan, showcasing services, strategic projects, and clients." },
       { subtitle: "Holding Company Digital Presence",  desc: "Digital presence for Pendi Group, a holding company — clean corporate branding, group profile, and modern multi-entity business presentation." },
       { subtitle: "Health Distribution Company",        desc: "Digital presence for PT. Pendi Hijau Berkah — a precision health distribution company, showcasing products, partnerships, and corporate profile." },
+      { subtitle: "Islamic Digital Platform",          desc: "A modern Islamic platform delivering curated content, digital resources, and a refined reading experience for a Muslim audience." },
+      { subtitle: "Business Document Generator",         desc: "A free tool to build and download professional business documents — Quotation, Invoice, Receipt, and Purchase Order — in seconds. No account required." },
     ],
   },
   skills: {
@@ -87,7 +88,7 @@ const id: typeof en = {
   },
   hero: {
     badge: "TERSEDIA UNTUK PROYEK",
-    subtitle: "Product Designer • UI/UX • Web • AI • 3D",
+    subtitle: "Product Design · UI/UX Design · Website Development",
     cta1: "Lihat Proyek", cta2: "Mulai Jelajah",
     scroll: "GULIR",
   },
@@ -117,10 +118,11 @@ const id: typeof en = {
     sub: "Seleksi proyek terkini — berbasis desain, fokus pada pengiriman.",
     visit: "KUNJUNGI SITUS",
     items: [
-      { subtitle: "Platform Digital Islami",              desc: "Platform Islam modern yang menyajikan konten pilihan, sumber daya digital, dan pengalaman membaca yang elegan untuk audiens Muslim." },
-      { subtitle: "Generator Dokumen Bisnis",             desc: "Tool gratis untuk membuat dan mengunduh dokumen bisnis profesional — Quotation, Invoice, Receipt, dan Purchase Order — dalam hitungan detik. Tanpa perlu akun." },
+      { subtitle: "Perusahaan Jasa Pertambangan",        desc: "Website korporat untuk PT Anharu Mitra Barokah — penyedia jasa pertambangan spesialis drilling & blasting di Kalimantan, menampilkan layanan, proyek strategis, dan klien." },
       { subtitle: "Kehadiran Digital Holding Company",   desc: "Kehadiran digital untuk Pendi Group, sebuah holding company — branding korporat yang bersih, profil grup, dan presentasi bisnis multi-entitas modern." },
       { subtitle: "Perusahaan Distribusi Kesehatan",      desc: "Kehadiran digital untuk PT. Pendi Hijau Berkah — perusahaan distribusi kesehatan presisi, menampilkan produk, kemitraan, dan profil korporat." },
+      { subtitle: "Platform Digital Islami",              desc: "Platform Islam modern yang menyajikan konten pilihan, sumber daya digital, dan pengalaman membaca yang elegan untuk audiens Muslim." },
+      { subtitle: "Generator Dokumen Bisnis",             desc: "Tool gratis untuk membuat dan mengunduh dokumen bisnis profesional — Quotation, Invoice, Receipt, dan Purchase Order — dalam hitungan detik. Tanpa perlu akun." },
     ],
   },
   skills: {

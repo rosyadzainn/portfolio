@@ -9,26 +9,25 @@ export default function Icon() {
     (
       <div
         style={{
-          background: "#000",
+          background: "linear-gradient(135deg, #222 0%, #000 100%)",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: "50%",
-          border: "1px solid rgba(255,255,255,0.3)",
+          borderRadius: 7,
         }}
       >
         <span
           style={{
-            fontSize: 13,
-            fontWeight: 900,
+            fontSize: 15,
+            fontWeight: 800,
             color: "#fff",
             fontFamily: "sans-serif",
-            letterSpacing: "-0.5px",
+            letterSpacing: "-1.2px",
           }}
         >
-          RZ
+          RZ.
         </span>
       </div>
     ),

@@ -4,7 +4,6 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useFrame } from "@react-three/fiber";
 import { AdaptiveDpr, AdaptiveEvents } from "@react-three/drei";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import ParticleField from "./ParticleField";
 import type { ShapeName } from "@/lib/shapes";
 
@@ -42,15 +41,6 @@ export default function Scene({ mouseX, mouseY, shape, accentColor = "#22c55e" }
       <Suspense fallback={null}>
         <CameraRig mouseX={mouseX} mouseY={mouseY} />
         <ParticleField mouseX={mouseX} mouseY={mouseY} shape={shape} accentColor={accentColor} />
-
-        <EffectComposer>
-          <Bloom
-            intensity={1.8}
-            luminanceThreshold={0.04}
-            luminanceSmoothing={0.92}
-            mipmapBlur
-          />
-        </EffectComposer>
       </Suspense>
     </Canvas>
   );

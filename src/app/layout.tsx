@@ -9,23 +9,21 @@ export const metadata: Metadata = {
     default: "Rosyad Zain — Product Designer",
     template: "%s | Rosyad Zain",
   },
-  description: "Portfolio of Rosyad Zain — Product Designer crafting UI/UX, web, and AI-powered 3D experiences.",
-  keywords: ["Rosyad Zain", "product designer", "UI/UX", "web design", "3D environment", "Unreal Engine 5", "Figma", "AI", "modern web", "portfolio", "Indonesia"],
+  description: "Portfolio of Rosyad Zain — product designer & web developer building clean, high-impact digital products. Product design, UI/UX, and web development.",
+  keywords: ["Rosyad Zain", "product designer", "web developer", "UI/UX design", "web development", "Next.js", "React", "Figma", "brand identity", "portfolio", "Indonesia"],
   authors: [{ name: "Rosyad Zain" }],
   creator: "Rosyad Zain",
   openGraph: {
-    title: "Rosyad Zain — Product Designer",
-    description: "Product Designer crafting UI/UX, web, and AI-powered 3D experiences.",
+    title: "Rosyad Zain — Product Designer & Web Developer",
+    description: "Building clean, high-impact digital products — product design, UI/UX, and web development.",
     type: "website",
     url: "https://rosyadzain.com",
     siteName: "Rosyad Zain Portfolio",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Rosyad Zain Portfolio" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rosyad Zain — Product Designer",
-    description: "Product Designer crafting UI/UX, web, and AI-powered 3D experiences.",
-    images: ["/og-image.jpg"],
+    title: "Rosyad Zain — Product Designer & Web Developer",
+    description: "Building clean, high-impact digital products — product design, UI/UX, and web development.",
   },
   robots: { index: true, follow: true },
 };
@@ -36,10 +34,14 @@ const jsonLd = {
   name: "Rosyad Zain",
   url: "https://rosyadzain.com",
   image: "https://rosyadzain.com/opengraph-image",
-  jobTitle: "Product Designer",
-  description: "Product Designer crafting UI/UX, web, and AI-powered 3D experiences.",
-  knowsAbout: ["Product Design", "UI/UX Design", "Brand Identity", "Figma", "Unreal Engine 5", "3D Environment", "Modern Web", "AI-Powered Workflows"],
-  sameAs: ["https://github.com/rosyadzainn"],
+  jobTitle: "Product Designer & Web Developer",
+  description: "Product designer & web developer building clean, high-impact digital products.",
+  knowsAbout: ["Product Design", "UI/UX Design", "Web Development", "Next.js", "React", "Brand Identity", "Figma", "Design Systems"],
+  sameAs: [
+    "https://github.com/rosyadzainn",
+    "https://www.linkedin.com/in/rosyadzain/",
+    "https://www.tiktok.com/@rosyadzainn",
+  ],
   worksFor: { "@type": "Organization", name: "Freelance" },
   address: { "@type": "PostalAddress", addressCountry: "ID" },
 };
@@ -62,7 +64,6 @@ export default function RootLayout({
       </head>
       <body>
         <div className="noise-overlay" />
-        <div className="grid-overlay" />
         {/* Cinematic edge vignette */}
         <div style={{
           position: "fixed", inset: 0, zIndex: 2, pointerEvents: "none",

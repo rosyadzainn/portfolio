@@ -2,14 +2,14 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { container } from "@/lib/layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useLanguage } from "@/context/LanguageContext";
 
 const SOCIALS = [
-  { label: "GITHUB",   icon: "⌥", href: "https://github.com/rosyadzainn" },
-  { label: "LINKEDIN", icon: "◈", href: "https://www.linkedin.com/in/rosyadzain/" },
-  { label: "TIKTOK",   icon: "◎", href: "https://www.tiktok.com/@rosyadzainn" },
+  { label: "GitHub",   logo: "/images/social/github.svg",   href: "https://github.com/rosyadzainn" },
+  { label: "LinkedIn", logo: "/images/social/linkedin.svg", href: "https://www.linkedin.com/in/rosyadzain/" },
+  { label: "TikTok",   logo: "/images/social/tiktok.svg",   href: "https://www.tiktok.com/@rosyadzainn" },
+  { label: "WhatsApp", logo: "/images/social/whatsapp.svg", href: "https://wa.me/6282242035628" },
 ];
 
 function Field({ label, name, type = "text", placeholder, multi = false }: {
@@ -24,7 +24,7 @@ function Field({ label, name, type = "text", placeholder, multi = false }: {
     padding: "12px 14px",
     color: "#fff",
     fontSize: 13,
-    fontFamily: "Space Grotesk, sans-serif",
+    fontFamily: "Plus Jakarta Sans, sans-serif",
     outline: "none",
     resize: "none" as const,
     transition: "border-color 0.25s ease, box-shadow 0.25s ease",
@@ -34,7 +34,7 @@ function Field({ label, name, type = "text", placeholder, multi = false }: {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <label style={{
-        fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em",
+        fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.2em",
         color: focused ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.35)",
         transition: "color 0.25s ease",
       }}>
@@ -127,29 +127,28 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" style={{ position: "relative", paddingTop: isMobile ? 80 : 112, paddingBottom: isMobile ? 80 : 112, overflow: "hidden" }}>
+    <section id="contact" style={{ position: "relative", paddingTop: isMobile ? 80 : 112, paddingBottom: isMobile ? 28 : 36, overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, #000 0%, #0a0a0a 100%)" }} />
       <div style={{
         position: "absolute", inset: 0, pointerEvents: "none",
         background: "radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255,255,255,0.04) 0%, transparent 70%)",
       }} />
 
-      <div style={{ ...container, position: "relative", zIndex: 10 }}>
+      <div style={{ position: "relative", zIndex: 10, padding: isMobile ? "0 24px" : "0 19%" }}>
         {/* Heading */}
         <div ref={headRef} style={{ marginBottom: 64, textAlign: "center" }}>
-          <motion.div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 12 }}
+          <motion.div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 16 }}
             initial={{ opacity: 0, y: 16 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
-            <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4))" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.35)" }}>03 / {t.contact.label}</span>
-            <div style={{ height: 1, width: 48, background: "linear-gradient(90deg, rgba(255,255,255,0.4), transparent)" }} />
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#fff", boxShadow: "0 0 10px rgba(255,255,255,0.6)", animation: "pulse-glow 2s ease-in-out infinite" }} />
+            <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, letterSpacing: "0.24em", color: "rgba(255,255,255,0.5)" }}>{t.contact.label}</span>
           </motion.div>
-          <motion.h2 style={{ margin: 0, fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
+          <motion.h2 style={{ margin: 0, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
             initial={{ opacity: 0, y: 22 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.15, duration: 0.6 }}>
             <span style={{ color: "#fff" }}>{t.contact.h1}</span>
             <br />
             <span style={{ color: "rgba(255,255,255,0.5)" }}>{t.contact.h2}</span>
           </motion.h2>
-          <motion.p style={{ margin: "16px auto 0", fontSize: 13, fontFamily: "Space Grotesk, sans-serif", maxWidth: 380, lineHeight: 1.7, color: "rgba(255,255,255,0.38)" }}
+          <motion.p style={{ margin: "16px auto 0", fontSize: 13, fontFamily: "Plus Jakarta Sans, sans-serif", maxWidth: 380, lineHeight: 1.7, color: "rgba(255,255,255,0.38)" }}
             initial={{ opacity: 0 }} animate={headInView ? { opacity: 1 } : {}} transition={{ delay: 0.3, duration: 0.5 }}>
             {t.contact.tagline}
           </motion.p>
@@ -164,34 +163,39 @@ export default function Contact() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.65 }}>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", marginBottom: 2, color: "rgba(255,255,255,0.35)" }}>{t.contact.transmission}</span>
-              <a href="mailto:rosyadz123@gmail.com" style={{ fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.75)", textDecoration: "none" }} data-hover="true">
-                rosyadz123@gmail.com
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, letterSpacing: "0.22em", color: "rgba(255,255,255,0.35)" }}>EMAIL</span>
+              <a href="mailto:rosyadz123@gmail.com" data-hover="true"
+                style={{ fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)", fontWeight: 600, color: "rgba(255,255,255,0.85)", textDecoration: "none", letterSpacing: "-0.01em", transition: "color 0.2s" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.85)")}>
+                rosyadz123@gmail.com ↗
               </a>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", marginBottom: 2, color: "rgba(255,255,255,0.35)" }}>{t.contact.coords}</span>
-              <span style={{ fontSize: 13, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.45)", lineHeight: 1.7 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, letterSpacing: "0.22em", color: "rgba(255,255,255,0.35)" }}>LOCATION</span>
+              <span style={{ fontSize: 14, fontFamily: "Plus Jakarta Sans, sans-serif", color: "rgba(255,255,255,0.55)", lineHeight: 1.7 }}>
                 {t.contact.location}<br />
-                <span style={{ color: "rgba(255,255,255,0.28)", fontSize: 12 }}>{t.contact.locationSub}</span>
+                <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12.5 }}>{t.contact.locationSub}</span>
               </span>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", marginBottom: 4, color: "rgba(255,255,255,0.35)" }}>{t.contact.network}</span>
-              {SOCIALS.map((s, i) => (
-                <motion.a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                  style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}
-                  initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.4 }} data-hover="true">
-                  <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 13 }}>{s.icon}</span>
-                  <span style={{ fontSize: 12, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.38)" }}>
-                    {s.label}
-                  </span>
-                </motion.a>
-              ))}
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, letterSpacing: "0.22em", color: "rgba(255,255,255,0.35)" }}>SOCIALS</span>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                {SOCIALS.map((s, i) => (
+                  <motion.a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
+                    style={{ width: 40, height: 40, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", textDecoration: "none", transition: "border-color 0.2s, background 0.2s" }}
+                    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.4 }} data-hover="true"
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)"; e.currentTarget.style.background = "rgba(255,255,255,0.1)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={s.logo} alt={s.label} style={{ width: 17, height: 17, opacity: 0.85 }} />
+                  </motion.a>
+                ))}
+              </div>
             </div>
 
             {/* Status */}
@@ -204,8 +208,8 @@ export default function Contact() {
                 background: "#22c55e", boxShadow: "0 0 7px #22c55e", animation: "pulse-glow 2s ease-in-out infinite",
               }} />
               <div>
-                <p style={{ margin: 0, fontSize: 11, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, color: "rgba(34,197,94,0.85)" }}>{t.contact.available}</p>
-                <p style={{ margin: "2px 0 0", fontSize: 10, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.28)" }}>{t.contact.response}</p>
+                <p style={{ margin: 0, fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, color: "rgba(34,197,94,0.85)" }}>{t.contact.available}</p>
+                <p style={{ margin: "2px 0 0", fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", color: "rgba(255,255,255,0.28)" }}>{t.contact.response}</p>
               </div>
             </div>
           </motion.div>
@@ -219,7 +223,7 @@ export default function Contact() {
             <div style={{ padding: 28, borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff", boxShadow: "0 0 6px rgba(255,255,255,0.5)" }} />
-                <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.2em", color: "rgba(255,255,255,0.35)" }}>{t.contact.initiate}</span>
+                <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, letterSpacing: "0.22em", color: "rgba(255,255,255,0.4)" }}>SEND A MESSAGE</span>
               </div>
 
               {sent ? (
@@ -231,8 +235,8 @@ export default function Contact() {
                   }}>
                     <span style={{ color: "#22c55e", fontSize: 22 }}>✓</span>
                   </div>
-                  <p style={{ margin: 0, fontSize: 12, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(34,197,94,0.8)" }}>{t.contact.ok_title}</p>
-                  <p style={{ margin: 0, fontSize: 11, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.35)" }}>{t.contact.ok_sub}</p>
+                  <p style={{ margin: 0, fontSize: 12, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.1em", color: "rgba(34,197,94,0.8)" }}>{t.contact.ok_title}</p>
+                  <p style={{ margin: 0, fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif", color: "rgba(255,255,255,0.35)" }}>{t.contact.ok_sub}</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -250,7 +254,7 @@ export default function Contact() {
                   <motion.button type="submit" disabled={loading}
                     style={{
                       position: "relative", marginTop: 4, padding: "14px 0", borderRadius: 6, overflow: "hidden",
-                      fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: "0.2em",
+                      fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: "0.2em",
                       background: loading ? "rgba(255,255,255,0.7)" : "#fff",
                       border: "1px solid rgba(255,255,255,0.9)", color: "#000", width: "100%",
                       cursor: loading ? "not-allowed" : "pointer",
@@ -260,19 +264,19 @@ export default function Contact() {
                     data-hover="true">
                     {!loading && <span className="shimmer" style={{ position: "absolute", inset: 0 }} />}
                     <span style={{ position: "relative", zIndex: 1 }}>
-                      {loading ? t.contact.sending : t.contact.send}
+                      {loading ? "SENDING..." : "SEND MESSAGE"}
                     </span>
                   </motion.button>
 
                   {blocked && (
                     <motion.p initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
-                      style={{ margin: 0, textAlign: "center", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(239,68,68,0.75)" }}>
+                      style={{ margin: 0, textAlign: "center", fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.1em", color: "rgba(239,68,68,0.75)" }}>
                       {t.contact.err_rate}
                     </motion.p>
                   )}
                   {error && (
                     <motion.p initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
-                      style={{ margin: 0, textAlign: "center", fontSize: 11, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.1em", color: "rgba(239,68,68,0.75)" }}>
+                      style={{ margin: 0, textAlign: "center", fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.1em", color: "rgba(239,68,68,0.75)" }}>
                       {error}
                     </motion.p>
                   )}
@@ -284,11 +288,11 @@ export default function Contact() {
 
         {/* Footer */}
         <motion.div style={{
-          marginTop: 80, paddingTop: 24, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12,
+          marginTop: 80, paddingTop: 24, display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center",
           borderTop: "1px solid rgba(255,255,255,0.04)",
         }}
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-          <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.18)" }}>
+          <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.15em", color: "rgba(255,255,255,0.18)" }}>
             {t.contact.footer_rights}
           </span>
         </motion.div>

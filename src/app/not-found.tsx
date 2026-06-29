@@ -29,18 +29,18 @@ export default function NotFound() {
           {/* Label */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 24 }}>
             <div style={{ height: 1, width: 40, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4))" }} />
-            <span style={{ fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>ERROR</span>
+            <span style={{ fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.3em", color: "rgba(255,255,255,0.3)" }}>ERROR</span>
             <div style={{ height: 1, width: 40, background: "linear-gradient(90deg, rgba(255,255,255,0.4), transparent)" }} />
           </div>
 
           {/* 404 */}
-          <h1 style={{ margin: "0 0 8px", fontFamily: "Exo 2, sans-serif", fontWeight: 900, fontSize: "clamp(7rem, 20vw, 14rem)", lineHeight: 1, color: "#fff", letterSpacing: "-0.02em" }}>
+          <h1 style={{ margin: "0 0 8px", fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 900, fontSize: "clamp(7rem, 20vw, 14rem)", lineHeight: 1, color: "#fff", letterSpacing: "-0.02em" }}>
             404
           </h1>
-          <p style={{ margin: "0 0 8px", fontFamily: "Exo 2, sans-serif", fontWeight: 800, fontSize: "clamp(1.2rem, 3vw, 2rem)", color: "rgba(255,255,255,0.35)" }}>
+          <p style={{ margin: "0 0 8px", fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 800, fontSize: "clamp(1.2rem, 3vw, 2rem)", color: "rgba(255,255,255,0.35)" }}>
             Signal Lost
           </p>
-          <p style={{ margin: "0 0 48px", fontSize: 13, fontFamily: "Space Grotesk, sans-serif", color: "rgba(255,255,255,0.28)", lineHeight: 1.7 }}>
+          <p style={{ margin: "0 0 48px", fontSize: 13, fontFamily: "Plus Jakarta Sans, sans-serif", color: "rgba(255,255,255,0.28)", lineHeight: 1.7 }}>
             The page you&apos;re looking for doesn&apos;t exist or has been moved.
           </p>
 
@@ -51,7 +51,7 @@ export default function NotFound() {
               display: "inline-flex", alignItems: "center", gap: 10,
               padding: "12px 28px", borderRadius: 6,
               border: "1px solid rgba(255,255,255,0.2)",
-              fontFamily: "Space Grotesk, sans-serif", fontWeight: 700,
+              fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 700,
               fontSize: 11, letterSpacing: "0.2em", color: "#fff",
               textDecoration: "none", background: "rgba(255,255,255,0.04)",
             }}
@@ -67,7 +67,7 @@ export default function NotFound() {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.5 }}
           style={{ position: "absolute", bottom: -80, left: "50%", transform: "translateX(-50%)", whiteSpace: "nowrap" }}
         >
-          <span style={{ fontSize: 9, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.25em", color: "rgba(255,255,255,0.12)" }}>
+          <span style={{ fontSize: 9, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.25em", color: "rgba(255,255,255,0.12)" }}>
             ROSYAD ZAIN · PORTFOLIO · 2026
           </span>
         </motion.div>

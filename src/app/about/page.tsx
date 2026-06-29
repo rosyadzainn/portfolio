@@ -17,7 +17,7 @@ function Header() {
     }}>
       <Link href="/"
         data-hover="true"
-        style={{ fontSize: 11, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, letterSpacing: "0.2em", color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>
+        style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, letterSpacing: "0.2em", color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>
         ← BACK
       </Link>
 
@@ -26,7 +26,7 @@ function Header() {
           <div style={{ position: "absolute", inset: 0, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.3)", animation: "spin-slow 5s linear infinite" }} />
           <div style={{ position: "absolute", inset: 5, borderRadius: "50%", background: "#fff", boxShadow: "0 0 8px rgba(255,255,255,0.5)" }} />
         </div>
-        <span style={{ fontSize: 12, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.22em", color: "#fff" }}>
+        <span style={{ fontSize: 12, fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 700, letterSpacing: "0.22em", color: "#fff" }}>
           ROSYAD ZAIN
         </span>
       </Link>
@@ -39,7 +39,7 @@ function Header() {
             data-hover="true"
             style={{
               padding: "5px 10px", fontSize: 9,
-              fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.16em",
+              fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 700, letterSpacing: "0.16em",
               background: lang === l ? "rgba(255,255,255,0.12)" : "none",
               border: "none", color: lang === l ? "#fff" : "rgba(255,255,255,0.38)",
               cursor: "pointer", transition: "background 0.2s, color 0.2s",

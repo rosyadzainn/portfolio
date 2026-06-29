@@ -36,6 +36,29 @@ export default function ParticleField({ mouseX, mouseY, shape, accentColor = "#2
   const localPt   = useMemo(() => new THREE.Vector3(), []);
   const zeroPlane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), []);
 
+  // Circular sprite texture so particles render as round dots, not squares
+  const circleTexture = useMemo(() => {
+    const size = 64;
+    const canvas = document.createElement("canvas");
+    canvas.width = size; canvas.height = size;
+    const ctx = canvas.getContext("2d")!;
+    const c = size / 2;
+    // Soft outer glow
+    const g = ctx.createRadialGradient(c, c, c * 0.35, c, c, c);
+    g.addColorStop(0, "rgba(255,255,255,1)");
+    g.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(c, c, c, 0, Math.PI * 2);
+    ctx.fill();
+    // Crisp solid core
+    ctx.fillStyle = "rgba(255,255,255,1)";
+    ctx.beginPath();
+    ctx.arc(c, c, c * 0.5, 0, Math.PI * 2);
+    ctx.fill();
+    return new THREE.CanvasTexture(canvas);
+  }, []);
+
   // Target positions — updated when shape changes, spring physics animates particles toward them
   const origRef = useRef<Float32Array>(generateShapePositions("sphere", COUNT));
 
@@ -194,6 +217,8 @@ export default function ParticleField({ mouseX, mouseY, shape, accentColor = "#2
           opacity={0.94}
           sizeAttenuation
           depthWrite={false}
+          map={circleTexture}
+          alphaTest={0.01}
           blending={THREE.AdditiveBlending}
         />
       </points>
@@ -206,6 +231,8 @@ export default function ParticleField({ mouseX, mouseY, shape, accentColor = "#2
           opacity={0.98}
           sizeAttenuation
           depthWrite={false}
+          map={circleTexture}
+          alphaTest={0.01}
           blending={THREE.AdditiveBlending}
         />
       </points>
@@ -214,16 +241,6 @@ export default function ParticleField({ mouseX, mouseY, shape, accentColor = "#2
       <mesh>
         <planeGeometry args={[20, 20]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-      </mesh>
-
-      <mesh>
-        <sphereGeometry args={[0.052, 10, 10]} />
-        <meshBasicMaterial color={WHITE} transparent opacity={0.95} />
-      </mesh>
-
-      <mesh>
-        <sphereGeometry args={[0.28, 14, 14]} />
-        <meshBasicMaterial color={WHITE} transparent opacity={0.055} side={THREE.BackSide} />
       </mesh>
     </group>
   );

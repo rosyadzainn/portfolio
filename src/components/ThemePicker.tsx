@@ -56,7 +56,7 @@ export default function ThemePicker() {
           transition: "background 0.3s, box-shadow 0.3s",
         }} />
         <span style={{
-          fontSize: 8, fontFamily: "Space Grotesk, sans-serif",
+          fontSize: 8, fontFamily: "Plus Jakarta Sans, sans-serif",
           fontWeight: 700, letterSpacing: "0.28em",
           color: "rgba(255,255,255,0.22)",
         }}>

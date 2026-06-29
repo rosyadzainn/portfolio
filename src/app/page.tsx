@@ -5,20 +5,23 @@ import { AnimatePresence, motion } from "framer-motion";
 import Lenis from "lenis";
 import LoadingScreen from "@/components/LoadingScreen";
 import Navigation from "@/components/Navigation";
-import SystemStatus from "@/components/SystemStatus";
-import ThemePicker from "@/components/ThemePicker";
 import Hero from "@/components/Hero";
+import AboutHome from "@/components/AboutHome";
 import Projects from "@/components/Projects";
-import RealTime3D from "@/components/RealTime3D";
+import ExperienceHome from "@/components/ExperienceHome";
 import Contact from "@/components/Contact";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 export default function Home() {
-  const [loading, setLoading]     = useState(() =>
-    typeof window === "undefined" ? true : !sessionStorage.getItem("visited")
-  );
+  const [loading, setLoading]     = useState(true);
   const [easterEgg, setEasterEgg] = useState(false);
   const keyBuffer                 = useRef("");
+
+  // Skip the loading screen on revisits — checked after mount so server and
+  // client render the same initial tree (avoids hydration mismatch).
+  useEffect(() => {
+    if (sessionStorage.getItem("visited")) setLoading(false);
+  }, []);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -57,8 +60,6 @@ export default function Home() {
 
   return (
     <LanguageProvider>
-      <ThemePicker />
-
       {/* Easter egg overlay */}
       <AnimatePresence>
         {easterEgg && (
@@ -80,14 +81,14 @@ export default function Home() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
               <div style={{
-                fontFamily: "Exo 2, sans-serif", fontSize: "clamp(80px, 18vw, 160px)",
+                fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: "clamp(80px, 18vw, 160px)",
                 fontWeight: 900, color: "#fff", letterSpacing: "0.08em", lineHeight: 1,
                 textShadow: "0 0 80px rgba(255,255,255,0.4), 0 0 160px rgba(255,255,255,0.15)",
               }}>
                 RZ
               </div>
               <motion.p
-                style={{ margin: "12px 0 0", fontSize: 10, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.4em", color: "rgba(255,255,255,0.4)" }}
+                style={{ margin: "12px 0 0", fontSize: 10, fontFamily: "Plus Jakarta Sans, sans-serif", letterSpacing: "0.4em", color: "rgba(255,255,255,0.4)" }}
                 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25, duration: 0.4 }}
               >
@@ -111,11 +112,11 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <Navigation />
-            <SystemStatus />
             <main>
               <Hero />
+              <AboutHome />
               <Projects />
-              <RealTime3D />
+              <ExperienceHome />
               <Contact />
             </main>
           </motion.div>
