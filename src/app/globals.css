@@ -99,9 +99,6 @@ body {
     linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04)) border-box;
 }
 
-/* ── Font ── */
-.font-exo { font-family: "Plus Jakarta Sans", sans-serif; }
-
 /* ── Keyframes ── */
 @keyframes marquee {
   0%   { transform: translateX(0); }
